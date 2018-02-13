@@ -31,6 +31,10 @@
     1. Integritatea aplicatiei client
     2. Integritatea aplicatiei server
     3. SSL + Java Sockets
+    4. Devices common interface:
+        - Open, Close, GetLastError, Command, GetStatus
+        - try this: https://www.youtube.com/watch?v=PX67YrcEJB4
+    5. Serializare binara manuala
 
 ###Ideas list
 - Serverul creeaza conectiune cu dispozitivul doar cand userul se logheaza sau are deja conectiunea facuta?
