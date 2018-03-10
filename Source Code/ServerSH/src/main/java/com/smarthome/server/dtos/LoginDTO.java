@@ -1,5 +1,8 @@
 package com.smarthome.server.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = LoginDTO.class)
 public class LoginDTO {
     private String username;
     private String password;

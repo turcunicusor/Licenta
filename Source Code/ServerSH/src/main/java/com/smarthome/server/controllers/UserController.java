@@ -49,11 +49,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity login(@RequestBody LoginDTO login) {
-        if(PasswordEncoder.matches(login.getPassword(),userRepository.findByUsername(login.getUsername()).get(0).getPassword()))
-            return ResponseEntity.ok("Login succes.");
-        else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
-    }
+//    @PostMapping("/login")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    ResponseEntity login(@RequestBody LoginDTO login) {
+//        if(PasswordEncoder.matches(login.getPassword(),userRepository.findByUsername(login.getUsername()).get(0).getPassword()))
+//            return ResponseEntity.ok("Login succes.");
+//        else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+//    }
 }
