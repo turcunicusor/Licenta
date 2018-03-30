@@ -1,45 +1,51 @@
 package com.smarthome.server.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
-@GenericGenerator(
-        name = "usersGenerator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-                @org.hibernate.annotations.Parameter(name = "sequence_name", value = "user_seq"),
-                @org.hibernate.annotations.Parameter(name = "initial_value", value = "1000"),
-                @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
-        }
-)
-
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
+    //region private fields
     @Id
+    @Column(name = "user_id")
     private UUID id;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
+    private String email;
     private int age;
+    private int active;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+    //endregion
 
+    //region constructors
     public User() {
+        this.id = UUID.randomUUID();
+        this.roles = new HashSet<>();
     }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public User(String firstName, String lastName, String username, String password, int age) {
+    public User(String firstName, String lastName, String username, String password, String email, int age, int active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.age = age;
         this.id = UUID.randomUUID();
+        this.active = active;
+        this.roles = new HashSet<>();
+    }
+    //endregion
+
+    //region setters and getters
+    public UUID getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -74,6 +80,14 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int getAge() {
         return age;
     }
@@ -82,6 +96,24 @@ public class User {
         this.age = age;
     }
 
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles.addAll(roles);
+    }
+    //endregion
+
+    //region override methods
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -94,4 +126,5 @@ public class User {
         sb.append(", password=").append(this.password);
         return sb.toString();
     }
+    //endregion
 }

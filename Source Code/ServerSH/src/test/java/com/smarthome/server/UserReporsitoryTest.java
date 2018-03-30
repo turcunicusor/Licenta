@@ -18,8 +18,8 @@ public class UserReporsitoryTest {
 
     @Before
     public void setUp() throws Exception {
-        User user1 = new User("Nicusor","Turcu","sbear","1234",21);
-        User user2 = new User("Ionut", "Turcu", "ion", "1234", 26);
+        User user1 = new User("Nicusor","Turcu","sbear","1234", "", 21,1);
+        User user2 = new User("Ionut", "Turcu", "ion", "1234", "", 26,1);
 
         assertNull(user1.getId());
         assertNull(user2.getId());

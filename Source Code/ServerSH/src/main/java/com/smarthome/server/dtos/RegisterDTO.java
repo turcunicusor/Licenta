@@ -5,6 +5,7 @@ public class RegisterDTO {
     private String lastName;
     private String username;
     private String password;
+    private String email;
 
     public RegisterDTO(){
     }
@@ -30,5 +31,9 @@ public class RegisterDTO {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

@@ -1,32 +1,32 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.LoginDTO;
 import com.smarthome.server.dtos.RegisterDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.UserRepository;
-import com.smarthome.server.utils.PasswordEncoder;
-import com.sun.deploy.net.HttpResponse;
+import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserService userService;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
         this.userRepository = userRepository;
     }
 
+
     @GetMapping("/add")
     void addUser() {
-        userRepository.save(new User("nicusor", "nicusor", "1", "1", 1));
+        userService.saveUser(new User("nicusor", "nicusor", "1", "1", "turcunick@gmail.com", 1, 1));
     }
 
     @GetMapping("/all")
@@ -36,16 +36,15 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity register(@RequestBody RegisterDTO registerDTO) {
-        if(userRepository.findByUsername(registerDTO.getUsername()).size() > 0)
+    ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO) {
+        if (userService.findUserByEmail(registerDTO.getEmail()) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken.");
-        userRepository.save(
+        userService.saveUser(
                 new User(registerDTO.getFirstName(),
                         registerDTO.getLastName(),
                         registerDTO.getUsername(),
-                        PasswordEncoder.encode(registerDTO.getPassword()),
-                        0)
-        );
+                        registerDTO.getPassword(),
+                        registerDTO.getEmail(), 0, 0));
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
 
