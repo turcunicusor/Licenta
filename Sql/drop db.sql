@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
-TRUNCATE role;
-TRUNCATE user;
-TRUNCATE user_role;
+truncate role;
+truncate user;
+truncate user_role;
 
 SET FOREIGN_KEY_CHECKS = 1;

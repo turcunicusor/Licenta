@@ -1,7 +1,6 @@
 package com.smarthome.server.security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,17 +11,17 @@ import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
-public class TokenAuthenticationService {
-    static final long EXPIRATIONTIME = 86_400_000; // 1 day
-    static final String SECRET = "smarthome_secret";
-    static final String TOKEN_PREFIX = "Bearer";
-    static final String HEADER_STRING = "Authorization";
+class TokenAuthenticationService {
+    private static final long EXPIRATIONTIME = 86_400_000; // 1 day
+    private static final String SECRET = "smarthome_secret";
+    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String HEADER_STRING = "Authorization";
 
-    static void addAuthentication(HttpServletResponse res, String username) {
+    static void addAuthentication(HttpServletResponse res, String email) {
         String JWT = Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS512, SECRET) // HMAC using SHA-512
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
@@ -33,13 +32,11 @@ public class TokenAuthenticationService {
             try {
                 String user = Jwts.parser()
                         .setSigningKey(SECRET)
-                        .parseClaimsJws(token.replace(TOKEN_PREFIX.toUpperCase(), "  "))
+                        .parseClaimsJws(token.replace(TOKEN_PREFIX.toUpperCase(), " "))
                         .getBody()
                         .getSubject();
 
-                return user != null ?
-                        new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
-                        null;
+                return user != null ? new UsernamePasswordAuthenticationToken(user, null, emptyList()): null;
             }
             catch (Exception ex){
                 return null;

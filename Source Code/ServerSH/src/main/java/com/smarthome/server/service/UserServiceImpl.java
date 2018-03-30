@@ -5,11 +5,9 @@ import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.RoleRepository;
 import com.smarthome.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -38,10 +36,5 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         userRepository.save(user);
-    }
-
-    @Override
-    public Iterable<User> findAll(Sort sort) {
-        return userRepository.findAll(sort);
     }
 }

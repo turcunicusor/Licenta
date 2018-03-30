@@ -3,9 +3,9 @@ package com.smarthome.server.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,12 +19,16 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Order(1000)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private static final String[] AUTH_WHITELIST = {
-            // -- swagger ui
+    private static final String[] ROUTES_SWAGGER = {
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**"
+    };
+    private static final String[] ROUTES_ALLOWED = {
+            "/register",
+            "/roles/add",
+            "/" //never delete that
     };
     private final DataSource dataSource;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -44,11 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.POST,"/users/register").permitAll()
-                .antMatchers(HttpMethod.POST,"/roles/add").permitAll()
-//                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(ROUTES_SWAGGER).permitAll()
+                .antMatchers(ROUTES_ALLOWED).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
@@ -59,11 +60,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Create a default account
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder);
     }
+
+
 }

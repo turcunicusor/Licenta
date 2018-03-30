@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/roles")
 public class RolesController {
-    final
-    RoleRepository roleRepository;
-
+    private final RoleRepository roleRepository;
 
     @Autowired
     public RolesController(RoleRepository roleRepository) {
@@ -22,7 +20,7 @@ public class RolesController {
     }
 
     @PostMapping("/add")
-    ResponseEntity addRoles(){
+    ResponseEntity addRoles() {
         Role roleAdmin = new Role("ADMIN");
         Role roleUser = new Role("USER");
         roleRepository.save(roleAdmin);

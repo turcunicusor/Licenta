@@ -20,7 +20,6 @@ public class Role {
     public Role() {
         this.id = UUID.randomUUID();
     }
-
     public Role(String role) {
         this.id = UUID.randomUUID();
         this.role = role;
@@ -31,7 +30,6 @@ public class Role {
     public UUID getId() {
         return id;
     }
-
     public void setId(UUID id) {
         this.id = id;
     }
@@ -39,7 +37,6 @@ public class Role {
     public String getRole() {
         return role;
     }
-
     public void setRole(String role) {
         this.role = role;
     }

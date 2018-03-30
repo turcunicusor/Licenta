@@ -1,5 +1,9 @@
 package com.smarthome.server.entities;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -15,13 +19,13 @@ public class User {
     private UUID id;
     private String firstName;
     private String lastName;
-    private String username;
     private String password;
     private String email;
-    private int age;
     private int active;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     //endregion
 
@@ -30,15 +34,13 @@ public class User {
         this.id = UUID.randomUUID();
         this.roles = new HashSet<>();
     }
-    public User(String firstName, String lastName, String username, String password, String email, int age, int active) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
         this.password = password;
         this.email = email;
-        this.age = age;
         this.id = UUID.randomUUID();
-        this.active = active;
+        this.active = 0;
         this.roles = new HashSet<>();
     }
     //endregion
@@ -51,7 +53,6 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -59,23 +60,13 @@ public class User {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -83,23 +74,13 @@ public class User {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public int getActive() {
         return active;
     }
-
     public void setActive(int active) {
         this.active = active;
     }
@@ -107,7 +88,6 @@ public class User {
     public Set<Role> getRoles() {
         return roles;
     }
-
     public void setRoles(Set<Role> roles) {
         this.roles.addAll(roles);
     }
@@ -119,10 +99,9 @@ public class User {
         StringBuilder sb = new StringBuilder();
         sb.append("User{");
         sb.append("id=").append(this.id);
-        sb.append(", username=").append(this.username);
         sb.append(", firstName=").append(this.firstName);
         sb.append(", lastName=").append(this.lastName);
-        sb.append(", age=").append(this.age);
+        sb.append(", email=").append(this.email);
         sb.append(", password=").append(this.password);
         return sb.toString();
     }

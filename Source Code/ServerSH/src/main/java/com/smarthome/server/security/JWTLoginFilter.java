@@ -2,6 +2,9 @@ package com.smarthome.server.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smarthome.server.dtos.LoginDTO;
+import com.smarthome.server.entities.User;
+import com.smarthome.server.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +20,10 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
-    public JWTLoginFilter(String url, AuthenticationManager authManager) {
+//    @Autowired
+//    private final UserService userService;
+
+    JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
     }
@@ -27,7 +33,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
         LoginDTO creds = new ObjectMapper().readValue(req.getInputStream(), LoginDTO.class);
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
-                        creds.getUsername(),
+                        creds.getEmail(),
                         creds.getPassword(),
                         Collections.emptyList()
                 )
@@ -38,5 +44,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService.addAuthentication(res, auth.getName());
+//        User user = userService.findUserByEmail(auth.getName());
     }
 }

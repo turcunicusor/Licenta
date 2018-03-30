@@ -44,7 +44,7 @@ public class SwaggerConfig {
                 ",");
     }
 
-    ApiInfo apiInfo() {
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("SmartHome")
                 .description("Diploma project")
@@ -70,7 +70,6 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(
-                new SecurityReference("AUTHORIZATION", authorizationScopes));
+        return Lists.newArrayList(new SecurityReference("AUTHORIZATION", authorizationScopes));
     }
 }
