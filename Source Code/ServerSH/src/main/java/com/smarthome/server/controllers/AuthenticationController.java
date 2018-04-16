@@ -7,12 +7,13 @@ import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/")
+@Controller
+//@RequestMapping("/")
 public class AuthenticationController {
     private final UserService userService;
 
@@ -24,6 +25,11 @@ public class AuthenticationController {
     @PostMapping("/login")
     void login(@RequestBody LoginDTO login) {
         // security package will take the request
+    }
+
+    @RequestMapping("/")
+    String index(){
+        return "index";
     }
 
     @PostMapping("/register")

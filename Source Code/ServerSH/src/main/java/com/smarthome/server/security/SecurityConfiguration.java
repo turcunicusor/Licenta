@@ -28,6 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] ROUTES_ALLOWED = {
             "/register",
             "/roles/add",
+//            "/*",
             "/" //never delete that
     };
     private final DataSource dataSource;
