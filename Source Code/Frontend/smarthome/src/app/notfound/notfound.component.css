@@ -1,0 +1,12 @@
+.center-container {
+ position: absolute;
+  top: 50%;
+  margin-top: -100px;
+  left:50%;
+  margin-left: -180px;
+/*}*/
+}
+
+.container-fluid{
+  height: 88vh;
+}

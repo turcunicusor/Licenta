@@ -3,9 +3,24 @@
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
 body {
   padding-top: 3.5rem;
-  margin-bottom: 60px;
 }
+
 html {
   position: relative;
   min-height: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                   supported by Chrome and Opera */
 }
