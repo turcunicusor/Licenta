@@ -7,6 +7,9 @@ import { FooterComponent } from './footer/footer.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import {RouterGlobal} from './app-router';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { CloseMenuDirective } from './close-menu.directive';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { HomeComponent } from './home/home.component';
     HeaderComponent,
     FooterComponent,
     NotfoundComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    CloseMenuDirective
   ],
   imports: [
     BrowserModule,
