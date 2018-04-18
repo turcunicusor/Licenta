@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from './app.component';
 import {NotfoundComponent} from './notfound/notfound.component';
 import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 
 // export const router : RouterGlobal = [
@@ -26,6 +28,8 @@ import {HomeComponent} from './home/home.component';
 export const router: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   {path: '**', component: NotfoundComponent},
   // {path: 'notfound', component: NotfoundComponent}
 ];

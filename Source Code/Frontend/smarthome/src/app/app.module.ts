@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CloseMenuDirective } from './close-menu.directive';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CloseMenuDirective } from './close-menu.directive';
   imports: [
     BrowserModule,
     RouterGlobal,
+    AngularFontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
