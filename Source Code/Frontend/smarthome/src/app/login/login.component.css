@@ -1,6 +1,6 @@
 .form-login {
   width: 100%;
-  max-width: 330px;
+  max-width: 400px;
   padding: 15px;
   margin: auto;
 }
@@ -34,8 +34,9 @@
 }
 
 .span-link:hover {
-  text-decoration:none;
+  text-decoration: none;
 }
+
 .span-link {
   color: #049cf5;
   transition: all 0.4s;

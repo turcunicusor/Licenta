@@ -21,7 +21,7 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    CloseMenuDirective
+    CloseMenuDirective,
   ],
   imports: [
     BrowserModule,
