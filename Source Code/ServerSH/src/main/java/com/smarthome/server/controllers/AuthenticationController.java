@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin
 public class AuthenticationController {
     private final UserService userService;
 
@@ -23,16 +24,20 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin
     void login(@RequestBody LoginDTO login) {
         // security package will take the request
     }
 
     @RequestMapping("/")
+    @CrossOrigin
     String index(){
         return "index";
     }
 
+
     @PostMapping("/register")
+    @CrossOrigin
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO) {
         if (userService.findUserByEmail(registerDTO.getEmail()) != null)

@@ -1,16 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { NotfoundComponent } from './notfound/notfound.component';
+import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+import {NotfoundComponent} from './notfound/notfound.component';
 import {RouterGlobal} from './app-router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { CloseMenuDirective } from './close-menu.directive';
+import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
+import {CloseMenuDirective} from './close-menu.directive';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {BackendService} from './backendservice/backend.service';
+
+import {HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {AppSettingsDirective} from './app-settings.directive';
 
 @NgModule({
   declarations: [
@@ -22,13 +26,16 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     LoginComponent,
     RegisterComponent,
     CloseMenuDirective,
+    AppSettingsDirective,
   ],
   imports: [
     BrowserModule,
     RouterGlobal,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [HttpClientModule, BackendService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
