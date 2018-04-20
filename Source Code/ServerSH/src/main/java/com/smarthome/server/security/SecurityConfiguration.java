@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors(); // magic line
         http.csrf().disable().authorizeRequests()
                 .antMatchers(ROUTES_SWAGGER).permitAll()
                 .antMatchers(ROUTES_ALLOWED).permitAll()
@@ -67,6 +68,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder);
     }
-
-
 }

@@ -5,24 +5,54 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class BackendService {
-  private username: string;
-  private password: string;
-  private confirmPassword: string;
-  private email: string;
+  private token;
+  private def_header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  });
+  private auth_header;
 
   constructor(private _http: HttpClient) {
+    this.auth_header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer '
+    });
   }
 
-  public get(url) {
-    return this._http.get(url, {responseType: 'json'});
+  public setToken(token: string) {
+    this.token = token;
+    this.auth_header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer ' + token
+    });
   }
 
-  public post(url, json, header = AppSettingsDirective.def_header): Observable<Object> {
-    return this._http.post(url, json, {headers: header});
+  public get(url): Observable<any> {
+    const httpheader = new HttpHeaders({
+      'Access-Control-Expose-Headers': 'Authorization',
+      'Authorization': 'AUTHORIZATION: Bearer ' + this.token
+    });
+    return this._http.get<any[]>(AppSettingsDirective.server_url + url,
+      {headers: httpheader});
   }
 
-  public get_food(url) {
-    return this.get(url);
+  public post(url, json, headers = this.auth_header): Observable<any> {
+    return this._http.post<any>(AppSettingsDirective.server_url + url, JSON.stringify(json),
+      {headers: headers, observe: 'response'});
+  }
+
+  public login(json): Observable<any> {
+    return this.post('/login', json, this.def_header);
+  }
+
+  public register(json): Observable<any> {
+    return this.post('/register', json, this.def_header);
+  }
+
+  public getAllUsers(): Observable<any> {
+    return this.get('/users/all');
   }
 
   // private username: string;

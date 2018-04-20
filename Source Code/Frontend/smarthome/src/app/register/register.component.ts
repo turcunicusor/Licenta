@@ -11,10 +11,12 @@ import {AppSettingsDirective} from '../app-settings.directive';
 })
 export class RegisterComponent implements OnInit {
   public message;
-  public edited;
+  public success;
+  public error;
 
-  constructor(private router: Router, private _backendService: BackendService, private _http: HttpClient) {
-    this.edited = false;
+  constructor(private router: Router, private _bs: BackendService) {
+    this.success = false;
+    this.error = false;
   }
 
   ngOnInit() {
@@ -26,26 +28,30 @@ export class RegisterComponent implements OnInit {
 
   onRegister(firstName, lastName, email, password, confirmpassword) {
     this.message = null;
-    console.log('register');
     const body = {email: email, firstName: firstName, lastName: lastName, password: password};
-    console.log(body);
-    this._http.post<any>(AppSettingsDirective.server_url + '/register', JSON.stringify(body),
-      {headers: AppSettingsDirective.def_header}).subscribe(
-      res => {
-        console.log(res);
-        this.message = 'succes';
-      },
-      (err: HttpErrorResponse) => {
-        this.message = 'fail';
-        console.log('fail');
-        console.log(err.error);
-        console.log(err.name);
-        console.log(err.message);
-        console.log(err.status);
-      });
-
-    this.edited = true;
-
+    this.success = false;
+    this._bs.register(body)
+      .subscribe(
+        res => {
+          this.success = true;
+          this.message = 'Register success! Redirecting to login...';
+          setTimeout(() => {
+            this.redirect('login');
+          }, 1500);
+        },
+        (err: HttpErrorResponse) => {
+          this.error = true;
+          if (err.statusText === 'Unknown Error') {
+            this.message = 'Service currently not available.';
+          } else if (err.status !== 500) {
+            this.message = err.error;
+          } else {
+            this.message = AppSettingsDirective.def_err_message;
+          }
+        });
+    this.error = false;
+    this.success = false;
+    this.message = '';
     return false;
   }
 }

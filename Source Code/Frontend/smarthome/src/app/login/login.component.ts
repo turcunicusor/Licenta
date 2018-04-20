@@ -11,11 +11,15 @@ import {AppSettingsDirective} from '../app-settings.directive';
 })
 export class LoginComponent implements OnInit {
   public token;
+  public message;
+  public success;
+  public error;
 
   constructor(private router: Router,
-              private _backendService: BackendService,
-              private _http: HttpClient) {
+              private _bs: BackendService) {
     this.token = 'no token';
+    this.success = false;
+    this.error = false;
   }
 
   ngOnInit() {
@@ -32,19 +36,35 @@ export class LoginComponent implements OnInit {
 
   onLogin(email, password) {
     const body = {email: email, password: password};
-    console.log(body);
-    this._http.post<any>(AppSettingsDirective.server_url + '/login', JSON.stringify(body),
-      {headers: AppSettingsDirective.def_header}).subscribe(
-      res => {
-        this.token = res.headers.get('AUTHORIZATION');
-      },
-      (err: HttpErrorResponse) => {
-        console.log('fail');
-        console.log(err.error);
-        console.log(err.name);
-        console.log(err.message);
-        console.log(err.status);
-      });
+    this._bs.login(body)
+      .subscribe(
+        res => {
+          this.success = true;
+          this.token = res.headers.get('Authorization').split(' ').pop();
+          this.message = 'Login success!';
+          this._bs.setToken(this.token);
+          setTimeout(() => {
+            this.redirect('home');
+          }, 1500);
+        },
+        (err: HttpErrorResponse) => {
+          this.error = true;
+
+          console.log('fail');
+          console.log(err.error);
+          console.log(err.name);
+          console.log(err.message);
+          console.log(err.status);
+
+          if (err.statusText === 'Unknown Error') {
+            this.message = 'Service currently not available.';
+          } else {
+            this.message = AppSettingsDirective.def_err_message;
+          }
+        });
+    this.error = false;
+    this.success = false;
+    this.message = '';
     return false;
   }
 }
