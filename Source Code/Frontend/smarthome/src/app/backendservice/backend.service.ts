@@ -1,5 +1,5 @@
 import {Injectable, NgModule} from '@angular/core';
-import {HttpClient, HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AppSettingsDirective} from '../app-settings.directive';
 import {Observable} from 'rxjs/Observable';
 
@@ -13,6 +13,7 @@ export class BackendService {
   private auth_header;
 
   constructor(private _http: HttpClient) {
+    this.token = 'Bearer ';
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -25,17 +26,17 @@ export class BackendService {
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer ' + token
+      'Authorization': token
     });
   }
 
   public get(url): Observable<any> {
-    const httpheader = new HttpHeaders({
-      'Access-Control-Expose-Headers': 'Authorization',
-      'Authorization': 'AUTHORIZATION: Bearer ' + this.token
-    });
-    return this._http.get<any[]>(AppSettingsDirective.server_url + url,
-      {headers: httpheader});
+    const headers = new HttpHeaders().set(
+      'Access-Control-Allow-Origin', '*').set(
+      'Content-Type', 'application/json').set(
+      'Authorization', this.token);
+    const options = {headers: headers};
+    return this._http.get(AppSettingsDirective.server_url + url, options);
   }
 
   public post(url, json, headers = this.auth_header): Observable<any> {

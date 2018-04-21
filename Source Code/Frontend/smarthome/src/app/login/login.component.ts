@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BackendService} from '../backendservice/backend.service';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {AppSettingsDirective} from '../app-settings.directive';
 
 @Component({

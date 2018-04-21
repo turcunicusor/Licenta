@@ -12,8 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.Header;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +32,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] ROUTES_ALLOWED = {
             "/register",
             "/roles/add",
-//            "/*",
             "/" //never delete that
     };
     private final DataSource dataSource;

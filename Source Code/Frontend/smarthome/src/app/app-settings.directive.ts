@@ -10,7 +10,7 @@ export class AppSettingsDirective {
   constructor() {
   }
 
-  static server_url = 'http://75eb8d39.ngrok.io';
+  static server_url = 'http://76ea7d1e.ngrok.io';
   static def_err_message = 'Ooops! Something whent wrong..';
 
   static delay(ms: number) {

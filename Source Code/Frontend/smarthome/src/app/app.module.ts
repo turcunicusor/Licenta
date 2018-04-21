@@ -13,7 +13,7 @@ import {CloseMenuDirective} from './close-menu.directive';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {BackendService} from './backendservice/backend.service';
 
-import {HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {AppSettingsDirective} from './app-settings.directive';
 
 @NgModule({
@@ -32,9 +32,10 @@ import {AppSettingsDirective} from './app-settings.directive';
     BrowserModule,
     RouterGlobal,
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpClientJsonpModule
   ],
-  providers: [HttpClientModule, BackendService],
+  providers: [BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
