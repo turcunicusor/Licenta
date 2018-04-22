@@ -19,12 +19,10 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    @CrossOrigin
     Iterable<User> getAll() {
         return userRepository.findAll();
     }
     @PostMapping("/")
-    @CrossOrigin
     User getByEmail(@Valid @RequestBody EmailDTO email) {
         return userRepository.findByEmail(email.getEmail());
     }

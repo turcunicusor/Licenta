@@ -9,7 +9,7 @@
   <aside class="collapse navbar-collapse" id="navbarMain" #menu>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active pointer">
-        <div class="nav-link noselect" appCloseMenu [menu]="menu" (click)="redirect('')">Home <span
+        <div class="nav-link noselect" appCloseMenu [menu]="menu" (click)="this._bs.redirect('')">Home <span
           class="sr-only">(current)</span></div>
       </li>
       <li class="nav-item">
@@ -35,10 +35,10 @@
       </div>
       <div class="justify-content-center btn-group mr-2">
         <div class="btn-group mr-sm-2" role="group" aria-label="Login">
-          <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu" (click)="redirect('login')">Login</button>
+          <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu" (click)="this._bs.redirect('login')">Login</button>
         </div>
         <div class="btn-group mr-sm-2 " role="group" aria-label="Sign up">
-          <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu" (click)="redirect('register')">Sign up</button>
+          <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu" (click)="this._bs.redirect('register')">Sign up</button>
         </div>
       </div>
     </div>

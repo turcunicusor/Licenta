@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {BackendService} from '../backendservice/backend.service';
-import {AppSettingsDirective} from '../app-settings.directive';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -15,29 +13,21 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class HomeComponent implements OnInit {
   public dataGet;
 
-  constructor(private router: Router, private _bs: BackendService) {
+  constructor(public _bs: BackendService) {
   }
 
   ngOnInit() {
-  }
-
-  redirect(page: string) {
-    this.router.navigate(['/' + page]);
   }
 
   getData() {
     this._bs.getAllUsers().subscribe(
       res => {
         this.dataGet = res;
+        console.log(res);
       },
       (err: HttpErrorResponse) => {
         // this.error = true;
-
-        console.log('fail');
-        console.log(err.error);
-        console.log(err.name);
-        console.log(err.message);
-        console.log(err.status);
+        this._bs.logError(err);
 
         // if (err.statusText === 'Unknown Error') {
         //   this.message = 'Service currently not available.';

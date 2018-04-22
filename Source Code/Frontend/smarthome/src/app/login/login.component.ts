@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {BackendService} from '../backendservice/backend.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AppSettingsDirective} from '../app-settings.directive';
@@ -15,8 +14,7 @@ export class LoginComponent implements OnInit {
   public success;
   public error;
 
-  constructor(private router: Router,
-              private _bs: BackendService) {
+  constructor(public _bs: BackendService) {
     this.token = 'no token';
     this.success = false;
     this.error = false;
@@ -30,10 +28,6 @@ export class LoginComponent implements OnInit {
     // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  redirect(page: string) {
-    this.router.navigate(['/' + page]);
-  }
-
   onLogin(email, password) {
     const body = {email: email, password: password};
     this._bs.login(body)
@@ -44,18 +38,12 @@ export class LoginComponent implements OnInit {
           this.message = 'Login success!';
           this._bs.setToken(this.token);
           setTimeout(() => {
-            this.redirect('home');
+            this._bs.redirect('home');
           }, 1500);
         },
         (err: HttpErrorResponse) => {
           this.error = true;
-
-          console.log('fail');
-          console.log(err.error);
-          console.log(err.name);
-          console.log(err.message);
-          console.log(err.status);
-
+          this._bs.logError(err);
           if (err.statusText === 'Unknown Error') {
             this.message = 'Service currently not available.';
           } else {

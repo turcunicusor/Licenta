@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {BackendService} from '../backendservice/backend.service';
 
 @Component({
   selector: 'app-notfound',
@@ -8,13 +8,9 @@ import {Router} from '@angular/router';
 })
 export class NotfoundComponent implements OnInit {
 
-  constructor(private router: Router) {
+  constructor(public _bs: BackendService) {
   }
 
   ngOnInit() {
-  }
-
-  redirect() {
-    this.router.navigate(['']);
   }
 }

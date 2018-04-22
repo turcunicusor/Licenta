@@ -22,7 +22,6 @@ public class RolesController {
     }
 
     @PostMapping("/add")
-    @CrossOrigin
     ResponseEntity addRoles() {
         Role roleAdmin = new Role("ADMIN");
         Role roleUser = new Role("USER");
