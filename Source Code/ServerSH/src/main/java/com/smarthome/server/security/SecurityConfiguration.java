@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private String rolesQuery;
 
     @Autowired
-    public SecurityConfiguration(@Qualifier("dataSource") DataSource dataSource, BCryptPasswordEncoder passwordEncoder,UserService userService) {
+    public SecurityConfiguration(@Qualifier("dataSource") DataSource dataSource, BCryptPasswordEncoder passwordEncoder, UserService userService) {
         this.dataSource = dataSource;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(ROUTES_ALLOWED).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(),userService),
+                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), userService),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
