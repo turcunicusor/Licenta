@@ -1,14 +1,10 @@
 package com.smarthome.server.entities;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.smarthome.server.service.Status;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "user")
@@ -16,13 +12,14 @@ public class User {
     //region private fields
     @Id
     @Column(name = "user_id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstName;
     private String lastName;
     private String password;
     private String email;
-    private int active;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private int status;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -31,25 +28,20 @@ public class User {
 
     //region constructors
     public User() {
-        this.id = UUID.randomUUID();
         this.roles = new HashSet<>();
+        this.status = Status.Created.ordinal();
     }
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.id = UUID.randomUUID();
-        this.active = 0;
+        this.status = Status.Created.ordinal();
         this.roles = new HashSet<>();
     }
     //endregion
 
     //region setters and getters
-    public UUID getId() {
-        return id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -78,11 +70,11 @@ public class User {
         this.email = email;
     }
 
-    public int getActive() {
-        return active;
+    public int getStatus() {
+        return status;
     }
-    public void setActive(int active) {
-        this.active = active;
+    public void setStatus(Status status) {
+        this.status = status.ordinal();
     }
 
     public Set<Role> getRoles() {

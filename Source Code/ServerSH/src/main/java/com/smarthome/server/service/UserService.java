@@ -4,5 +4,6 @@ import com.smarthome.server.entities.User;
 
 public interface UserService {
     User findUserByEmail(String email);
-    void saveUser(User user);
+    void saveRegistered(User user);
+    void loggedIn(String email);
 }

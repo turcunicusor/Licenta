@@ -6,7 +6,8 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class BackendService {
-  private server_url = 'http://26b4285e.ngrok.io';
+  public isLoggedIn;
+  private server_url = 'http://927f6600.ngrok.io';
   private token;
   private auth_header;
   private def_header = new HttpHeaders({
@@ -21,6 +22,7 @@ export class BackendService {
       'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer '
     });
+    this.isLoggedIn = false;
   }
 
   public setToken(token: string) {
@@ -30,6 +32,7 @@ export class BackendService {
       'Access-Control-Allow-Origin': '*',
       'Authorization': token
     });
+    this.isLoggedIn = true;
   }
 
   redirect(page = '') {
@@ -41,6 +44,21 @@ export class BackendService {
     console.log(error.name);
     console.log(error.message);
     console.log(error.status);
+  }
+
+  public handleError(err: HttpErrorResponse) {
+    this.logError(err);
+    if (err.status === 401) {
+      return 'Invalid credentials. Please try again.';
+    } else if (err.status === 403) {
+      return 'You must login to perform this action.';
+    } else if (err.statusText === 'Unknown Error') {
+      return 'Service currently not available.';
+    } else if (err.status !== 500) {
+      return err.error;
+    } else {
+      return AppSettingsDirective.def_err_message;
+    }
   }
 
   public get(url): Observable<any> {
@@ -57,9 +75,17 @@ export class BackendService {
   }
 
   public logout(): Observable<any> {
-    // this.token = 'Bearer ';
     return this.post('/logout', '');
-    // this.token = 'Bearer ';
+  }
+
+  public logoutSucess() {
+    this.token = 'Bearer ';
+    this.auth_header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': 'Bearer '
+    });
+    this.isLoggedIn = false;
   }
 
   public register(json): Observable<any> {

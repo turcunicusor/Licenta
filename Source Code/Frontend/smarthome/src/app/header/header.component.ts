@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../backendservice/backend.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -12,5 +13,15 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this._bs.logout().subscribe(
+      res => {
+        this._bs.logoutSucess();
+      },
+      (err: HttpErrorResponse) => {
+        this._bs.handleError(err);
+      });
   }
 }

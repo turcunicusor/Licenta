@@ -30,11 +30,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveRegistered(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(1);
+        user.setStatus(Status.Registered);
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void loggedIn(String email){
+        System.out.println("Email: " + email);
+        User user = userRepository.findByEmail(email);
+        user.setStatus(Status.LoggedIn);
         userRepository.save(user);
     }
 }

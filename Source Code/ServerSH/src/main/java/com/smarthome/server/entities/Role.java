@@ -1,9 +1,8 @@
 package com.smarthome.server.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -11,32 +10,30 @@ import java.util.UUID;
 public class Role {
     //region private fields
     @Id
-    @Column(name="role_id")
-    private UUID id;
+    @Column(name = "role_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String role;
+    @ManyToMany(mappedBy = "roles",cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<User> users;
     //endregion
 
     //region contructors
     public Role() {
-        this.id = UUID.randomUUID();
+        this.users = new HashSet<>();
     }
+
     public Role(String role) {
-        this.id = UUID.randomUUID();
         this.role = role;
+        this.users = new HashSet<>();
     }
     //endregion
-
-    //region setters and getters
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getRole() {
         return role;
     }
+
     public void setRole(String role) {
         this.role = role;
     }

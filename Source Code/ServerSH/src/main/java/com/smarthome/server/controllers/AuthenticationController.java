@@ -7,7 +7,6 @@ import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,7 +38,7 @@ public class AuthenticationController {
     ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO) {
         if (userService.findUserByEmail(registerDTO.getEmail()) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already taken.");
-        userService.saveUser(new User(registerDTO.getFirstName(), registerDTO.getLastName(),
+        userService.saveRegistered(new User(registerDTO.getFirstName(), registerDTO.getLastName(),
                 registerDTO.getEmail(), registerDTO.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }

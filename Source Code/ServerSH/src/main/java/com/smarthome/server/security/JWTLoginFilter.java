@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
-//    @Autowired
-//    private final UserService userService;
+    private final UserService userService;
 
-    JWTLoginFilter(String url, AuthenticationManager authManager) {
+    JWTLoginFilter(String url, AuthenticationManager authManager, UserService userService) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
+        this.userService = userService;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService.addAuthentication(res, auth.getName());
-//        User user = userService.findUserByEmail(auth.getName());
+        userService.loggedIn(auth.getName());
     }
 }

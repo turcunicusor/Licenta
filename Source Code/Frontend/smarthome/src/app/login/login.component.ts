@@ -43,12 +43,7 @@ export class LoginComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           this.error = true;
-          this._bs.logError(err);
-          if (err.statusText === 'Unknown Error') {
-            this.message = 'Service currently not available.';
-          } else {
-            this.message = AppSettingsDirective.def_err_message;
-          }
+          this.message = this._bs.handleError(err);
         });
     this.error = false;
     this.success = false;

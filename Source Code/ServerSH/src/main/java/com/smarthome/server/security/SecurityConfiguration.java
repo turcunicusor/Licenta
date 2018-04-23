@@ -1,5 +1,6 @@
 package com.smarthome.server.security;
 
+import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
     private final DataSource dataSource;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final UserService userService;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;
@@ -44,9 +46,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private String rolesQuery;
 
     @Autowired
-    public SecurityConfiguration(@Qualifier("dataSource") DataSource dataSource, BCryptPasswordEncoder passwordEncoder) {
+    public SecurityConfiguration(@Qualifier("dataSource") DataSource dataSource, BCryptPasswordEncoder passwordEncoder,UserService userService) {
         this.dataSource = dataSource;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(ROUTES_ALLOWED).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(),userService),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);

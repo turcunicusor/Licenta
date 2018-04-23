@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         // this.error = true;
-        this._bs.logError(err);
+        this._bs.handleError(err);
 
         // if (err.statusText === 'Unknown Error') {
         //   this.message = 'Service currently not available.';
