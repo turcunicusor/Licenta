@@ -1,6 +1,5 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.LoginDTO;
 import com.smarthome.server.dtos.LogoutDTO;
 import com.smarthome.server.dtos.RegisterDTO;
 import com.smarthome.server.entities.User;
@@ -11,11 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin
 public class AuthenticationController {
     private final UserService userService;
 
@@ -24,14 +21,7 @@ public class AuthenticationController {
         this.userService = userService;
     }
 
-    @CrossOrigin
-    @PostMapping("/login")
-    void login(@RequestBody LoginDTO login) {
-        // security package will take the request
-    }
-
-    @CrossOrigin
-    @PostMapping("/logout")
+    @RequestMapping(value = "/reg/logout", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity logout(@RequestBody LogoutDTO logout) {
         try {
@@ -42,13 +32,11 @@ public class AuthenticationController {
         }
     }
 
-    @CrossOrigin
     @RequestMapping("/")
-    String index(){
+    String index() {
         return "index";
     }
 
-    @CrossOrigin
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity register(@Valid @RequestBody RegisterDTO registerDTO) {

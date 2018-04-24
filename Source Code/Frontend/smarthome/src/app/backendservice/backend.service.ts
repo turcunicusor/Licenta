@@ -7,21 +7,23 @@ import {Router} from '@angular/router';
 @Injectable()
 export class BackendService {
   public isLoggedIn;
-  private server_url = 'http://261b5748.ngrok.io';
+  private server_url = 'http://7fef5bad.ngrok.io';
   private token;
+  private email;
   private auth_header;
   private def_header = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
+    // 'Access-Control-Allow-Origin': '*'
   });
 
   constructor(private _http: HttpClient, private router: Router) {
     this.token = 'Bearer ';
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer '
     });
+    this.email = null;
     this.isLoggedIn = false;
   }
 
@@ -29,7 +31,7 @@ export class BackendService {
     this.token = token;
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       'Authorization': token
     });
     this.isLoggedIn = true;
@@ -71,18 +73,20 @@ export class BackendService {
   }
 
   public login(json): Observable<any> {
+    this.email = json['email'];
     return this.post('/login', json, this.def_header);
   }
 
   public logout(): Observable<any> {
-    return this.post('/logout', '');
+    return this.post('/user/logout', {email: this.email});
   }
 
   public logoutSucess() {
+    console.log('logout sucess');
     this.token = 'Bearer ';
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer '
     });
     this.isLoggedIn = false;
@@ -93,7 +97,7 @@ export class BackendService {
   }
 
   public getAllUsers(): Observable<any> {
-    return this.get('/users/all');
+    return this.get('/user/all');
   }
 
   // private username: string;
