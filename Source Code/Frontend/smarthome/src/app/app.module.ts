@@ -13,8 +13,11 @@ import {CloseMenuDirective} from './close-menu.directive';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {BackendService} from './backendservice/backend.service';
 
-import {HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import {HttpClientModule, HttpClientJsonpModule} from '@angular/common/http';
 import {AppSettingsDirective} from './app-settings.directive';
+
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,13 @@ import {AppSettingsDirective} from './app-settings.directive';
     RouterGlobal,
     AngularFontAwesomeModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true,
+    }),
+    BrowserAnimationsModule
   ],
   providers: [BackendService],
   bootstrap: [AppComponent]

@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 @Injectable()
 export class BackendService {
   public isLoggedIn;
-  private server_url = 'http://7fef5bad.ngrok.io';
+  private server_url = 'http://1ddfbc26.ngrok.io';
   private token;
   private email;
   private auth_header;
