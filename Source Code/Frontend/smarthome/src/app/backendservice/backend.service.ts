@@ -11,30 +11,28 @@ export class BackendService {
   private token;
   private email;
   private auth_header;
-  private def_header = new HttpHeaders({
-    'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin': '*'
-  });
+  private def_header;
 
   constructor(private _http: HttpClient, private router: Router) {
     this.token = 'Bearer ';
-    this.auth_header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer '
-    });
     this.email = null;
     this.isLoggedIn = false;
+    this.auth_header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer '
+    });
+    this.def_header = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
   }
 
   public setToken(token: string) {
     this.token = token;
+    this.isLoggedIn = true;
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin': '*',
       'Authorization': token
     });
-    this.isLoggedIn = true;
   }
 
   redirect(page = '') {
@@ -86,7 +84,6 @@ export class BackendService {
     this.token = 'Bearer ';
     this.auth_header = new HttpHeaders({
       'Content-Type': 'application/json',
-      // 'Access-Control-Allow-Origin': '*',
       'Authorization': 'Bearer '
     });
     this.isLoggedIn = false;
