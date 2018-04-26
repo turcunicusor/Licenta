@@ -1,5 +1,6 @@
 package com.smarthome.server.entities;
 
+import com.smarthome.server.dtos.UserDTO;
 import com.smarthome.server.service.Status;
 
 import javax.persistence.*;
@@ -98,4 +99,8 @@ public class User {
         return sb.toString();
     }
     //endregion
+
+    public UserDTO toUserDTO(){
+        return new UserDTO(firstName,lastName,email);
+    }
 }

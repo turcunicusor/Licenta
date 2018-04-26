@@ -1,6 +1,5 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.LogoutDTO;
 import com.smarthome.server.dtos.RegisterDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.service.UserService;
@@ -19,22 +18,6 @@ public class AuthenticationController {
     @Autowired
     public AuthenticationController(UserService userService) {
         this.userService = userService;
-    }
-
-    @RequestMapping(value = "/reg/logout", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    ResponseEntity logout(@RequestBody LogoutDTO logout) {
-        try {
-            userService.loggedOut(logout.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body("");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-
-    @RequestMapping("/")
-    String index() {
-        return "index";
     }
 
     @PostMapping("/register")

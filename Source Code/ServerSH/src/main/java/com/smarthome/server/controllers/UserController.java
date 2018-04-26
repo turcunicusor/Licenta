@@ -2,6 +2,7 @@ package com.smarthome.server.controllers;
 
 import com.smarthome.server.dtos.EmailDTO;
 import com.smarthome.server.dtos.LogoutDTO;
+import com.smarthome.server.dtos.UserDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.UserRepository;
 import com.smarthome.server.service.UserService;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -35,9 +38,21 @@ public class UserController {
         }
     }
 
+    @GetMapping(value = "/profile")
+    ResponseEntity profile(@RequestParam("email") String email){
+        User user = userService.findUserByEmail(email);
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No username found with that email.");
+        return ResponseEntity.status(HttpStatus.OK).body(user.toUserDTO());
+    }
+
     @GetMapping("/all")
-    Iterable<User> getAll() {
-        return userRepository.findAll();
+    Iterable<UserDTO> getAll() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> usersDto = new ArrayList<>();
+        for(User user: users)
+            usersDto.add(user.toUserDTO());
+        return usersDto;
     }
 
     @PostMapping("/")

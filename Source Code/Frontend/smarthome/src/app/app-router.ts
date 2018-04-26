@@ -4,6 +4,8 @@ import {NotfoundComponent} from './notfound/notfound.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
+import {ProfileComponent} from './profile/profile.component';
+import {AuthGuardService as AuthGuard} from './backendservice/auth-guard.service';
 
 
 // export const router : RouterGlobal = [
@@ -29,6 +31,7 @@ export const router: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotfoundComponent},
   // {path: 'notfound', component: NotfoundComponent}
 ];

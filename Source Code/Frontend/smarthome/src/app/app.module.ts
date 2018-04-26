@@ -18,6 +18,8 @@ import {AppSettingsDirective} from './app-settings.directive';
 
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ProfileComponent } from './profile/profile.component';
+import {AuthGuardService} from './backendservice/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RegisterComponent,
     CloseMenuDirective,
     AppSettingsDirective,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     }),
     BrowserAnimationsModule
   ],
-  providers: [BackendService],
+  providers: [BackendService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

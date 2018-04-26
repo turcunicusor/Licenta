@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
       res => {
         this._bs.logoutSucess();
         this.toastr.success('See you next time!', 'Logout success!');
+        this._bs.redirect('/home');
       },
       (err: HttpErrorResponse) => {
         this._bs.handleError(err);

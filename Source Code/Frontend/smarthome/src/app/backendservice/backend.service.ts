@@ -4,10 +4,16 @@ import {AppSettingsDirective} from '../app-settings.directive';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 @Injectable()
 export class BackendService {
   public isLoggedIn;
-  private server_url = 'http://1ddfbc26.ngrok.io';
+  private server_url = 'http://a185a7d3.ngrok.io';
   private token;
   private email;
   private auth_header;
@@ -95,6 +101,12 @@ export class BackendService {
 
   public getAllUsers(): Observable<any> {
     return this.get('/user/all');
+  }
+
+  public profile(): Observable<any> {
+    const url = '/user/profile';
+    const params = new HttpParams().set('email', this.email);
+    return this._http.get<User>(this.server_url + url, {headers: this.auth_header, params: params});
   }
 
   // private username: string;
