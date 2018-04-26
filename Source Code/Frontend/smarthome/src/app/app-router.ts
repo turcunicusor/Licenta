@@ -31,7 +31,7 @@ export const router: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent}, // canActivate: [AuthGuard]},
   {path: '**', component: NotfoundComponent},
   // {path: 'notfound', component: NotfoundComponent}
 ];

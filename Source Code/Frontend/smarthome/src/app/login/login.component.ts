@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
           this.success = true;
           this.token = res.headers.get('Authorization').split(' ').pop();
           this.message = 'Login success!';
-          this._bs.setToken(this.token);
           setTimeout(() => {
+            this._bs.setToken(this.token);
             this._bs.redirect('home');
           }, 1500);
         },

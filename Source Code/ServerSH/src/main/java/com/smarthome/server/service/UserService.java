@@ -7,4 +7,5 @@ public interface UserService {
     void saveRegistered(User user);
     void loggedIn(String email);
     void loggedOut(String email) throws Exception;
+    void update(User user);
 }

@@ -109,6 +109,14 @@ export class BackendService {
     return this._http.get<User>(this.server_url + url, {headers: this.auth_header, params: params});
   }
 
+  public updateProfile(json): Observable<any> {
+    return this.post('/user/profile', json);
+  }
+
+  public updateEmail(email) {
+    this.email = email;
+  }
+
   // private username: string;
   //
   // constructor(private http: Http) {

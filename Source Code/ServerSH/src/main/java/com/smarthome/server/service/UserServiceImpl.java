@@ -4,7 +4,6 @@ import com.smarthome.server.entities.Role;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.RoleRepository;
 import com.smarthome.server.repositories.UserRepository;
-import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,6 +53,11 @@ public class UserServiceImpl implements UserService {
         if (user.getStatus() != Status.LoggedIn.ordinal())
             throw new Exception("User is not logged in. Cannot logged out.");
         user.setStatus(Status.LoggedOut);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void update(User user) {
         userRepository.save(user);
     }
 }

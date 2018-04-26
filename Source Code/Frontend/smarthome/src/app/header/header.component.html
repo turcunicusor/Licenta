@@ -27,24 +27,24 @@
       </div>
 
       <div *ngIf="!this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">
-        <div class="btn-group mr-sm-2" role="group" aria-label="Login">
+        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Login">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('login')">Login
           </button>
         </div>
-        <div class="btn-group mr-sm-2" role="group" aria-label="Sign up">
+        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Sign up">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('register')">Sign up
           </button>
         </div>
       </div>
       <div *ngIf="this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">
-        <div class="btn-group mr-sm-2" role="group" aria-label="Profile">
+        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('profile')">Profile
           </button>
         </div>
-        <div class="btn-group mr-sm-2" role="group" aria-label="Profile">
+        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="logout()">Logout
           </button>
