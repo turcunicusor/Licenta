@@ -12,7 +12,12 @@ export class ProfileComponent implements OnInit {
   public user: User;
 
   constructor(public _bs: BackendService) {
-    _bs.profile().subscribe(
+
+  }
+
+  ngOnInit() {
+    this.user = new User();
+    this._bs.profile().subscribe(
       res => {
         this.user = res;
       },
@@ -20,8 +25,4 @@ export class ProfileComponent implements OnInit {
         this._bs.handleError(err);
       });
   }
-
-  ngOnInit() {
-  }
-
 }

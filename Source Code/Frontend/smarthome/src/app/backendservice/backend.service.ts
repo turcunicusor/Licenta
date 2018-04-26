@@ -4,7 +4,7 @@ import {AppSettingsDirective} from '../app-settings.directive';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 
-export interface User {
+export class User {
   firstName: string;
   lastName: string;
   email: string;
