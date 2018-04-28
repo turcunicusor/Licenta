@@ -8,4 +8,5 @@ public interface IDevice {
     Status getStatus();
     Params queryData(List<String> data);
     String getType();
+    List<String> getParams();
 }

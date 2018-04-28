@@ -7,12 +7,11 @@ public class DeviceImpl implements IDevice {
     private Queue<String> errors;
     private String type;
 
-    DeviceImpl(){
-        errors = new LinkedList<>();
-        type = "Deviece";
+    public DeviceImpl(String type){
+        this.errors = new LinkedList<>();
+        this.type = type;
     }
 
-    @Override
     public boolean open() {
         try {
             status = Status.OPENED;
@@ -23,7 +22,6 @@ public class DeviceImpl implements IDevice {
         }
     }
 
-    @Override
     public boolean close() {
         try {
             status = Status.CLOSED;
@@ -34,28 +32,27 @@ public class DeviceImpl implements IDevice {
         }
     }
 
-    @Override
     public String getLastError() {
         return errors.peek();
     }
 
-    @Override
     public boolean command(Params params) {
         return false;
     }
 
-    @Override
     public Status getStatus() {
         return status;
     }
 
-    @Override
     public Params queryData(List<String> data) {
         return null;
     }
 
-    @Override
     public String getType() {
         return type;
+    }
+
+    public List<String> getParams(){
+        return null;
     }
 }

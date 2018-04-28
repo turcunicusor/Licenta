@@ -32,9 +32,10 @@ public class SSLServer {
                          new BufferedReader(
                                  new InputStreamReader(socket.getInputStream()))) {
                 String line;
+                int i=0;
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println(line);
-                    out.println(line);
+                    out.println(line + i);
                 }
             }
             System.out.println("Closed");
