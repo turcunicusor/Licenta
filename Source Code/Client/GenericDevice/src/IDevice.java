@@ -1,12 +1,15 @@
-import java.util.List;
-
 public interface IDevice {
-    boolean open();
-    boolean close();
-    String getLastError();
-    boolean command(Params params);
+    void open() throws Exception;
+
+    void close() throws Exception;
+
+    void command(Params params) throws Exception;
+
     Status getStatus();
-    Params queryData(List<String> data);
+
+    Params queryData(Data data);
+
     String getType();
-    List<String> getParams();
+
+    Data getParams();
 }
