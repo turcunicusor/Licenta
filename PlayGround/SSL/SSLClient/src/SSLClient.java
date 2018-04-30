@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.net.ssl.SSLSocketFactory;
 
 public class SSLClient {
-    static final int port = 8000;
+    private static final int port = 8000;
 
     public static void main(String[] args) {
         try {

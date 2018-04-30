@@ -1,5 +1,6 @@
 package com.smarthome.server.controllers;
 
+import com.smarthome.server.dtos.LoginDTO;
 import com.smarthome.server.dtos.RegisterDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.service.UserService;
@@ -18,6 +19,11 @@ public class AuthenticationController {
     @Autowired
     public AuthenticationController(UserService userService) {
         this.userService = userService;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public void login(@RequestBody LoginDTO loginDTO){
+        // handled by filter
     }
 
     @PostMapping("/register")

@@ -1,9 +1,6 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.EmailDTO;
-import com.smarthome.server.dtos.LogoutDTO;
-import com.smarthome.server.dtos.ProfileDTO;
-import com.smarthome.server.dtos.UserDTO;
+import com.smarthome.server.dtos.*;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.UserRepository;
 import com.smarthome.server.service.UserService;
@@ -54,7 +51,7 @@ public class UserController {
     ResponseEntity changeProfile(@Valid @RequestBody ProfileDTO profile) {
         User user = userService.findUserByEmail(profile.getOldEmail());
         if (user == null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user found with that email.");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
         if (!profile.getNewPassword().isEmpty()|| !profile.getOldPassword().isEmpty()) {
             if (!passwordEncoder.matches(profile.getOldPassword(), user.getPassword()))
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid old password.");

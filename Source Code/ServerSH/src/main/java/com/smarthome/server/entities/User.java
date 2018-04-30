@@ -5,6 +5,7 @@ import com.smarthome.server.service.Status;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +26,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @OneToMany(mappedBy = "owner")
+    private List<Device> devices;
     //endregion
 
     //region constructors
@@ -32,6 +35,7 @@ public class User {
         this.roles = new HashSet<>();
         this.status = Status.Created.ordinal();
     }
+
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,6 +50,7 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -53,6 +58,7 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -60,6 +66,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -67,6 +74,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -74,6 +82,7 @@ public class User {
     public int getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status.ordinal();
     }
@@ -81,8 +90,13 @@ public class User {
     public Set<Role> getRoles() {
         return roles;
     }
+
     public void setRoles(Set<Role> roles) {
         this.roles.addAll(roles);
+    }
+
+    public List<Device> getDevices() {
+        return devices;
     }
     //endregion
 
@@ -100,7 +114,7 @@ public class User {
     }
     //endregion
 
-    public UserDTO toUserDTO(){
-        return new UserDTO(firstName,lastName,email);
+    public UserDTO toUserDTO() {
+        return new UserDTO(firstName, lastName, email);
     }
 }
