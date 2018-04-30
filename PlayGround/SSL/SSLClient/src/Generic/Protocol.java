@@ -1,5 +1,6 @@
+package Generic;
+
 public class Protocol {
-    public static final byte CLOSE_CONNECTION = 100;
     public static final byte EXCEPTION = 101;
     public static final byte SUCCESS = 109;
 

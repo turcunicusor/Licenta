@@ -1,3 +1,5 @@
+package Generic;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +11,8 @@ public class Params extends HashMap<String, String> {
 
     public void addData(String data) throws Exception {
         // key=value;key=value
-        if(data.isEmpty()) return;
+        this.clear();
+        if (data.isEmpty()) return;
         List<String> pairs = Arrays.asList(data.split(separator_pairs));
         for (String pair : pairs) {
             String[] x = pair.split(separator_kv);
@@ -26,7 +29,7 @@ public class Params extends HashMap<String, String> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(Map.Entry<String,String> entry: this.entrySet())
+        for (Map.Entry<String, String> entry : this.entrySet())
             sb.append(entry.getKey()).append(separator_kv).append(entry.getValue()).append(separator_pairs);
         return sb.toString();
     }

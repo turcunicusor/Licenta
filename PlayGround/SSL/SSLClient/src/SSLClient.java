@@ -1,7 +1,10 @@
+import Generic.IDevice;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -12,6 +15,22 @@ public class SSLClient {
     static final int port = 8000;
 
     public static void main(String[] args) {
+        try {
+            InetAddress ip = InetAddress.getByName("127.0.0.1");
+            DeviceManager deviceManager = new DeviceManager();
+            deviceManager.registerDevice(new DeviceImpl(ip, port, "led"));
+            IDevice device = deviceManager.getDevice(ip, port);
+            device.open();
+            device.close();
+            device.getStatus();
+            device.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        comandLineClient();
+    }
+
+    public static void comandLineClient() {
         System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo");
         SSLSocketFactory sslSocketFactory =
                 (SSLSocketFactory) SSLSocketFactory.getDefault();
@@ -25,7 +44,7 @@ public class SSLClient {
                 while (true) {
                     System.out.println("Enter something:");
                     String inputLine = scanner.nextLine();
-                    if (inputLine.equals("q")) {
+                    if (inputLine.equals("100")) {
                         socket.close();
                         break;
                     }
@@ -38,7 +57,5 @@ public class SSLClient {
             Logger.getLogger(SSLClient.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
-
     }
-
 }

@@ -1,3 +1,5 @@
+package Generic;
+
 public interface IDevice {
     void open() throws Exception;
 

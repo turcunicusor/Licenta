@@ -1,4 +1,4 @@
-import org.omg.CORBA.portable.ApplicationException;
+import Generic.*;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.BufferedReader;
@@ -28,34 +28,34 @@ public class CommunicationManager implements IMessage {
         try {
             ServerSocket sslServerSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(port, 2, ip);
             System.out.println("Device online " + sslServerSocket.toString());
-
-            client = sslServerSocket.accept();
-            System.out.println("Connection made with " + client.getInetAddress().toString() + ":" + client.getPort());
-            outStream = new PrintWriter(client.getOutputStream(), true);
-            try (BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(client.getInputStream()))) {
-                String command;
-                while ((command = bufferedReader.readLine()) != null) {
-                    onCommand(command);
-//                    outStream.println(command);
+            while (true) {
+                client = sslServerSocket.accept();
+                System.out.println("Connection made with " + client.getInetAddress().toString() + ":" + client.getPort());
+                outStream = new PrintWriter(client.getOutputStream(), true);
+                try (BufferedReader bufferedReader = new BufferedReader(
+                        new InputStreamReader(client.getInputStream()))) {
+                    String command;
+                    while ((command = bufferedReader.readLine()) != null) {
+                        onCommand(command);
+                    }
                 }
+                outStream.close();
+                client.close();
+                System.out.println(String.format("Connection closed! Bye bye '%s:%d'.", client.getInetAddress().toString(), client.getPort()));
             }
-            System.out.println("Connection closed!");
         } catch (IOException ex) {
-            Logger.getLogger(CommunicationManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CommunicationManager.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
     public void onCommand(String command) {
         try {
-            byte protocol = Byte.valueOf(command.substring(0, 3));
+            int header;
+            if (command.length() > 2) header = Integer.valueOf(command.substring(0, 3));
+            else throw new Exception(String.format("Invalid header '%s' received.", command));
             String payload = command.substring(3);
-            System.out.println("Command: " + command);
-            switch (protocol) {
-                case Protocol.CLOSE_CONNECTION:
-                    outStream.close();
-                    client.close();
-                    break;
+            System.out.println("Header: " + header);
+            switch (header) {
                 case Protocol.OPEN:
                     device.open();
                     outStream.println(Protocol.SUCCESS);
@@ -66,15 +66,15 @@ public class CommunicationManager implements IMessage {
                     break;
                 case Protocol.GET_STATUS:
                     Status status = device.getStatus();
-                    outStream.println(status);
+                    outStream.println(Protocol.SUCCESS + status.toString());
                     break;
                 case Protocol.GET_TYPE:
                     String type = device.getType();
-                    outStream.println(type);
+                    outStream.println(Protocol.SUCCESS + type);
                     break;
                 case Protocol.GET_PARAMS:
                     Data data = device.getParams();
-                    outStream.println(data.toString());
+                    outStream.println(Protocol.SUCCESS + data.toString());
                     break;
                 case Protocol.COMMAND:
                     Params params = new Params();
@@ -86,13 +86,14 @@ public class CommunicationManager implements IMessage {
                     Data querry_data = new Data();
                     querry_data.addData(payload);
                     Params parameters = device.queryData(querry_data);
-                    outStream.println(parameters.toString());
+                    outStream.println(Protocol.SUCCESS + parameters.toString());
                     break;
                 default:
-                    throw new Exception(String.format("Invalid command '%s'.", protocol));
+                    throw new Exception(String.format("Invalid header '%d' received.", header));
             }
         } catch (Exception e) {
             outStream.println(String.format("%d%s", Protocol.EXCEPTION, e.getMessage()));
+//            e.printStackTrace();
         }
     }
 }

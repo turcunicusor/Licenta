@@ -1,3 +1,5 @@
+import Concrete.DeviceImpl;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
