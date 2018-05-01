@@ -1,0 +1,16 @@
+#carouselHome {
+  max-height: 800px;
+}
+
+.carousel-caption {
+  top: 45%;
+  transform: translateY(-50%);
+  bottom: initial;
+  /*max-width: 400px;*/
+}
+
+.item {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}

@@ -13,7 +13,7 @@ export class User {
 @Injectable()
 export class BackendService {
   public isLoggedIn;
-  private server_url = 'http://d7992321.ngrok.io';
+  private server_url = 'http://33aa4ddd.ngrok.io';
   private token;
   private email;
   private auth_header;

@@ -75,7 +75,7 @@ public class UserController {
         return usersDto;
     }
 
-    @PostMapping("/")
+    @PostMapping()
     User getByEmail(@Valid @RequestBody EmailDTO email) {
         return userRepository.findByEmail(email.getEmail());
     }

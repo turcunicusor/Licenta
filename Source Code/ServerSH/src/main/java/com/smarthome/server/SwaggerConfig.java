@@ -40,7 +40,7 @@ public class SwaggerConfig {
                 null,
                 "BEARER",
                 ApiKeyVehicle.HEADER,
-                "AUTHORIZATION",
+                "Authorization",
                 ",");
     }
 
@@ -56,7 +56,7 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("AUTHORIZATION", "api_key", "header");
+        return new ApiKey("Authorization", "api_key", "header");
     }
 
     private SecurityContext securityContext() {
@@ -70,6 +70,6 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("AUTHORIZATION", authorizationScopes));
+        return Lists.newArrayList(new SecurityReference("Authorization", authorizationScopes));
     }
 }

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
     List<Device> findAllByOwner(User user);
+    Device findByHash(String hash);
 }

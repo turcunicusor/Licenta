@@ -11,7 +11,7 @@ import java.util.Date;
 
 import static java.util.Collections.emptyList;
 
-class TokenAuthenticationService {
+public class TokenAuthenticationService {
     private static final long EXPIRATIONTIME = 86_400_000; // 1 day
     private static final String SECRET = "smarthome_secret";
     private static final String TOKEN_PREFIX = "Bearer";
@@ -31,18 +31,20 @@ class TokenAuthenticationService {
         System.out.println(token);
         if (token != null) {
             try {
-                String user = Jwts.parser()
-                        .setSigningKey(SECRET)
-                        .parseClaimsJws(token.replace(TOKEN_PREFIX.toUpperCase(), " "))
-                        .getBody()
-                        .getSubject();
-
-                return user != null ? new UsernamePasswordAuthenticationToken(user, null, emptyList()): null;
-            }
-            catch (Exception ex){
+                String userEmail = TokenAuthenticationService.decodeToken(token);
+                return userEmail != null ? new UsernamePasswordAuthenticationToken(userEmail, null, emptyList()) : null;
+            } catch (Exception ex) {
                 return null;
             }
         }
         return null;
+    }
+
+    public static String decodeToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token.replace(TOKEN_PREFIX.toUpperCase(), " "))
+                .getBody()
+                .getSubject();
     }
 }
