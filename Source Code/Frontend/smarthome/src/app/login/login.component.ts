@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => {
             this._bs.setToken(this.token);
             this._bs.redirect('home');
-          }, 1500);
+          }, this._bs.timeout);
         },
         (err: HttpErrorResponse) => {
           this.error = true;

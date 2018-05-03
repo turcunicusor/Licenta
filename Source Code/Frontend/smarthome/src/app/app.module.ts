@@ -20,6 +20,9 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import {AuthGuardService} from './backendservice/auth-guard.service';
+import { AddComponent } from './device/add/add.component';
+import { ViewComponent } from './device/view/view.component';
+import { ManageComponent } from './device/manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import {AuthGuardService} from './backendservice/auth-guard.service';
     CloseMenuDirective,
     AppSettingsDirective,
     ProfileComponent,
+    AddComponent,
+    ViewComponent,
+    ManageComponent,
   ],
   imports: [
     BrowserModule,

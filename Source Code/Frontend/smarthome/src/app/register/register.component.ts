@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
             this.message = 'Register success! Redirecting to login...';
             setTimeout(() => {
               this._bs.redirect('login');
-            }, 1500);
+            }, this._bs.timeout);
           },
           (err: HttpErrorResponse) => {
             this.error = true;

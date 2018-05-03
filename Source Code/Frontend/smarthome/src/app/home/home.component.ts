@@ -43,7 +43,9 @@ export class HomeComponent implements OnInit {
       this._bs.redirect(path);
     } else {
       this.toastr.warning('You must be logged in to perform this action.', ' ');
-      this._bs.redirect('/login');
+      setTimeout(() => {
+        this._bs.redirect('/login');
+      }, this._bs.timeout);
     }
   }
 }

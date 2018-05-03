@@ -8,15 +8,17 @@
 
   <aside class="collapse navbar-collapse" id="navbarMain" #menu>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active pointer">
-        <div class="nav-link noselect" appCloseMenu [menu]="menu" (click)="this._bs.redirect('')">Home <span
-          class="sr-only">(current)</span></div>
+      <li class="nav-item pointer" [routerLinkActive]="['active']">
+        <div class="nav-link noselect" appCloseMenu [menu]="menu" (click)="this._bs.redirect('')">Home</div>
       </li>
-      <li class="nav-item">
-        <div class="nav-link" href="#">Link</div>
+      <li class="nav-item pointer"  [routerLinkActive]="['active']">
+        <div class="nav-link noselect" (click)="redirect('/devices')">View</div>
       </li>
-      <li class="nav-item">
-        <div class="nav-link disabled" href="#">Disabled</div>
+      <li class="nav-item pointer"  [routerLinkActive]="['active']">
+        <div class="nav-link noselect" (click)="redirect('/devices/manage')">Manage</div>
+      </li>
+      <li class="nav-item pointer"  [routerLinkActive]="['active']">
+        <div class="nav-link" (click)="redirect('/devices/add')">Add</div>
       </li>
     </ul>
 

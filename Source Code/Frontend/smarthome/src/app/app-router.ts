@@ -6,25 +6,10 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {ProfileComponent} from './profile/profile.component';
 import {AuthGuardService as AuthGuard} from './backendservice/auth-guard.service';
+import {ViewComponent} from './device/view/view.component';
+import {AddComponent} from './device/add/add.component';
+import {ManageComponent} from './device/manage/manage.component';
 
-
-// export const router : RouterGlobal = [
-//   {path:'', component: DashboardComponent, children: [
-//       {path:'', redirectTo: 'home', pathMatch:'full'},
-//       {path: 'profile', component: ProfileComponent},
-//       {path:'home', component: HomeComponent},
-//       {path:'play', component: PlayComponent},
-//       {path:'live', component: LiveComponent},
-//       {path:'clubs', component: ClubsComponent},
-//       {path:'learn', component: LearnComponent},
-//       {path:'forum', component: ForumComponent},
-//       {path:'status', component: StatsComponent},
-//       {path:'help', component: HelpComponent}
-//     ]},
-//   {path: 'login', component: LoginComponent},
-//   {path: 'register', component: RegisterComponent},
-//   {path: '**', redirectTo: '/404', pathMatch: 'full'}
-// ];
 
 export const router: Routes = [
   {path: '', component: HomeComponent},
@@ -32,6 +17,9 @@ export const router: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent}, // canActivate: [AuthGuard]},
+  {path: 'devices', component: ViewComponent},
+  {path: 'devices/add', component: AddComponent},
+  {path: 'devices/manage', component: ManageComponent},
   {path: '**', component: NotfoundComponent},
   // {path: 'notfound', component: NotfoundComponent}
 ];
