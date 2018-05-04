@@ -157,4 +157,8 @@ export class BackendService {
   public getAllDevices(): Observable<Device[]> {
     return this._http.get<Device[]>(this.server_url + '/device/all', {headers: this.auth_header});
   }
+
+  public addNewDevice(json) {
+    return this.post('/device', json);
+  }
 }

@@ -1,3 +1,46 @@
-<p>
-  add works!
-</p>
+<div class="container-fluid fill-screen add">
+  <div class="border border-secondary rounded color2">
+    <h1 class="display-4">Add device</h1>
+    <form class="container-fluid "
+          (submit)="onSaveChanges(ip.value, port.value, type.value, name.value)">
+      <div class="form-group row">
+        <label for="inputname"
+               class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Name</label>
+        <div class="col-lg-6">
+          <input id="inputname" class="form-control" type="text" value="" placeholder="Name" required #name>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputip" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Ip</label>
+        <div class="col-lg-6">
+          <input id="inputip" class="form-control" type="text" value="" placeholder="Ip" #ip required
+                 pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"
+                 title="Not a valid ip address.">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputport"
+               class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Port</label>
+        <div class="col-lg-6">
+          <input id="inputport" class="form-control" type="text" value="" placeholder="Port" required
+                 pattern="^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                 title="Invalid port. Port range: [0,65535]." #port>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputtype"
+               class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Type</label>
+        <div class="col-lg-6">
+          <select class="form-control" id="inputtype" #type>
+            <ng-container *ngFor="let option of _bs.deviceTypes">
+              <option>{{option}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col">
+        <button type="submit" class="btn btn-primary">Add device</button>
+      </div>
+    </form>
+  </div>
+</div>

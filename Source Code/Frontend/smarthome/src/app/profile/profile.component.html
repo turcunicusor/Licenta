@@ -1,23 +1,23 @@
-<div class="container-fluid fill-screen profile">
-  <h1 class="cover-heading">Profile</h1>
+<div class="container-fluid fill-screen profile border border-secondary rounded color2">
+  <h1 class="display-4">Profile</h1>
   <form class="container-fluid"
         (submit)="onSaveChanges(firstName.value, lastName.value, email.value, oldpassword.value, newpassword.value, confirmnewpassword.value)">
     <div class="form-group row">
       <label for="inputFirstName" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">First name</label>
       <div class="col-lg-6">
-        <input id="inputFirstName" class="form-control" type="text" value="{{user.firstName}}" #firstName>
+        <input id="inputFirstName" class="form-control" type="text" value="{{user.firstName}}" placeholder="First Name" #firstName>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputLastName" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Last name</label>
       <div class="col-lg-6">
-        <input id="inputLastName" class="form-control" type="text" value="{{user.lastName}}" #lastName>
+        <input id="inputLastName" class="form-control" type="text" value="{{user.lastName}}" placeholder="Last Name" #lastName>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputEmail" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Email</label>
       <div class="col-lg-6">
-        <input id="inputEmail" class="form-control" type="email" value="{{user.email}}" #email>
+        <input id="inputEmail" class="form-control" type="email" value="{{user.email}}" placeholder="Email" #email>
       </div>
     </div>
     <div class="">
@@ -25,21 +25,21 @@
       <div class="form-group row">
         <label for="inputPasswordOld" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Old Password</label>
         <div class="col-lg-6">
-          <input id="inputPasswordOld" class="form-control" type="password" value="" #oldpassword
+          <input id="inputPasswordOld" class="form-control" type="password" value="" #oldpassword placeholder="Old Password"
                  pattern=".{7,}" title="7 characters minimum">
         </div>
       </div>
       <div class="form-group row">
         <label for="inputPassword" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">New Password</label>
         <div class="col-lg-6">
-          <input id="inputPassword" class="form-control" type="password" value="" #newpassword
+          <input id="inputPassword" class="form-control" type="password" value="" #newpassword placeholder="New Password"
                  pattern=".{7,}" title="7 characters minimum">
         </div>
       </div>
       <div class="form-group row">
         <label for="inputPasswordConfirmed" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Confirm new password</label>
         <div class="col-lg-6">
-          <input id="inputPasswordConfirmed" class="form-control" type="password" value="" #confirmnewpassword
+          <input id="inputPasswordConfirmed" class="form-control" type="password" value="" #confirmnewpassword placeholder="Confirm New Password"
                  pattern=".{7,}" title="7 characters minimum">
         </div>
       </div>

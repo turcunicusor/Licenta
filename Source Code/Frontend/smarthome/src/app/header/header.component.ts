@@ -30,13 +30,13 @@ export class HeaderComponent implements OnInit {
   }
 
   redirect(path: string) {
-    if (this._bs.isLoggedIn) {
+    // if (this._bs.isLoggedIn) {
       this._bs.redirect(path);
-    } else {
-      this.toastr.warning('You must be logged in to perform this action.', ' ');
-      setTimeout(() => {
-        this._bs.redirect('/login');
-      }, this._bs.timeout);
-    }
+    // } else {
+    //   this.toastr.warning('You must be logged in to perform this action.', ' ');
+    //   setTimeout(() => {
+    //     this._bs.redirect('/login');
+    //   }, this._bs.timeout);
+    // }
   }
 }

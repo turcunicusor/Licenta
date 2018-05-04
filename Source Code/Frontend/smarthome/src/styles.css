@@ -1,5 +1,26 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+.color1 {
+  background-color: #d8e0bb;
+}
+
+.color2 {
+  /*background-color: #b6cec7;*/
+  background-color: rgba(182, 206, 199, 0.15);
+}
+
+.color3 {
+  background-color: #86a3c3;
+}
+
+.color4 {
+  background-color: #7268a6;
+}
+
+.color5 {
+  background-color: #6b3074;
+}
+
 .fill-screen {
   padding-bottom: 60px; /*footer*/
 }
