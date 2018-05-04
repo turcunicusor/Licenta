@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Device} from '../../backendservice/backend.service';
+import {BackendService, Device, Utils} from '../../backendservice/backend.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add',
@@ -7,7 +8,7 @@ import {Device} from '../../backendservice/backend.service';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-  constructor() {
+  constructor(public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
   }
 
   ngOnInit() {

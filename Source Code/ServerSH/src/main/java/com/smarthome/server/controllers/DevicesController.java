@@ -31,23 +31,7 @@ public class DevicesController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping()
-    ResponseEntity add(@Valid @RequestBody DeviceDTO deviceDTO) {
-        User user = userRepository.findByEmail(deviceDTO.getUserEmail());
-        if (user == null)
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
-        Device device;
-        try {
-            device = new Device(InetAddress.getByName(deviceDTO.getIp()), deviceDTO.getPort(), deviceDTO.getType(), deviceDTO.getName());
-        } catch (UnknownHostException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
-        } catch (NoSuchAlgorithmException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-        device.setOwner(user);
-        deviceRepository.save(device);
-        return ResponseEntity.status(HttpStatus.OK).body("");
-    }
+
 
     @GetMapping()
     public ResponseEntity<?> findByHash(@RequestParam("device") String hash, @RequestHeader("Authorization") String token) {
@@ -68,5 +52,24 @@ public class DevicesController {
         for(Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
             devices.add(new DeviceViewDTO(device));
         return devices;
+    }
+
+    @PostMapping()
+    ResponseEntity add(@RequestHeader("Authorization") String token, @Valid @RequestBody DeviceDTO deviceDTO) {
+        String userEmail= TokenAuthenticationService.decodeToken(token);
+        User user = userRepository.findByEmail(userEmail);
+        if (user == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
+        Device device;
+        try {
+            device = new Device(InetAddress.getByName(deviceDTO.getIp()), deviceDTO.getPort(), deviceDTO.getType(), deviceDTO.getName());
+        } catch (UnknownHostException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
+        } catch (NoSuchAlgorithmException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+        device.setOwner(user);
+        deviceRepository.save(device);
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }

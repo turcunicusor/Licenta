@@ -30,7 +30,8 @@ export class ViewComponent implements OnInit {
         this.devices = res;
       },
       (err: HttpErrorResponse) => {
-        this._bs.handleError(err);
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
       });
   }
 }

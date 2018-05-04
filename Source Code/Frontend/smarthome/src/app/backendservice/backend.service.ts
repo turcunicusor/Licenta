@@ -45,6 +45,7 @@ export class Utils {
 
 @Injectable()
 export class BackendService {
+  public deviceTypes: String[];
   public isLoggedIn;
   public timeout = 1000;
   private server_url = 'http://39a638a2.ngrok.io';
@@ -54,6 +55,8 @@ export class BackendService {
   private def_header;
 
   constructor(private _http: HttpClient, private router: Router) {
+    this.deviceTypes = [];
+    this.deviceTypes.push('led', 'rbga led', 'doorlock', 'central heating', 'temperature sensor');
     this.token = 'Bearer ';
     this.email = null;
     this.isLoggedIn = false;

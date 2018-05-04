@@ -20,24 +20,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  getData() {
-    this._bs.getAllUsers().subscribe(
-      res => {
-        this.dataGet = res;
-        console.log(res);
-      },
-      (err: HttpErrorResponse) => {
-        // this.error = true;
-        this._bs.handleError(err);
-
-        // if (err.statusText === 'Unknown Error') {
-        //   this.message = 'Service currently not available.';
-        // } else {
-        //   this.message = AppSettingsDirective.def_err_message;
-        // }
-      });
-  }
-
   redirect(path: string) {
     if (this._bs.isLoggedIn) {
       this._bs.redirect(path);

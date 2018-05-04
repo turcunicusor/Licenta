@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
         this._bs.redirect('/home');
       },
       (err: HttpErrorResponse) => {
-        this._bs.handleError(err);
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
       });
   }
 
