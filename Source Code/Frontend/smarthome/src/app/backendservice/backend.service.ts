@@ -10,11 +10,41 @@ export class User {
   email: string;
 }
 
+interface Dictionary {
+  [index: string]: string;
+}
+
+export class Device {
+  public name: string;
+  public type: string;
+  public id: string;
+  public ip: string;
+  public port: string;
+  public params: Dictionary;
+
+  constructor() {
+    this.name = 'Lampa lui aladin';
+    this.type = 'led';
+    this.id = 'randomid';
+    this.ip = '127.0.0.1';
+    this.port = '8000';
+    this.params = {'intensitate': '80%', 'temperatura': '12grade'};
+  }
+
+  keys(): Array<string> {
+    return Object.keys(this.params);
+  }
+
+  keyindex(key: string): any {
+    return Object.keys(this.params).indexOf(key);
+  }
+}
+
 @Injectable()
 export class BackendService {
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://6fce83de.ngrok.io';
+  private server_url = 'http://39a638a2.ngrok.io';
   private token;
   private email;
   private auth_header;

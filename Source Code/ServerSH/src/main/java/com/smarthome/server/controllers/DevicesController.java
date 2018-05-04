@@ -1,6 +1,7 @@
 package com.smarthome.server.controllers;
 
 import com.smarthome.server.dtos.DeviceDTO;
+import com.smarthome.server.dtos.DeviceViewDTO;
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.DeviceRepository;
@@ -61,11 +62,11 @@ public class DevicesController {
     }
 
     @GetMapping("/all")
-    public List<DeviceDTO> getAllByEmail(@RequestHeader("Authorization") String token){
+    public List<DeviceViewDTO> getAllByEmail(@RequestHeader("Authorization") String token){
         String userEmail= TokenAuthenticationService.decodeToken(token);
-        List<DeviceDTO> devices = new ArrayList<>();
+        List<DeviceViewDTO> devices = new ArrayList<>();
         for(Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
-            devices.add(new DeviceDTO(device));
+            devices.add(new DeviceViewDTO(device));
         return devices;
     }
 }
