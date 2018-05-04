@@ -15,11 +15,11 @@ interface Dictionary {
 }
 
 export class Device {
-  public name: string;
-  public type: string;
   public id: string;
   public ip: string;
   public port: string;
+  public name: string;
+  public type: string;
   public params: Dictionary;
 
   constructor() {
@@ -30,13 +30,16 @@ export class Device {
     this.port = '8000';
     this.params = {'intensitate': '80%', 'temperatura': '12grade'};
   }
+}
 
-  keys(): Array<string> {
-    return Object.keys(this.params);
+@Injectable()
+export class Utils {
+  keys(param: Dictionary): Array<string> {
+    return Object.keys(param);
   }
 
-  keyindex(key: string): any {
-    return Object.keys(this.params).indexOf(key);
+  keyindex(param: Dictionary, key: string): any {
+    return Object.keys(param).indexOf(key);
   }
 }
 
@@ -148,32 +151,7 @@ export class BackendService {
     this.email = email;
   }
 
-  // private username: string;
-  //
-  // constructor(private http: Http) {
-  // }
-  //
-  // setUsername(username: string) {
-  //   this.username = username;
-  // }
-  //
-  // getUsername() {
-  //   return this.username;
-  // }
-  //
-  // logoutUser(token: string) {
-  //   const header = new Headers();
-  //   header.append('Authorization', token);
-  //
-  //   const json = JSON.stringify({});
-  //   return this.http.post('http://localhost:4500/user/logout', json, {headers: header}).map(res => res.json());
-  // }
-  //
-  // getUsersByStringMatch(token: string, stringMatch : string) {
-  //   const header = new Headers();
-  //   header.append('Authorization', token);
-  //
-  //   return this.http.get('http://localhost:4500//f
-  // indUsers/string_match="' + stringMatch + '"', {headers: header}).map(res => res.json());
-  // }
+  public getAllDevices(): Observable<Device[]> {
+    return this._http.get<Device[]>(this.server_url + '/device/all', {headers: this.auth_header});
+  }
 }

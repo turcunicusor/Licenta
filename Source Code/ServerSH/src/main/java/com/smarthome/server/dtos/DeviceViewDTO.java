@@ -2,43 +2,48 @@ package com.smarthome.server.dtos;
 
 import com.smarthome.server.entities.Device;
 
+import java.util.HashMap;
+
 public class DeviceViewDTO {
     private String id;
-    private String userEmail;
     private String ip;
     private int port;
     private String type;
     private String name;
+    private HashMap<String, String> params;
 
-    public DeviceViewDTO(String id, String userEmail, String ip, int port, String type, String name) {
+    public HashMap<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(HashMap<String, String> params) {
+        this.params = params;
+    }
+
+    public DeviceViewDTO(String id, String ip, int port, String type, String name) {
         this.id = id;
-        this.userEmail = userEmail;
         this.ip = ip;
         this.port = port;
         this.type = type;
         this.name = name;
+        params = new HashMap<>();
+        params.put("test", "test");
     }
 
     public DeviceViewDTO() {
+        params = new HashMap<>();
+        params.put("test", "test");
     }
 
     public DeviceViewDTO(Device device) {
-        this.userEmail = device.getOwner().getEmail();
         this.ip = device.getIp().toString();
         this.port = device.getPort();
         this.type = device.getType();
         this.name = device.getName();
         this.id = device.getHash();
+        this.params = new HashMap<>();
+        this.params.put("test", "test");
     }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getIp() {
         return ip;
     }
@@ -73,5 +78,9 @@ public class DeviceViewDTO {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

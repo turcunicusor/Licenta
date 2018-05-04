@@ -57,8 +57,8 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
-        DeviceDTO deviceDTO = new DeviceDTO(device);
-        return ResponseEntity.status(HttpStatus.OK).body(deviceDTO);
+        DeviceViewDTO deviceViewDTO = new DeviceViewDTO(device);
+        return ResponseEntity.status(HttpStatus.OK).body(deviceViewDTO);
     }
 
     @GetMapping("/all")

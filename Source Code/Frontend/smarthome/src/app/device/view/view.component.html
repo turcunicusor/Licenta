@@ -1,74 +1,31 @@
 <div class="container-fluid">
   <section class="cards-section text-center">
     <div class="accordion cards-container container container-fluid" id="accordion">
-      <div class="card">
-        <div class="card-header" id="heading{{firstDevice.id}}">
-          <div class="container">
-            <button class="btn btn-link" type="button" [attr.data-toggle]="'collapse'"
-                    [attr.data-target]="'#collapse' + firstDevice.id"
-                    [attr.aria-expanded]="'true'" [attr.aria-controls]="'collapse'+firstDevice.id">
-              {{firstDevice.name}}
-            </button>
-          </div>
-        </div>
-        <div id="collapse{{firstDevice.id}}" class="collapse  show" [attr.aria-labelledby]="'heading' + firstDevice.id"
-             [attr.data-parent]="'#accordion'">
-          <div class="cards-container container container-fluid align-items-center">
-            <div class="cards-wrapper row row-center">
-              <div
-                class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16">
-                <div class="device-item card">
-                  <div class="card-body">
-                    <h5 class="card-title">Device: "{{device.name}}"</h5>
-                    <div>
-                      <p class="text-left text-info"><b>Parameters</b></p>
-                      <table class="table table-hover table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Value</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="text-left" *ngFor="let key of device.keys()">
-                          <th scope="row">{{device.keyindex(key)}}</th>
-                          <td>{{key}}</td>
-                          <td>{{device.params[key]}}</td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <button href="#" class="btn btn-primary">Manage</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <ng-container *ngFor="let device of devices">
+      <ng-container *ngFor="let device of devices; let i = index">
         <div class="card">
-          <div class="card-header" id="heading{{device.id}}">
+          <div class="card-header" id="heading{{i}}">
             <h5 class="mb-0">
               <button class="btn btn-link collapsed" type="button" [attr.data-toggle]="'collapse'"
-                      [attr.data-target]="'#collapse' + device.id"
-                      [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + device.id">
+                      [attr.data-target]="'#collapse' + i"
+                      [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
                 {{device.name}}
               </button>
             </h5>
           </div>
-          <div id="collapse{{device.id}}" class="collapse" [attr.aria-labelledby]="'heading' + device.id"
+          <div id="collapse{{i}}" class="collapse" [attr.aria-labelledby]="'heading' + i"
                data-parent="#accordion">
             <div class="cards-container container container-fluid align-items-center">
               <div class="cards-wrapper row row-center">
                 <div
-                  class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16 col-centered">
+                  class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16">
                   <div class="device-item card">
                     <div class="card-body">
                       <h5 class="card-title">Device: "{{device.name}}"</h5>
+                      <p class="text-center">
+                        <small>#{{device.id}}</small>
+                      </p>
                       <div>
-                        <p>Parameters</p>
+                        <p class="text-left text-info "><b>Parameters</b></p>
                         <table class="table table-hover table-bordered">
                           <thead class="thead-dark">
                           <tr>
@@ -78,15 +35,17 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <tr class="text-left" *ngFor="let key of device.keys()">
-                            <th scope="row">{{device.keyindex(key)}}</th>
-                            <td>{{key}}</td>
-                            <td>{{device.params[key]}}</td>
-                          </tr>
+                          <ng-container *ngFor="let key of _ut.keys(device.params)">
+                            <tr class="text-left">
+                              <th scope="row">{{_ut.keyindex(device.params,key)}}</th>
+                              <td>{{key}}</td>
+                              <td>{{device.params[key]}}</td>
+                            </tr>
+                          </ng-container>
                           </tbody>
                         </table>
                       </div>
-                      <button href="#" class="btn btn-primary">Manage</button>
+                      <button class="btn btn-primary" (click)="onManageClick(device.id)">Manage</button>
                     </div>
                   </div>
                 </div>
@@ -98,92 +57,3 @@
     </div>
   </section>
 </div>
-
-
-<!--<div class="container-fluid">-->
-<!--<section class="cards-section text-center">-->
-<!--<div class="accordion cards-container container container-fluid" id="accordion">-->
-<!--<div class="card">-->
-<!--<div class="card-header" id="headingOne">-->
-<!--<h5 class="mb-0">-->
-<!--<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"-->
-<!--aria-expanded="true" aria-controls="collapseOne">-->
-<!--Collapsible Group Item #1-->
-<!--</button>-->
-<!--</h5>-->
-<!--</div>-->
-
-<!--<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">-->
-<!--<div class="cards-container container container-fluid align-items-center">-->
-<!--<div class="cards-wrapper row row-center">-->
-<!--<div class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16 col-centered">-->
-<!--<div class="device-item card">-->
-<!--<div class="card-body">-->
-<!--<h5 class="card-title">Special title treatment</h5>-->
-<!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
-<!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;<div class="item col-md-4 col-sm-6 col-xs-12 col-centered">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="item-inner">&ndash;&gt;-->
-<!--&lt;!&ndash;<h3 class="title">Curs</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;<p class="intro">tehnologii, proiecte și comunități deschise</p>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="item col-md-4 col-sm-6 col-xs-12 col-centered">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="item-inner">&ndash;&gt;-->
-<!--&lt;!&ndash;<h3 class="title">Curs</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;<p class="intro">tehnologii, proiecte și comunități deschise</p>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;<div class="card-body">&ndash;&gt;-->
-<!--&lt;!&ndash;Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="card">-->
-<!--<div class="card-header" id="headingTwo">-->
-<!--<h5 class="mb-0">-->
-<!--<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"-->
-<!--aria-expanded="false" aria-controls="collapseTwo">-->
-<!--Collapsible Group Item #2-->
-<!--</button>-->
-<!--</h5>-->
-<!--</div>-->
-<!--<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">-->
-<!--<div class="card-body">-->
-<!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon-->
-<!--officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3-->
-<!--wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.-->
-<!--Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan-->
-<!--excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt-->
-<!--you probably haven't heard of them accusamus labore sustainable VHS.-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="card">-->
-<!--<div class="card-header" id="headingThree">-->
-<!--<h5 class="mb-0">-->
-<!--<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"-->
-<!--aria-expanded="false" aria-controls="collapseThree">-->
-<!--Collapsible Group Item #3-->
-<!--</button>-->
-<!--</h5>-->
-<!--</div>-->
-<!--<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">-->
-<!--<div class="card-body">-->
-<!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon-->
-<!--officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3-->
-<!--wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.-->
-<!--Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan-->
-<!--excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt-->
-<!--you probably haven't heard of them accusamus labore sustainable VHS.-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</section>-->
-<!--</div>-->

@@ -11,7 +11,7 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {CloseMenuDirective} from './close-menu.directive';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import {BackendService} from './backendservice/backend.service';
+import {BackendService, Utils} from './backendservice/backend.service';
 
 import {HttpClientModule, HttpClientJsonpModule} from '@angular/common/http';
 import {AppSettingsDirective} from './app-settings.directive';
@@ -53,7 +53,7 @@ import { ManageComponent } from './device/manage/manage.component';
     }),
     BrowserAnimationsModule
   ],
-  providers: [BackendService, AuthGuardService],
+  providers: [BackendService, AuthGuardService, Utils],
   bootstrap: [AppComponent]
 })
 export class AppModule {
