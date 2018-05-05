@@ -31,8 +31,6 @@ public class DevicesController {
         this.userRepository = userRepository;
     }
 
-
-
     @GetMapping()
     public ResponseEntity<?> findByHash(@RequestParam("device") String hash, @RequestHeader("Authorization") String token) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
@@ -46,17 +44,17 @@ public class DevicesController {
     }
 
     @GetMapping("/all")
-    public List<DeviceViewDTO> getAllByEmail(@RequestHeader("Authorization") String token){
-        String userEmail= TokenAuthenticationService.decodeToken(token);
+    public List<DeviceViewDTO> getAllByEmail(@RequestHeader("Authorization") String token) {
+        String userEmail = TokenAuthenticationService.decodeToken(token);
         List<DeviceViewDTO> devices = new ArrayList<>();
-        for(Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
+        for (Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
             devices.add(new DeviceViewDTO(device));
         return devices;
     }
 
     @PostMapping()
     ResponseEntity add(@RequestHeader("Authorization") String token, @Valid @RequestBody DeviceDTO deviceDTO) {
-        String userEmail= TokenAuthenticationService.decodeToken(token);
+        String userEmail = TokenAuthenticationService.decodeToken(token);
         User user = userRepository.findByEmail(userEmail);
         if (user == null)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
@@ -69,6 +67,40 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
         device.setOwner(user);
+        deviceRepository.save(device);
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @DeleteMapping
+    ResponseEntity delete(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceRepository.findByHash(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        // here should check close connection with that device
+        // and removed from device manager
+        deviceRepository.delete(device);
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @PutMapping()
+    ResponseEntity edit(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody DeviceDTO deviceDTO) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceRepository.findByHash(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        try {
+            if (!deviceDTO.getIp().isEmpty()) device.setIp(InetAddress.getByName(deviceDTO.getIp()));
+            if (deviceDTO.getPort() != 0) device.setPort(deviceDTO.getPort());
+            if (!deviceDTO.getType().isEmpty()) device.setType(deviceDTO.getType());
+            if (!deviceDTO.getName().isEmpty()) device.setName(deviceDTO.getName());
+        } catch (UnknownHostException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
+        }
         deviceRepository.save(device);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }

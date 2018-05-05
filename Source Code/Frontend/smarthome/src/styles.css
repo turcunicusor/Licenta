@@ -1,24 +1,22 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
-.color1 {
-  background-color: #d8e0bb;
+:root {
+  --color1: #d8e0bb;
+  --color2: #b6cec7;
+  --color3: #86a3c3;
+  --color4: #7268a6;
+  --color5: #6b3074;
+
+  --color6: rgba(182, 206, 199, 0.15);
+  --color7: rgba(226, 18, 18, 0.15);
 }
 
-.color2 {
-  /*background-color: #b6cec7;*/
-  background-color: rgba(182, 206, 199, 0.15);
+.bg_color_green {
+  background-color: var(--color6);
 }
 
-.color3 {
-  background-color: #86a3c3;
-}
-
-.color4 {
-  background-color: #7268a6;
-}
-
-.color5 {
-  background-color: #6b3074;
+.bg_color_red {
+  background-color: var(--color7);
 }
 
 .fill-screen {

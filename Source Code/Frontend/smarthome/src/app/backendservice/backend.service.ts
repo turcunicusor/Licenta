@@ -48,13 +48,13 @@ export class BackendService {
   public deviceTypes: String[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://39a638a2.ngrok.io';
+  private server_url = 'http://4c70bc99.ngrok.io';
   private token;
   private email;
   private auth_header;
   private def_header;
 
-  constructor(private _http: HttpClient, private router: Router) {
+  constructor(private _http: HttpClient, public router: Router) {
     this.deviceTypes = [];
     this.deviceTypes.push('led', 'rbga led', 'doorlock', 'central heating', 'temperature sensor');
     this.token = 'Bearer ';
@@ -80,6 +80,10 @@ export class BackendService {
 
   redirect(page = '') {
     this.router.navigate(['/' + page]);
+  }
+
+  redirectWithParam(page = '', param = '') {
+    this.router.navigate(['/' + page, param]);
   }
 
   public logError(error: HttpErrorResponse) {
@@ -160,5 +164,9 @@ export class BackendService {
 
   public addNewDevice(json) {
     return this.post('/device', json);
+  }
+
+  public getDevice(id: String): Observable<Device> {
+    return this._http.get<Device>(this.server_url + '/device/all?device=' + id, {headers: this.auth_header});
   }
 }

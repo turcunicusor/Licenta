@@ -21,6 +21,7 @@ export class ViewComponent implements OnInit {
   }
 
   onManageClick(id: string) {
+    this._bs.redirectWithParam('/devices/manage', id);
   }
 
   ngOnInit() {

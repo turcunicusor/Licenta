@@ -1,3 +1,76 @@
-<p>
-  manage works!
-</p>
+<div class="container-fluid fill-screen manage">
+  <div class="border border-secondary rounded">
+    <h1 class="display-4">Manage</h1>
+    <div class="innerdiv">
+      <label class="text-left row" id="labledevicetype">{{device.type}}</label>
+      <div class="container bg_color_green innerdiv">
+        <div class="containerel mb-3 border border-secondary bg_color_green innerdiv">
+          <div class="containerel input-group mb-3 row bg_color_green innerdiv">
+            <label for="inputname"
+                   class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Name</label>
+            <input id="inputname" class="form-control" type="text" value="" placeholder="Name" required #name>
+            <div class="input-group-appended">
+              <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
+                      (click)="onSaveName(name.value)">Save
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="containerel bg_color_green innerdiv border border-secondary ">
+          <h4 class="text-center">Options</h4>
+          <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
+            <div class="containerel input-group mb-3 row bg_color_green innerdiv">
+              <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
+              <input id="param{{i}}" class="form-control" type="text" value="{{device.params[key]}}"
+                     placeholder="{{key}}" required>
+              <div class="input-group-appended">
+                <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
+                        (click)="onSaveParam(key, i)">Save</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <form class="containerel border border-danger rounded bg_color_red innerdiv"
+              (submit)="onSaveDangerZone(ip.value, port.value, type.value, name.value)">
+          <h4 class="text-center">Danger zone</h4>
+          <div class="form-group row">
+            <label for="inputip"
+                   class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Ip</label>
+            <div class="col-lg-6">
+              <input id="inputip" class="form-control" type="text" value="{{device.ip}}" placeholder="Ip" #ip required
+                     pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"
+                     title="Not a valid ip address.">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputport"
+                   class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Port</label>
+            <div class="col-lg-6">
+              <input id="inputport" class="form-control" type="text" value="{{device.port}}" placeholder="Port" required
+                     pattern="^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
+                     title="Invalid port. Port range: [0,65535]." #port>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputtype"
+                   class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Type</label>
+            <div class="col-lg-6">
+              <select class="form-control" id="inputtype" #type>
+                <ng-container *ngFor="let option of _bs.deviceTypes">
+                  <option>{{option}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col">
+            <button type="submit" class="btn btn-danger">Save changes</button>
+          </div>
+        </form>
+
+        <button type="submit" class="btn btn-danger">Delete device</button>
+      </div>
+    </div>
+  </div>
+</div>

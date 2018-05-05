@@ -1,0 +1,22 @@
+.manage {
+  width: 100%;
+  max-width: 800px;
+}
+
+.innerdiv {
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  margin: auto;
+}
+
+#labledevicetype {
+  padding-left: 20px;
+  font-variant: small-caps;
+  font-size: medium;
+  color: var(--color5);
+}
+
+.containerel {
+  margin: 10px 0;
+}

@@ -97,4 +97,12 @@ public class Device {
     public String getHash() {
         return hash;
     }
+
+    public void setIp(InetAddress ip) {
+        this.ip = ip;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 }

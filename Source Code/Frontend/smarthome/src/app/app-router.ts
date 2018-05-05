@@ -19,7 +19,7 @@ export const router: Routes = [
   {path: 'profile', component: ProfileComponent}, // canActivate: [AuthGuard]},
   {path: 'devices', component: ViewComponent},
   {path: 'devices/add', component: AddComponent},
-  {path: 'devices/manage', component: ManageComponent},
+  {path: 'devices/manage/:id', component: ManageComponent},
   {path: '**', component: NotfoundComponent},
   // {path: 'notfound', component: NotfoundComponent}
 ];
