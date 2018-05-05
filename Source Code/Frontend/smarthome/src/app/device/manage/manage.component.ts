@@ -33,15 +33,31 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   onSaveName(name: string) {
+    return false;
   }
 
   onSaveParam(key: string, valueindex: string) {
     const value = ((document.getElementById('param' + valueindex) as HTMLInputElement).value);
     const val = key.concat(value);
     alert(val);
+    return false;
   }
 
   onSaveDangerZone(ip: string, port: string, type: string, name: string) {
+    return false;
+  }
+
+  onDeleteDevice() {
+    this._bs.deleteDevice(this.device.id).subscribe(
+      res => {
+        this.toastr.success('Device \''.concat(this.device.name).concat('\' deleted successfully.'));
+        this._bs.redirect('/devices');
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
+    return false;
   }
 
   ngOnDestroy() {

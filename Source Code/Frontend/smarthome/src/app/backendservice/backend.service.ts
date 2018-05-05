@@ -23,7 +23,7 @@ export class Device {
   public params: Dictionary;
 
   constructor() {
-    this.name = 'Lampa lui aladin';
+    this.name = 'DEFAULT';
     this.type = 'led';
     this.id = 'randomid';
     this.ip = '127.0.0.1';
@@ -167,6 +167,10 @@ export class BackendService {
   }
 
   public getDevice(id: String): Observable<Device> {
-    return this._http.get<Device>(this.server_url + '/device/all?device=' + id, {headers: this.auth_header});
+    return this._http.get<Device>(this.server_url + '/device?device=' + id, {headers: this.auth_header});
+  }
+
+  public deleteDevice(id: String) {
+    return this._http.delete(this.server_url + '/device?device=' + id, {headers: this.auth_header});
   }
 }

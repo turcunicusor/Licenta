@@ -36,7 +36,7 @@ public class DevicesController {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
         Device device = deviceRepository.findByHash(hash);
         if (device == null)
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No device found with that hash.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
         DeviceViewDTO deviceViewDTO = new DeviceViewDTO(device);
