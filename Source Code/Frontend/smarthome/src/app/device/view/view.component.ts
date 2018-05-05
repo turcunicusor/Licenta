@@ -10,6 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ViewComponent implements OnInit {
   devices: Array<Device>;
+  public isLoading: boolean;
 
   constructor(public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     // test only
@@ -18,6 +19,7 @@ export class ViewComponent implements OnInit {
     //   this.devices.push(new Device());
     //   this.devices[i].id = this.devices[i].id + i;
     // }
+    this.isLoading = true;
   }
 
   onManageClick(id: string) {
@@ -29,6 +31,7 @@ export class ViewComponent implements OnInit {
     this._bs.getAllDevices().subscribe(
       res => {
         this.devices = res;
+        this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

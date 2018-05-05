@@ -13,8 +13,10 @@ export class ManageComponent implements OnInit, OnDestroy {
   id: string;
   private sub: any;
   device: Device;
+  public isLoading;
 
   constructor(private route: ActivatedRoute, public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
+    this.isLoading = true;
   }
 
   ngOnInit() {
@@ -24,6 +26,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       this._bs.getDevice(this.id).subscribe(
         res => {
           this.device = res;
+          this.isLoading = false;
         },
         (err: HttpErrorResponse) => {
           const message = this._bs.handleError(err);
@@ -33,6 +36,15 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   onSaveName(name: string) {
+    const json = {ip: '', port: '', type: '', name: name};
+    this._bs.updateDevice(json, this.device.id).subscribe(
+      res => {
+        this.toastr.success('Device name updated successfully.');
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
     return false;
   }
 
@@ -43,7 +55,16 @@ export class ManageComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  onSaveDangerZone(ip: string, port: string, type: string, name: string) {
+  onSaveDangerZone(ip: string, port: string, type: string) {
+    const json = {ip: ip, port: port, type: type, name: ''};
+    this._bs.updateDevice(json, this.device.id).subscribe(
+      res => {
+        this.toastr.success('Device updated successfully.');
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
     return false;
   }
 

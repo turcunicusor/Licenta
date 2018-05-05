@@ -40,7 +40,7 @@ public class DeviceViewDTO {
         this.port = device.getPort();
         this.type = device.getType();
         this.name = device.getName();
-        this.id = device.getHash();
+        this.id = device.getHash().toString();
         this.params = new HashMap<>();
         this.params.put("test", "test");
     }

@@ -1,7 +1,7 @@
 <div class="container-fluid fill-screen manage">
   <div class="border border-secondary rounded">
     <h1 class="display-4">Manage</h1>
-    <div class="innerdiv floating">
+    <div *ngIf="!this.isLoading" class="innerdiv floating">
       <label class="text-left row" id="labledevicetype">{{device.type}}</label>
 
         <div class="containerel mb-3 border border-secondary rounded bg_color_green innerdiv">
@@ -34,7 +34,7 @@
         </div>
 
         <form class="containerel border border-danger rounded bg_color_red innerdiv"
-              (submit)="onSaveDangerZone(ip.value, port.value, type.value, name.value)">
+              (submit)="onSaveDangerZone(ip.value, port.value, type.value)">
           <h4 class="text-center">Danger zone</h4>
           <div class="form-group row">
             <label for="inputip"
@@ -72,6 +72,9 @@
         <div style='float: right;'>
           <button type="submit" class="btn btn-dark" (click)="onDeleteDevice()">Delete device</button>
         </div>
+    </div>
+    <div *ngIf="this.isLoading" class="form-group mb-3">
+      <div class="loader"></div>
     </div>
   </div>
 </div>

@@ -12,10 +12,12 @@ import {ToastrService} from 'ngx-toastr';
 export class ProfileComponent implements OnInit {
   public user: User;
   private userSave: User;
+  public isLoading: boolean;
 
   constructor(public _bs: BackendService, private toastr: ToastrService) {
-
+    this.isLoading = true;
   }
+
 
   ngOnInit() {
     this.user = new User();
@@ -23,6 +25,7 @@ export class ProfileComponent implements OnInit {
       res => {
         this.user = res;
         this.userSave = this.user;
+        this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
         this._bs.handleError(err);

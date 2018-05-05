@@ -1,14 +1,9 @@
 package com.smarthome.server.entities;
 
 import javax.persistence.*;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "device")
@@ -32,21 +27,12 @@ public class Device {
         lastAccessed = new Date();
     }
 
-    public Device(InetAddress ip, int port, String type, String name) throws NoSuchAlgorithmException {
+    public Device(InetAddress ip, int port, String type, String name) {
         this.ip = ip;
         this.port = port;
         this.type = type;
         this.name = name;
-        String text = ip.toString() + port + type + name;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));
-            this.hash =  URLEncoder.encode(Base64.getEncoder().encodeToString(hash), "UTF-8");
-        } catch (NoSuchAlgorithmException e) {
-            throw new NoSuchAlgorithmException("Algorithm SHA-256 was not found.");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        this.hash = UUID.randomUUID().toString();
         lastAccessed = new Date();
     }
 

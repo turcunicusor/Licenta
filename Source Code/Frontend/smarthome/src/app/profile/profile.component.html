@@ -1,7 +1,7 @@
 <div class="container-fluid fill-screen profile">
   <div class="border border-secondary rounded bg_color_green">
     <h1 class="display-4">Profile</h1>
-    <form class="container-fluid"
+    <form *ngIf="!this.isLoading" class="container-fluid"
           (submit)="onSaveChanges(firstName.value, lastName.value, email.value, oldpassword.value, newpassword.value, confirmnewpassword.value)">
       <div class="form-group row">
         <label for="inputFirstName" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">First
@@ -66,5 +66,8 @@
         </div>
       </div>
     </form>
+    <div *ngIf="this.isLoading" class="form-group mb-3">
+      <div class="loader"></div>
+    </div>
   </div>
 </div>

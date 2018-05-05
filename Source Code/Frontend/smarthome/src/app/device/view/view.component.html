@@ -1,59 +1,64 @@
 <div class="container-fluid">
   <section class="cards-section text-center">
     <div class="accordion cards-container container container-fluid" id="accordion">
-      <ng-container *ngFor="let device of devices; let i = index">
-        <div class="card">
-          <div class="card-header" id="heading{{i}}">
-            <h5 class="mb-0">
-              <button class="btn btn-outline-info collapsed" type="button" [attr.data-toggle]="'collapse'"
-                      [attr.data-target]="'#collapse' + i"
-                      [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
-                {{device.name}}
-              </button>
-            </h5>
-          </div>
-          <div id="collapse{{i}}" class="collapse" [attr.aria-labelledby]="'heading' + i"
-               data-parent="#accordion">
-            <div class="cards-container container container-fluid align-items-center">
-              <div class="cards-wrapper row row-center">
-                <div
-                  class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16">
-                  <div class="device-item card">
-                    <div class="card-body">
-                      <h5 class="card-title">Device: "{{device.name}}"</h5>
-                      <p class="text-center">
-                        <small>#{{device.id}}</small>
-                      </p>
-                      <div>
-                        <p class="text-left text-info "><b>Parameters</b></p>
-                        <table class="table table-hover table-bordered">
-                          <thead class="thead-dark">
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Value</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <ng-container *ngFor="let key of _ut.keys(device.params)">
-                            <tr class="text-left">
-                              <th scope="row">{{_ut.keyindex(device.params,key)}}</th>
-                              <td>{{key}}</td>
-                              <td>{{device.params[key]}}</td>
+      <ng-container *ngIf="!this.isLoading">
+        <ng-container *ngFor="let device of devices; let i = index">
+          <div class="card">
+            <div class="card-header" id="heading{{i}}">
+              <h5 class="mb-0">
+                <button class="btn btn-outline-info collapsed" type="button" [attr.data-toggle]="'collapse'"
+                        [attr.data-target]="'#collapse' + i"
+                        [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
+                  {{device.name}}
+                </button>
+              </h5>
+            </div>
+            <div id="collapse{{i}}" class="collapse" [attr.aria-labelledby]="'heading' + i"
+                 data-parent="#accordion">
+              <div class="cards-container container container-fluid align-items-center">
+                <div class="cards-wrapper row row-center">
+                  <div
+                    class="container container-fluid align-items-center item col-md-8 col-sm-12 col-xs-16">
+                    <div class="device-item card">
+                      <div class="card-body">
+                        <h5 class="card-title">Device: "{{device.name}}"</h5>
+                        <p class="text-center">
+                          <small>#{{device.id}}</small>
+                        </p>
+                        <div>
+                          <p class="text-left text-info "><b>Parameters</b></p>
+                          <table class="table table-hover table-bordered">
+                            <thead class="thead-dark">
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Value</th>
                             </tr>
-                          </ng-container>
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                            <ng-container *ngFor="let key of _ut.keys(device.params)">
+                              <tr class="text-left">
+                                <th scope="row">{{_ut.keyindex(device.params,key)}}</th>
+                                <td>{{key}}</td>
+                                <td>{{device.params[key]}}</td>
+                              </tr>
+                            </ng-container>
+                            </tbody>
+                          </table>
+                        </div>
+                        <button class="btn btn-primary" (click)="onManageClick(device.id)">Manage</button>
                       </div>
-                      <button class="btn btn-primary" (click)="onManageClick(device.id)">Manage</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </ng-container>
       </ng-container>
+      <div *ngIf="this.isLoading" class="form-group mb-3">
+        <div class="loader"></div>
+      </div>
       <div class="form-group mb-3">
         <div class="alert alert-info" role="alert">
           <p class="mb-0">Want more devices? Add more.

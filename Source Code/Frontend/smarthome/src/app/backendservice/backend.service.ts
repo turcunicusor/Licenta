@@ -48,7 +48,7 @@ export class BackendService {
   public deviceTypes: String[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://4c70bc99.ngrok.io';
+  private server_url = 'http://f6322b2d.ngrok.io';
   private token;
   private email;
   private auth_header;
@@ -172,5 +172,9 @@ export class BackendService {
 
   public deleteDevice(id: String) {
     return this._http.delete(this.server_url + '/device?device=' + id, {headers: this.auth_header});
+  }
+
+  public updateDevice(json, id) {
+    return this._http.put(this.server_url + '/device?device=' + id, JSON.stringify(json), {headers: this.auth_header});
   }
 }
