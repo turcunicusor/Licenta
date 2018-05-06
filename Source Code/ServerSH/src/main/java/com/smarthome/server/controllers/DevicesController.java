@@ -4,6 +4,7 @@ import com.smarthome.server.dtos.DeviceDTO;
 import com.smarthome.server.dtos.DeviceViewDTO;
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
+import com.smarthome.server.hal.Generic.IDevice;
 import com.smarthome.server.repositories.DeviceRepository;
 import com.smarthome.server.repositories.UserRepository;
 import com.smarthome.server.security.TokenAuthenticationService;
@@ -39,10 +40,10 @@ public class DevicesController {
     @GetMapping()
     public ResponseEntity<?> findByHash(@RequestParam("device") String hash, @RequestHeader("Authorization") String token) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceManager.getDevice(hash);
+        IDevice device = deviceManager.getHalDevice(hash);
         if (device == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
-        if (!device.getOwner().getEmail().equals(ownerEmail))
+        if (!device.getDevice().getOwner().getEmail().equals(ownerEmail))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
         DeviceViewDTO deviceViewDTO = new DeviceViewDTO(device);
         return ResponseEntity.status(HttpStatus.OK).body(deviceViewDTO);
@@ -53,7 +54,7 @@ public class DevicesController {
         String userEmail = TokenAuthenticationService.decodeToken(token);
         List<DeviceViewDTO> devices = new ArrayList<>();
         for (Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
-            devices.add(new DeviceViewDTO(device));
+            devices.add(new DeviceViewDTO(deviceManager.getHalDevice(device.getHash())));
         return devices;
     }
 

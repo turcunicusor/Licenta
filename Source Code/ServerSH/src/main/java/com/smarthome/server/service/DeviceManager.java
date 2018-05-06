@@ -69,14 +69,6 @@ public class DeviceManager {
         // register devices
         for (Device device : devices)
             registerDevice(device);
-        // try to connect
-        for (Device device : devices)
-            try {
-                this.halDevices.get(device.getHash()).connect();
-            } catch (Exception e) {
-                e.printStackTrace();
-                // to decide what to do here, exception list?
-            }
     }
 
     public void userLogout(String userEmail) {

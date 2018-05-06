@@ -34,6 +34,7 @@ export class Device {
   public port: string;
   public name: string;
   public type: string;
+  public status: string;
   public params: DictionaryParm;
   public acceptedParams: DictionaryAccParm;
 
@@ -43,6 +44,7 @@ export class Device {
     this.id = 'randomid';
     this.ip = '127.0.0.1';
     this.port = '8000';
+    this.status = 'DEFAULT';
     this.params = {'intensitate': '80%', 'temperatura': '12grade'};
     this.acceptedParams = {'intensitate': new ParameterDescription()};
   }

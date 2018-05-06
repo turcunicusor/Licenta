@@ -1,16 +1,19 @@
-<div class="container-fluid">
+<div class="container-fluid fill-screen">
   <section class="cards-section text-center">
     <div class="accordion cards-container container container-fluid" id="accordion">
       <ng-container *ngIf="!this.isLoading">
         <ng-container *ngFor="let device of devices; let i = index">
           <div class="card">
             <div class="card-header" id="heading{{i}}">
-              <h5 class="mb-0">
-                <button class="btn btn-outline-info collapsed" type="button" [attr.data-toggle]="'collapse'"
+              <h5 class="mb-2">
+                <button class="btn btn-outline-info collapsed custom" type="button" [attr.data-toggle]="'collapse'"
                         [attr.data-target]="'#collapse' + i"
                         [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
                   {{device.name}}
                 </button>
+                <label id="device_status">
+                  <small>{{device.status}}</small>
+                </label>
               </h5>
             </div>
             <div id="collapse{{i}}" class="collapse" [attr.aria-labelledby]="'heading' + i"

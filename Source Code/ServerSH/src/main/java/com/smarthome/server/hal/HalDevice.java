@@ -25,6 +25,7 @@ public class HalDevice implements IDevice {
         this.device = device;
         this.acceptedParams = new AcceptedParams();
         this.paramsVal = new Params();
+        this.status = DeviceStatus.CREATED;
     }
 
     @Override
@@ -59,8 +60,10 @@ public class HalDevice implements IDevice {
 
     @Override
     public DeviceStatus getStatus() throws Exception {
-        outStream.println(Protocol.GET_STATUS);
-        this.status = DeviceStatus.valueOf(onResponse(inStream.readLine()));
+        if (DeviceStatus.CONNECTED == this.status) {
+            outStream.println(Protocol.GET_STATUS);
+            this.status = DeviceStatus.valueOf(onResponse(inStream.readLine()));
+        }
         return this.status;
     }
 

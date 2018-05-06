@@ -1,6 +1,6 @@
 package com.smarthome.server.dtos;
 
-import com.smarthome.server.entities.Device;
+import com.smarthome.server.hal.Generic.IDevice;
 import com.smarthome.server.hal.Generic.ParamDescription;
 
 import java.util.HashMap;
@@ -11,39 +11,45 @@ public class DeviceViewDTO {
     private int port;
     private String type;
     private String name;
+    private String status;
     private HashMap<String, ParamDescription> acceptedParams;
     private HashMap<String, String> params;
 
-    public DeviceViewDTO(String id, String ip, int port, String type, String name) {
-        this.id = id;
-        this.ip = ip;
-        this.port = port;
-        this.type = type;
-        this.name = name;
-        this.acceptedParams = new HashMap<>();
-        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
-        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
-        this.params = new HashMap<>();
-        this.params.put("intensitate", "0");
-        this.params.put("tensiune", "1");
-    }
+//    public DeviceViewDTO(String id, String ip, int port, String type, String name) {
+//        this.id = id;
+//        this.ip = ip;
+//        this.port = port;
+//        this.type = type;
+//        this.name = name;
+//        this.acceptedParams = new HashMap<>();
+//        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
+//        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
+//        this.params = new HashMap<>();
+//        this.params.put("intensitate", "0");
+//        this.params.put("tensiune", "1");
+//    }
+//
+//    public DeviceViewDTO() {
+//        this.acceptedParams = new HashMap<>();
+//        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
+//        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
+//        this.params = new HashMap<>();
+//        this.params.put("intensitate", "0");
+//        this.params.put("tensiune", "1");
+//    }
 
-    public DeviceViewDTO() {
-        this.acceptedParams = new HashMap<>();
-        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
-        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
+    public DeviceViewDTO(IDevice deviceHal) {
+        this.ip = deviceHal.getDevice().getIp().toString();
+        this.port = deviceHal.getDevice().getPort();
+        this.type = deviceHal.getDevice().getType();
+        this.name = deviceHal.getDevice().getName();
+        this.id = deviceHal.getDevice().getHash();
         this.params = new HashMap<>();
-        this.params.put("intensitate", "0");
-        this.params.put("tensiune", "1");
-    }
-
-    public DeviceViewDTO(Device device) {
-        this.ip = device.getIp().toString();
-        this.port = device.getPort();
-        this.type = device.getType();
-        this.name = device.getName();
-        this.id = device.getHash();
-        this.params = new HashMap<>();
+        try {
+            this.status = deviceHal.getStatus().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.params.put("intensitate", "intensitate");
         this.params.put("tensiune", "1");
         this.acceptedParams = new HashMap<>();
@@ -105,5 +111,13 @@ public class DeviceViewDTO {
 
     public void setAcceptedParams(HashMap<String, ParamDescription> acceptedParams) {
         this.acceptedParams = acceptedParams;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
