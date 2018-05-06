@@ -12,11 +12,11 @@
         <div class="nav-link noselect" appCloseMenu [menu]="menu" (click)="this._bs.redirect('')">Home</div>
       </li>
       <li class="nav-item pointer" [routerLinkActive]="['active']">
-        <div class="nav-link noselect" (click)="redirect('/devices')">View</div>
+        <div class="nav-link noselect" (click)="redirect('/devices')">MyDevice</div>
       </li>
-      <li class="nav-item pointer" [routerLinkActive]="['active']">
-        <div class="nav-link noselect" (click)="redirect('/devices/manage')">Manage</div>
-      </li>
+      <!--<li class="nav-item pointer" [routerLinkActive]="['active']">-->
+        <!--<div class="nav-link noselect" (click)="redirect('/devices/manage')">Manage</div>-->
+      <!--</li>-->
       <li class="nav-item pointer" [routerLinkActive]="['active']">
         <div class="nav-link" (click)="redirect('/devices/add')">Add</div>
       </li>

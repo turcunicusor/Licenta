@@ -48,7 +48,7 @@ export class BackendService {
   public deviceTypes: String[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://f6322b2d.ngrok.io';
+  private server_url = 'http://e6b5bcd3.ngrok.io';
   private token;
   private email;
   private auth_header;

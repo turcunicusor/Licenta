@@ -24,3 +24,12 @@
 .floating {
   display: inline-block;
 }
+
+.modal {
+  position: fixed;
+  top: 30% !important;
+}
+
+.modal-title {
+  margin: 0 auto;
+}
