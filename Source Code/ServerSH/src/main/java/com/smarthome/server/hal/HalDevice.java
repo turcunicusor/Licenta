@@ -1,5 +1,6 @@
 package com.smarthome.server.hal;
 
+import com.smarthome.server.entities.Device;
 import com.smarthome.server.hal.Generic.*;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -7,13 +8,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class HalDevice implements IDevice {
-    private InetAddress ip;
-    private int port;
-    private String type;
+    private Device device;
     private DeviceStatus status;
     private AcceptedParams acceptedParams;
     private Params paramsVal;
@@ -22,29 +20,24 @@ public class HalDevice implements IDevice {
     private PrintWriter outStream;
     private BufferedReader inStream;
 
-    HalDevice(InetAddress ip, int port, String type) throws Exception {
-        this.ip = ip;
-        this.port = port;
+    public HalDevice(Device device) throws Exception {
+        this.device = device;
         this.acceptedParams = new AcceptedParams();
         this.paramsVal = new Params();
         try {
-            server = (SSLSocketFactory.getDefault()).createSocket(ip, port);
+            server = (SSLSocketFactory.getDefault()).createSocket(device.getIp(), device.getPort());
             outStream = new PrintWriter(server.getOutputStream(), true);
             inStream = new BufferedReader(new InputStreamReader(server.getInputStream()));
         } catch (Exception e) {
-            throw new Exception(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online. Reason: '%s'.", ip.toString(), port, this.type, e.getMessage()));
+            throw new Exception(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online. Reason: '%s'.",
+                    device.getIp().toString(), device.getPort(), device.getType(), e.getMessage()));
         }
-        checkType(type);
+        checkType(device.getType());
     }
 
     @Override
-    public InetAddress getIp() {
-        return ip;
-    }
-
-    @Override
-    public int getPort() {
-        return port;
+    public Device getDevice() {
+        return this.device;
     }
 
     @Override
@@ -82,8 +75,8 @@ public class HalDevice implements IDevice {
     @Override
     public String getType() throws Exception {
         outStream.println(Protocol.GET_TYPE);
-        this.type = onResponse(inStream.readLine());
-        return this.type;
+        this.device.setType(onResponse(inStream.readLine()));
+        return  this.device.getType();
     }
 
     @Override

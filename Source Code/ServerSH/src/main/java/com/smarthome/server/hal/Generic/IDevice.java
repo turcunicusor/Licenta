@@ -1,12 +1,11 @@
 package com.smarthome.server.hal.Generic;
 
+import com.smarthome.server.entities.Device;
+
 import java.io.IOException;
-import java.net.InetAddress;
 
 public interface IDevice {
-    InetAddress getIp();
-
-    int getPort();
+    Device getDevice();
 
     void open() throws Exception;
 
