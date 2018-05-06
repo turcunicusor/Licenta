@@ -1,7 +1,7 @@
 package com.smarthome.server.entities;
 
 import com.smarthome.server.dtos.UserDTO;
-import com.smarthome.server.service.Status;
+import com.smarthome.server.service.UserStatus;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class User {
     //region constructors
     public User() {
         this.roles = new HashSet<>();
-        this.status = Status.Created.ordinal();
+        this.status = UserStatus.Created.ordinal();
     }
 
     public User(String firstName, String lastName, String email, String password) {
@@ -41,7 +41,7 @@ public class User {
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.status = Status.Created.ordinal();
+        this.status = UserStatus.Created.ordinal();
         this.roles = new HashSet<>();
     }
     //endregion
@@ -83,7 +83,7 @@ public class User {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(UserStatus status) {
         this.status = status.ordinal();
     }
 

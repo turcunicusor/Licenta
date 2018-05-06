@@ -23,9 +23,13 @@
         <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
           <div class="containerel input-group mb-3 row bg_color_green innerdiv">
             <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
-            <input id="param{{i}}" class="form-control" type="text" value="{{device.params[key]}}"
-                   placeholder="{{key}}" required>
-            <div class="input-group-appended">
+            <ng-container>
+              <input *ngIf="!device.acceptedParams[key].readOnly" id="param{{i}}" class="form-control" type="text" value="{{device.params[key]}}"
+                     placeholder="{{key}}" required>
+              <input *ngIf="device.acceptedParams[key].readOnly" class="form-control" type="text" value="{{device.params[key]}}"
+                     placeholder="{{key}}" required disabled="disabled">
+            </ng-container>
+            <div *ngIf="!device.acceptedParams[key].readOnly" class="input-group-appended">
               <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
                       (click)="onSaveParam(key, i)">Save
               </button>

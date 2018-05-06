@@ -1,4 +1,6 @@
-import Generic.*;
+package com.smarthome.server.hal;
+
+import com.smarthome.server.hal.Generic.*;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
@@ -7,24 +9,23 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.concurrent.TimeUnit;
 
-public class DeviceImpl implements IDevice {
+public class HalDevice implements IDevice {
     private InetAddress ip;
     private int port;
     private String type;
-    private Status status;
-    private Data acceptedParams;
+    private DeviceStatus status;
+    private AcceptedParams acceptedParams;
     private Params paramsVal;
 
     private Socket server;
     private PrintWriter outStream;
     private BufferedReader inStream;
 
-    DeviceImpl(InetAddress ip, int port, String type) throws Exception {
+    HalDevice(InetAddress ip, int port, String type) throws Exception {
         this.ip = ip;
         this.port = port;
-        this.acceptedParams = new Data();
+        this.acceptedParams = new AcceptedParams();
         this.paramsVal = new Params();
         try {
             server = (SSLSocketFactory.getDefault()).createSocket(ip, port);
@@ -65,9 +66,9 @@ public class DeviceImpl implements IDevice {
     }
 
     @Override
-    public Status getStatus() throws Exception {
+    public DeviceStatus getStatus() throws Exception {
         outStream.println(Protocol.GET_STATUS);
-        this.status = Status.valueOf(onResponse(inStream.readLine()));
+        this.status = DeviceStatus.valueOf(onResponse(inStream.readLine()));
         return this.status;
     }
 
@@ -86,7 +87,7 @@ public class DeviceImpl implements IDevice {
     }
 
     @Override
-    public Data getParams() throws Exception {
+    public AcceptedParams getAcceptedParams() throws Exception {
         outStream.println(Protocol.GET_PARAMS);
         this.acceptedParams.addData(onResponse(inStream.readLine()));
         return this.acceptedParams;

@@ -10,8 +10,22 @@ export class User {
   email: string;
 }
 
-interface Dictionary {
+interface DictionaryParm {
   [index: string]: string;
+}
+
+interface DictionaryAccParm {
+  [index: string]: ParameterDescription;
+}
+
+export class ParameterDescription {
+  public readOnly: boolean;
+  public type: string;
+
+  constructor() {
+    this.readOnly = false;
+    this.type = 'unknown';
+  }
 }
 
 export class Device {
@@ -20,7 +34,8 @@ export class Device {
   public port: string;
   public name: string;
   public type: string;
-  public params: Dictionary;
+  public params: DictionaryParm;
+  public acceptedParams: DictionaryAccParm;
 
   constructor() {
     this.name = 'DEFAULT';
@@ -29,16 +44,17 @@ export class Device {
     this.ip = '127.0.0.1';
     this.port = '8000';
     this.params = {'intensitate': '80%', 'temperatura': '12grade'};
+    this.acceptedParams = {'intensitate': new ParameterDescription()};
   }
 }
 
 @Injectable()
 export class Utils {
-  keys(param: Dictionary): Array<string> {
+  keys(param: DictionaryParm): Array<string> {
     return Object.keys(param);
   }
 
-  keyindex(param: Dictionary, key: string): any {
+  keyindex(param: DictionaryParm, key: string): any {
     return Object.keys(param).indexOf(key);
   }
 }

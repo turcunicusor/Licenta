@@ -27,6 +27,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         res => {
           this.device = res;
           this.isLoading = false;
+          console.log(this.device.acceptedParams);
         },
         (err: HttpErrorResponse) => {
           const message = this._bs.handleError(err);

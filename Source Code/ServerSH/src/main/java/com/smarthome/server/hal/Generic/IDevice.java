@@ -1,4 +1,4 @@
-package Generic;
+package com.smarthome.server.hal.Generic;
 
 import java.io.IOException;
 import java.net.InetAddress;

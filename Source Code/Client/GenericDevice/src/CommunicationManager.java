@@ -65,7 +65,7 @@ public class CommunicationManager implements IMessage {
                     outStream.println(Protocol.SUCCESS);
                     break;
                 case Protocol.GET_STATUS:
-                    Status status = device.getStatus();
+                    DeviceStatus status = device.getStatus();
                     outStream.println(Protocol.SUCCESS + status.toString());
                     break;
                 case Protocol.GET_TYPE:
@@ -73,8 +73,8 @@ public class CommunicationManager implements IMessage {
                     outStream.println(Protocol.SUCCESS + type);
                     break;
                 case Protocol.GET_PARAMS:
-                    Data data = device.getParams();
-                    outStream.println(Protocol.SUCCESS + data.toString());
+                    AcceptedParams acceptedParams = device.getAcceptedParams();
+                    outStream.println(Protocol.SUCCESS + acceptedParams.toString());
                     break;
                 case Protocol.COMMAND:
                     Params params = new Params();

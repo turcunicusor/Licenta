@@ -7,11 +7,11 @@ public interface IDevice {
 
     void command(Params params) throws Exception;
 
-    Status getStatus();
+    DeviceStatus getStatus();
 
     Params queryData(Data data);
 
     String getType();
 
-    Data getParams();
+    AcceptedParams getAcceptedParams();
 }

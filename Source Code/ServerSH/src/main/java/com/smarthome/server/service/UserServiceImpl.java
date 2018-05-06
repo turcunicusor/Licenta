@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveRegistered(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setStatus(Status.Registered);
+        user.setStatus(UserStatus.Registered);
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         userRepository.save(user);
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loggedIn(String email) {
         User user = userRepository.findByEmail(email);
-        user.setStatus(Status.LoggedIn);
+        user.setStatus(UserStatus.LoggedIn);
         userRepository.save(user);
     }
 
@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if (user == null)
             throw new Exception("User does not exists in database.");
-        if (user.getStatus() != Status.LoggedIn.ordinal())
+        if (user.getStatus() != UserStatus.LoggedIn.ordinal())
             throw new Exception("User is not logged in. Cannot logged out.");
-        user.setStatus(Status.LoggedOut);
+        user.setStatus(UserStatus.LoggedOut);
         userRepository.save(user);
     }
 

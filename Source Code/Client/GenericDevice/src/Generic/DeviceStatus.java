@@ -1,6 +1,6 @@
 package Generic;
 
-public enum Status {
+public enum DeviceStatus {
     OPENED,
     CLOSED,
     INACTIVE
