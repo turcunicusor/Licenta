@@ -7,12 +7,14 @@ import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.DeviceRepository;
 import com.smarthome.server.repositories.UserRepository;
 import com.smarthome.server.security.TokenAuthenticationService;
+import com.smarthome.server.service.DeviceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -22,18 +24,22 @@ import java.util.List;
 @RequestMapping("/device")
 public class DevicesController {
     private final DeviceRepository deviceRepository;
+    private final DeviceManager deviceManager;
     private final UserRepository userRepository;
 
     @Autowired
-    public DevicesController(DeviceRepository deviceRepository, UserRepository userRepository) {
+    public DevicesController(DeviceRepository deviceRepository,
+                             UserRepository userRepository,
+                             DeviceManager deviceManager) {
         this.deviceRepository = deviceRepository;
         this.userRepository = userRepository;
+        this.deviceManager = deviceManager;
     }
 
     @GetMapping()
     public ResponseEntity<?> findByHash(@RequestParam("device") String hash, @RequestHeader("Authorization") String token) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceRepository.findByHash(hash);
+        Device device = deviceManager.getDevice(hash);
         if (device == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
@@ -64,7 +70,7 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
         }
         device.setOwner(user);
-        deviceRepository.save(device);
+        deviceManager.registerDevice(device);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
@@ -76,9 +82,7 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
-        // here should check close connection with that device
-        // and removed from device manager
-        deviceRepository.delete(device);
+        deviceManager.deleteHalDevice(device.getHash());
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
@@ -98,7 +102,11 @@ public class DevicesController {
         } catch (UnknownHostException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
         }
-        deviceRepository.save(device);
+        try {
+            deviceManager.editDevice(device);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }

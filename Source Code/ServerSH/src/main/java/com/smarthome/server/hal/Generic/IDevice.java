@@ -7,6 +7,8 @@ import java.io.IOException;
 public interface IDevice {
     Device getDevice();
 
+    void setDevice(Device device);
+
     void open() throws Exception;
 
     void close() throws Exception;
@@ -22,4 +24,6 @@ public interface IDevice {
     AcceptedParams getAcceptedParams() throws Exception;
 
     void closeConnection() throws IOException;
+
+    void connect() throws  Exception;
 }

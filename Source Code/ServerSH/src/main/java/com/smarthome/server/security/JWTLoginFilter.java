@@ -2,6 +2,7 @@ package com.smarthome.server.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smarthome.server.dtos.LoginDTO;
+import com.smarthome.server.service.DeviceManager;
 import com.smarthome.server.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,11 +20,13 @@ import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     private final UserService userService;
+    private final DeviceManager deviceManager;
 
-    JWTLoginFilter(String url, AuthenticationManager authManager, UserService userService) {
+    JWTLoginFilter(String url, AuthenticationManager authManager, UserService userService, DeviceManager deviceManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
         this.userService = userService;
+        this.deviceManager = deviceManager;
     }
 
     @Override

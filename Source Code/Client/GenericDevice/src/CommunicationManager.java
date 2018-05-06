@@ -27,7 +27,7 @@ public class CommunicationManager implements IMessage {
     public void doWork() {
         try {
             ServerSocket sslServerSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(port, 2, ip);
-            System.out.println("Device online " + sslServerSocket.toString());
+            System.out.println("Device online " + sslServerSocket.toString() + this.device.getType());
             while (true) {
                 client = sslServerSocket.accept();
                 System.out.println("Connection made with " + client.getInetAddress().toString() + ":" + client.getPort());

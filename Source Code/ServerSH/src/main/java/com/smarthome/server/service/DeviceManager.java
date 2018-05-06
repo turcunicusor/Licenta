@@ -2,50 +2,97 @@ package com.smarthome.server.service;
 
 
 import com.smarthome.server.entities.Device;
-import com.smarthome.server.hal.Generic.DeviceStatus;
+import com.smarthome.server.entities.User;
 import com.smarthome.server.hal.Generic.IDevice;
 import com.smarthome.server.hal.HalDevice;
+import com.smarthome.server.repositories.DeviceRepository;
+import com.smarthome.server.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class DeviceManager {
+    private final UserRepository userRepository;
+    private final DeviceRepository deviceRepository;
+
     private static final String SSL_KEY = "javax.net.ssl.trustStore";
     private static final String SSL_VALUE = "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo";
-    private HashMap<String, IDevice> devices;
+    private HashMap<String, IDevice> halDevices;
 
-    public DeviceManager() {
+    @Autowired
+    public DeviceManager(UserRepository userRepository, DeviceRepository deviceRepository) {
         System.setProperty(SSL_KEY, SSL_VALUE);
-        this.devices = new HashMap<>();
+        this.halDevices = new HashMap<>();
+        this.userRepository = userRepository;
+        this.deviceRepository = deviceRepository;
     }
 
-    public void registerDevice(Device device) throws Exception {
-        try {
-            this.devices.put(device.getHash(), new HalDevice(device));
-        } catch (Exception e) {
-            throw new Exception(String.format("A device with ip '%s' and port '%s' already registered.", device.getIp().toString(), device.getPort()));
-        }
+    public void editDevice(Device device) throws IOException {
+        halDevices.get(device.getHash()).closeConnection();
+        halDevices.get(device.getHash()).setDevice(device);
+        this.deviceRepository.save(device);
     }
 
     public IDevice getHalDevice(String hash) {
-        return devices.get(hash);
+        return halDevices.get(hash);
     }
 
     public Device getDevice(String hash) {
-        return devices.get(hash).getDevice();
+        return halDevices.get(hash).getDevice();
     }
 
-    public void deleteHalDevice(String hash){
-        IDevice device = this.devices.get(hash);
+    public void registerDevice(Device device) {
+        this.deviceRepository.save(device);
+        this.halDevices.put(device.getHash(), new HalDevice(device));
+    }
+
+    public void deleteHalDevice(String hash) {
+        IDevice device = this.halDevices.get(hash);
         try {
-            if (device.getStatus() != DeviceStatus.OPENED)
-                device.closeConnection();
-        }
-        catch (Exception e){
+            device.closeConnection();
+        } catch (Exception e) {
             System.err.println("deleteHalDevice");
             e.printStackTrace();
         }
-        this.devices.remove(hash);
+        this.halDevices.remove(hash);
+        this.deviceRepository.delete(device.getDevice());
+    }
+
+    public void userLogin(String userEmail) {
+        System.out.println("DEVICE MANAGER USER LOGIN");
+        User user = userRepository.findByEmail(userEmail);
+        List<Device> devices = deviceRepository.findAllByOwner(user);
+        // register devices
+        for (Device device : devices)
+            registerDevice(device);
+        // try to connect
+        for (Device device : devices)
+            try {
+                this.halDevices.get(device.getHash()).connect();
+            } catch (Exception e) {
+                e.printStackTrace();
+                // to decide what to do here, exception list?
+            }
+    }
+
+    public void userLogout(String userEmail) {
+        System.out.println("DEVICE MANAGER USER LOGOUT");
+        User user = userRepository.findByEmail(userEmail);
+        List<Device> devices = deviceRepository.findAllByOwner(user);
+        // release resources
+        for (Device device : devices) {
+            try {
+                this.halDevices.get(device.getHash()).closeConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // to decide what to do here, exception list?
+            }
+        }
+        for (Device device : devices)
+            halDevices.remove(device.getHash());
     }
 }

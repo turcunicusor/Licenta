@@ -1,8 +1,12 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.*;
+import com.smarthome.server.dtos.EmailDTO;
+import com.smarthome.server.dtos.LogoutDTO;
+import com.smarthome.server.dtos.ProfileDTO;
+import com.smarthome.server.dtos.UserDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.UserRepository;
+import com.smarthome.server.service.DeviceManager;
 import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +23,16 @@ import java.util.List;
 public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
+    private final DeviceManager deviceManager;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserRepository userRepository, UserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepository, UserService userService,
+                          BCryptPasswordEncoder passwordEncoder, DeviceManager deviceManager) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.deviceManager = deviceManager;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -33,8 +40,10 @@ public class UserController {
     ResponseEntity logout(@RequestBody LogoutDTO logout) {
         try {
             userService.loggedOut(logout.getEmail());
+            deviceManager.userLogout(logout.getEmail());
             return ResponseEntity.status(HttpStatus.OK).body("");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
