@@ -5,6 +5,6 @@ public enum DeviceStatus {
     CLOSED,
     INACTIVE,
     CONNECTED,
-    CONNECTION_CLOSED,
+    DISCONNECTED,
     CREATED
 }

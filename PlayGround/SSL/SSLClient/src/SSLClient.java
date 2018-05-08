@@ -20,13 +20,13 @@ public class SSLClient {
             InetAddress ip = InetAddress.getByName("127.0.0.1");
             DeviceManager deviceManager = new DeviceManager();
             deviceManager.registerDevice(new HalDevice(ip, port, "led"));
-            IDevice device = deviceManager.getDevice(ip, port);
-            device.open();
-            device.close();
-            device.getStatus();
-            AcceptedParams acceptedParams = device.getAcceptedParams();
-//            System.out.println(acceptedParams.get("intensintate"));
-            device.closeConnection();
+//            IDevice device = deviceManager.getDevice(ip, port);
+//            device.open();
+//            device.close();
+//            device.getStatus();
+//            AcceptedParams acceptedParams = device.getAcceptedParams();
+////            System.out.println(acceptedParams.get("intensintate"));
+//            device.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }

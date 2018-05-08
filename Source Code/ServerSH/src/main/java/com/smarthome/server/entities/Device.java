@@ -1,5 +1,7 @@
 package com.smarthome.server.entities;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.net.InetAddress;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "device")
+@Transactional
 public class Device {
     @Id
     @Column(name = "device_id")

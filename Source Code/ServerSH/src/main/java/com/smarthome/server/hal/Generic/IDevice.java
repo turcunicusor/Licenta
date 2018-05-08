@@ -23,7 +23,9 @@ public interface IDevice {
 
     AcceptedParams getAcceptedParams() throws Exception;
 
+    void connect() throws  Exception;
+
     void closeConnection() throws IOException;
 
-    void connect() throws  Exception;
+    void testConnection() throws Exception;
 }

@@ -46,7 +46,7 @@ public class DeviceViewDTO {
         this.id = deviceHal.getDevice().getHash();
         this.params = new HashMap<>();
         try {
-            this.status = deviceHal.getStatus().toString();
+            this.status = deviceHal.getStatus().toString().toLowerCase();
         } catch (Exception e) {
             e.printStackTrace();
         }

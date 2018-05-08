@@ -90,26 +90,37 @@ public class HalDevice implements IDevice {
 
     @Override
     public void closeConnection() throws IOException {
-        if (this.status != DeviceStatus.CONNECTION_CLOSED) {
-            inStream.close();
-            outStream.close();
-            server.close();
+        System.out.println("disconnected called");
+        try {
+            if (this.status == DeviceStatus.CONNECTED) {
+                inStream.close();
+                outStream.close();
+                server.close();
+            }
+        } finally {
+            this.status = DeviceStatus.DISCONNECTED;
         }
-        this.status = DeviceStatus.CONNECTION_CLOSED;
     }
 
     @Override
     public void connect() throws Exception {
+        System.out.println("connected called");
         try {
             server = (SSLSocketFactory.getDefault()).createSocket(device.getIp(), device.getPort());
             outStream = new PrintWriter(server.getOutputStream(), true);
             inStream = new BufferedReader(new InputStreamReader(server.getInputStream()));
-            this.status = DeviceStatus.CONNECTED;
         } catch (Exception e) {
-            throw new SocketException(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online. Reason: '%s'.",
-                    device.getIp().toString(), device.getPort(), device.getType(), e.getMessage()));
+            throw new SocketException(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online.",
+                    device.getIp().toString(), device.getPort(), device.getType()));
         }
         checkType(device.getType());
+        this.status = DeviceStatus.CONNECTED;
+    }
+
+    @Override
+    public void testConnection() throws Exception {
+        this.connect();
+        this.closeConnection();
     }
 
     private String onResponse(String response) throws IOException {

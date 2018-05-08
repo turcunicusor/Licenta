@@ -15,7 +15,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class ServerApplication {
+	private static final String SSL_KEY = "javax.net.ssl.trustStore";
+	private static final String SSL_VALUE = "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo";
+
 	public static void main(String[] args) {
+		System.setProperty(SSL_KEY, SSL_VALUE);
 		SpringApplication.run(ServerApplication.class, args);
 	}
 }

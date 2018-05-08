@@ -9,23 +9,22 @@ import com.smarthome.server.repositories.DeviceRepository;
 import com.smarthome.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
+@Transactional
 public class DeviceManager {
     private final UserRepository userRepository;
     private final DeviceRepository deviceRepository;
 
-    private static final String SSL_KEY = "javax.net.ssl.trustStore";
-    private static final String SSL_VALUE = "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo";
     private HashMap<String, IDevice> halDevices;
 
     @Autowired
     public DeviceManager(UserRepository userRepository, DeviceRepository deviceRepository) {
-        System.setProperty(SSL_KEY, SSL_VALUE);
         this.halDevices = new HashMap<>();
         this.userRepository = userRepository;
         this.deviceRepository = deviceRepository;

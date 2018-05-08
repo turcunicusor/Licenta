@@ -14,9 +14,11 @@ export class ManageComponent implements OnInit, OnDestroy {
   private sub: any;
   device: Device;
   public isLoading;
+  public connectionStatus: boolean;
 
   constructor(private route: ActivatedRoute, public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     this.isLoading = true;
+    this.connectionStatus = null;
   }
 
   ngOnInit() {
@@ -81,6 +83,39 @@ export class ManageComponent implements OnInit, OnDestroy {
       });
     return false;
   }
+
+  onConnect() {
+    return this._bs.connectDevice(this.device.id).subscribe(
+      res => {
+        this.device.status = 'connected';
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
+  }
+
+  onDisconnect() {
+    return this._bs.disconnectDevice(this.device.id).subscribe(
+      res => {
+        this.device.status = 'disconnected';
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
+  }
+
+  // onTestConnection(id: string) {
+  //   this._bs.testConnectionDevice(id).subscribe(res => {
+  //       this.connectionStatus = true;
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       this.connectionStatus = false;
+  //       const message = this._bs.handleError(err);
+  //       this.toastr.warning(message);
+  //     });
+  // }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

@@ -11,6 +11,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class ViewComponent implements OnInit {
   devices: Array<Device>;
   public isLoading: boolean;
+  public connectionStatus: boolean;
 
   constructor(public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     // test only
@@ -20,6 +21,7 @@ export class ViewComponent implements OnInit {
     //   this.devices[i].id = this.devices[i].id + i;
     // }
     this.isLoading = true;
+    this.connectionStatus = null;
   }
 
   onManageClick(id: string) {
@@ -34,6 +36,17 @@ export class ViewComponent implements OnInit {
         this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
+  }
+
+  onTestConnection(id: string) {
+    this._bs.testConnectionDevice(id).subscribe(res => {
+        this.connectionStatus = true;
+      },
+      (err: HttpErrorResponse) => {
+        this.connectionStatus = false;
         const message = this._bs.handleError(err);
         this.toastr.warning(message);
       });

@@ -75,10 +75,10 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @DeleteMapping
+    @DeleteMapping()
     ResponseEntity delete(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceRepository.findByHash(hash);
+        Device device = deviceManager.getDevice(hash);
         if (device == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
@@ -87,10 +87,58 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
+    @PostMapping("/testConnection")
+    ResponseEntity testConnection(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceManager.getDevice(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        try {
+            deviceManager.getHalDevice(hash).testConnection();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Test connection failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @PostMapping("/connect")
+    ResponseEntity connect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceManager.getDevice(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        try {
+            deviceManager.getHalDevice(hash).connect();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Connect failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @PostMapping("/disconnect")
+    ResponseEntity disconnect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceManager.getDevice(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        try {
+            deviceManager.getHalDevice(hash).closeConnection();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Disconnect failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
     @PutMapping()
     ResponseEntity edit(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody DeviceDTO deviceDTO) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceRepository.findByHash(hash);
+        Device device = deviceManager.getDevice(hash);
         if (device == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))

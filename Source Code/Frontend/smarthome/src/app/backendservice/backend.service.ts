@@ -63,10 +63,10 @@ export class Utils {
 
 @Injectable()
 export class BackendService {
-  public deviceTypes: String[];
+  public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://e6b5bcd3.ngrok.io';
+  private server_url = 'http://dfd4f9ad.ngrok.io';
   private token;
   private email;
   private auth_header;
@@ -194,5 +194,17 @@ export class BackendService {
 
   public updateDevice(json, id) {
     return this._http.put(this.server_url + '/device?device=' + id, JSON.stringify(json), {headers: this.auth_header});
+  }
+
+  public testConnectionDevice(id) {
+    return this._http.post(this.server_url + '/device/testConnection?device=' + id, '', {headers: this.auth_header});
+  }
+
+  public connectDevice(id) {
+    return this._http.post(this.server_url + '/device/connect?device=' + id, '', {headers: this.auth_header});
+  }
+
+  public disconnectDevice(id) {
+    return this._http.post(this.server_url + '/device/disconnect?device=' + id, '', {headers: this.auth_header});
   }
 }

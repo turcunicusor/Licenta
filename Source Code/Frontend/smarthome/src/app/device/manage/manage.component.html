@@ -5,6 +5,21 @@
       <label class="text-left row" id="labledevicetype">{{device.type}}</label>
 
       <div class="containerel mb-3 border border-secondary rounded bg_color_green innerdiv">
+        <div class="row">
+          <div class="col">
+            <button *ngIf="device.status.toLowerCase() === 'created' || device.status.toLowerCase() === 'disconnected'"
+                    class="btn btn-info" style="float: left;" (click)="onConnect()">Connect
+            </button>
+            <button *ngIf="device.status.toLowerCase() === 'connected'" class="btn btn-secondary"
+                    (click)="onDisconnect()" style="float: left;">Disconnect
+            </button>
+          </div>
+          <div class="col">
+            <p style="float: right;">Status:
+              <small style="color: var(--color5)">{{device.status}}</small>
+            </p>
+          </div>
+        </div>
         <div class="containerel input-group mb-3 row bg_color_green innerdiv">
           <label for="inputname"
                  class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Name</label>
@@ -67,8 +82,8 @@
           <div class="col-lg-6">
             <select class="form-control" id="inputtype" #type>
               <ng-container *ngFor="let option of _bs.deviceTypes">
-                <option *ngIf="!option.match(device.type)">{{option}}</option>
-                <option *ngIf="option.match(device.type)" selected="selected">{{option}}</option>
+                <option *ngIf="!(option === device.type)">{{option}}</option>
+                <option *ngIf="option === device.type" selected="selected">{{option}}</option>
               </ng-container>
             </select>
           </div>

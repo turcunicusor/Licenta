@@ -2,6 +2,7 @@ package com.smarthome.server.entities;
 
 import com.smarthome.server.dtos.UserDTO;
 import com.smarthome.server.service.UserStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@Transactional
 public class User {
     //region private fields
     @Id

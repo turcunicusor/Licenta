@@ -1,11 +1,14 @@
 package com.smarthome.server.entities;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
+@Transactional
 public class Role {
     //region private fields
     @Id
