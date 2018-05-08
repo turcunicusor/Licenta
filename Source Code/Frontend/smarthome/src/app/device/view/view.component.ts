@@ -10,8 +10,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ViewComponent implements OnInit {
   devices: Array<Device>;
+  devConnStatus: { [index: string]: boolean; };
   public isLoading: boolean;
-  public connectionStatus: boolean;
 
   constructor(public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     // test only
@@ -21,7 +21,7 @@ export class ViewComponent implements OnInit {
     //   this.devices[i].id = this.devices[i].id + i;
     // }
     this.isLoading = true;
-    this.connectionStatus = null;
+    this.devConnStatus = {};
   }
 
   onManageClick(id: string) {
@@ -33,6 +33,9 @@ export class ViewComponent implements OnInit {
     this._bs.getAllDevices().subscribe(
       res => {
         this.devices = res;
+        for (const device of this.devices) {
+          this.devConnStatus[device.id] = false;
+        }
         this.isLoading = false;
       },
       (err: HttpErrorResponse) => {
@@ -43,10 +46,10 @@ export class ViewComponent implements OnInit {
 
   onTestConnection(id: string) {
     this._bs.testConnectionDevice(id).subscribe(res => {
-        this.connectionStatus = true;
+        this.devConnStatus[id] = true;
       },
       (err: HttpErrorResponse) => {
-        this.connectionStatus = false;
+        this.devConnStatus[id] = false;
         const message = this._bs.handleError(err);
         this.toastr.warning(message);
       });

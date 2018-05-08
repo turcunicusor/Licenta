@@ -50,7 +50,7 @@ public class DeviceViewDTO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.params.put("intensitate", "intensitate");
+        this.params.put("intensitate", "100");
         this.params.put("tensiune", "1");
         this.acceptedParams = new HashMap<>();
         this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));

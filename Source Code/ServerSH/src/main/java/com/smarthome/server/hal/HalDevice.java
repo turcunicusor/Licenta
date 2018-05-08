@@ -113,7 +113,14 @@ public class HalDevice implements IDevice {
             throw new SocketException(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online.",
                     device.getIp().toString(), device.getPort(), device.getType()));
         }
-        checkType(device.getType());
+        try {
+            // if type mismatch connection is opened and we need to close it
+            checkType(device.getType());
+        }
+        catch (Exception e){
+            closeConnection();
+            throw e;
+        }
         this.status = DeviceStatus.CONNECTED;
     }
 

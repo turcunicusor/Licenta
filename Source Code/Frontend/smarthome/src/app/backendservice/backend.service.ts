@@ -74,7 +74,7 @@ export class BackendService {
 
   constructor(private _http: HttpClient, public router: Router) {
     this.deviceTypes = [];
-    this.deviceTypes.push('led', 'rbga led', 'doorlock', 'central heating', 'temperature sensor');
+    this.deviceTypes.push('led', 'rbga led', 'doorlock', 'centralheating', 'temperature sensor');
     this.token = 'Bearer ';
     this.email = null;
     this.isLoggedIn = false;

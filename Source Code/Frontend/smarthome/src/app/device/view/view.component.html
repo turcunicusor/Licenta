@@ -5,16 +5,21 @@
         <ng-container *ngFor="let device of devices; let i = index">
           <div class="card">
             <div class="card-header" id="heading{{i}}">
-              <h5 class="mb-2">
-                <button class="btn btn-outline-info collapsed custom" type="button" [attr.data-toggle]="'collapse'"
-                        [attr.data-target]="'#collapse' + i"
-                        [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
-                  {{device.name}}
-                </button>
-                <label id="device_status">
-                  <small>{{device.status}}</small>
-                </label>
-              </h5>
+              <div class="row">
+                <div class="col">
+                  <button style="float:right;" class="btn btn-outline-info collapsed custom" type="button"
+                          [attr.data-toggle]="'collapse'"
+                          [attr.data-target]="'#collapse' + i"
+                          [attr.aria-expanded]="'false'" [attr.aria-controls]="'collapse' + i">
+                    {{device.name}}
+                  </button>
+                </div>
+                <div class="col">
+                  <div style="float:left;" id="device_status">
+                    <small>{{device.status}}</small>
+                  </div>
+                </div>
+              </div>
             </div>
             <div id="collapse{{i}}" class="collapse" [attr.aria-labelledby]="'heading' + i"
                  data-parent="#accordion">
@@ -53,8 +58,8 @@
                       <div style="float: left;">
                         <button class="btn btn-outline-info" (click)="onTestConnection(device.id)">Test Connection
                         </button>
-                        <span *ngIf="connectionStatus" class="text-success">Success</span>
-                        <span *ngIf="!connectionStatus" class="text-danger">Failed</span>
+                        <span *ngIf="devConnStatus[device.id]" class="text-success">Success</span>
+                        <span *ngIf="!devConnStatus[device.id]" class="text-danger">Failed</span>
                       </div>
                     </div>
                   </div>
