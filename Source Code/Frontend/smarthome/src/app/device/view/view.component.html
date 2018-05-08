@@ -42,20 +42,25 @@
                           </tr>
                           </thead>
                           <tbody>
-                          <ng-container *ngFor="let key of _ut.keys(device.params)">
-                            <tr class="text-left">
-                              <th scope="row">{{_ut.keyindex(device.params,key)}}</th>
-                              <td>{{key}}</td>
-                              <td>{{device.params[key]}}</td>
-                            </tr>
+                          <ng-container *ngIf="!_ut.checkEmpty(device.params)">
+                            <ng-container *ngFor="let key of _ut.keys(device.params)">
+                              <tr class="text-left">
+                                <th scope="row">{{_ut.keyindex(device.params,key)}}</th>
+                                <td>{{key}}</td>
+                                <td>{{device.params[key]}}</td>
+                              </tr>
+                            </ng-container>
                           </ng-container>
                           </tbody>
                         </table>
+                        <div *ngIf="_ut.checkEmpty(device.params)" class="">
+                          <p class="text-info text-center">No parameters are displayed when device is offline.</p>
+                        </div>
                       </div>
                       <div style="float: right;">
                         <button class="btn btn-primary" (click)="onManageClick(device.id)">Manage</button>
                       </div>
-                      <div style="float: left;">
+                      <div *ngIf="device.status !== 'connected'" style="float: left;">
                         <button class="btn btn-outline-info" (click)="onTestConnection(device.id)">Test Connection
                         </button>
                         <span *ngIf="devConnStatus[device.id]" class="text-success">Success</span>

@@ -35,23 +35,28 @@
 
       <div class="containerel bg_color_green innerdiv rounded border border-secondary ">
         <h4 class="text-center">Options</h4>
-        <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
-          <div class="containerel input-group mb-3 row bg_color_green innerdiv">
-            <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
-            <ng-container>
-              <input *ngIf="!device.acceptedParams[key].readOnly" id="param{{i}}" class="form-control" type="text"
-                     value="{{device.params[key]}}"
-                     placeholder="{{key}}" required>
-              <input *ngIf="device.acceptedParams[key].readOnly" class="form-control" type="text"
-                     value="{{device.params[key]}}"
-                     placeholder="{{key}}" required disabled="disabled">
-            </ng-container>
-            <div *ngIf="!device.acceptedParams[key].readOnly" class="input-group-appended">
-              <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
-                      (click)="onSaveParam(key, i)">Save
-              </button>
+        <div *ngIf="_ut.checkEmpty(device.params)" class="containerel input-group bg_color_green innerdiv">
+          <p class="text-info text-center">No parameters are displayed when device is offline.</p>
+        </div>
+        <ng-container *ngIf="!_ut.checkEmpty(device.params)">
+          <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
+            <div class="containerel input-group mb-3 row bg_color_green innerdiv">
+              <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
+              <ng-container>
+                <input *ngIf="!device.acceptedParams[key].readOnly" id="param{{i}}" class="form-control" type="text"
+                       value="{{device.params[key]}}"
+                       placeholder="{{key}}" required>
+                <input *ngIf="device.acceptedParams[key].readOnly" class="form-control" type="text"
+                       value="{{device.params[key]}}"
+                       placeholder="{{key}}" required disabled="disabled">
+              </ng-container>
+              <div *ngIf="!device.acceptedParams[key].readOnly" class="input-group-appended">
+                <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
+                        (click)="onSaveParam(key, i)">Save
+                </button>
+              </div>
             </div>
-          </div>
+          </ng-container>
         </ng-container>
       </div>
 

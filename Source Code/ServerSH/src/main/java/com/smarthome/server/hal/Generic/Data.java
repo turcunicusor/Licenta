@@ -6,6 +6,11 @@ import java.util.Arrays;
 public class Data extends ArrayList<String> {
     private static String separator = ";";
 
+    public Data(ArrayList<String> data){
+        this.clear();
+        this.addAll(data);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

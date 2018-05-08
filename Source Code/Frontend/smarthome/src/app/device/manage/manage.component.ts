@@ -29,7 +29,6 @@ export class ManageComponent implements OnInit, OnDestroy {
         res => {
           this.device = res;
           this.isLoading = false;
-          console.log(this.device.acceptedParams);
         },
         (err: HttpErrorResponse) => {
           const message = this._bs.handleError(err);
@@ -85,9 +84,18 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   onConnect() {
-    return this._bs.connectDevice(this.device.id).subscribe(
+    return this._bs.connectDevice(this.id).subscribe(
       res => {
-        this.device.status = 'connected';
+        this._bs.getDevice(this.id).subscribe(
+          rest => {
+            this.device.params = rest.params;
+            this.device.acceptedParams = rest.acceptedParams;
+            this.device.status = rest.status;
+          },
+          (err: HttpErrorResponse) => {
+            const message = this._bs.handleError(err);
+            this.toastr.warning(message);
+          });
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);
@@ -99,6 +107,8 @@ export class ManageComponent implements OnInit, OnDestroy {
     return this._bs.disconnectDevice(this.device.id).subscribe(
       res => {
         this.device.status = 'disconnected';
+        this.device.params = {};
+        this.device.acceptedParams = {};
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

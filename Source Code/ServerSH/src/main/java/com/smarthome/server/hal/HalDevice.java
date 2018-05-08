@@ -40,16 +40,22 @@ public class HalDevice implements IDevice {
 
     @Override
     public void open() throws Exception {
-        outStream.println(Protocol.OPEN);
-        onResponse(inStream.readLine());
-        this.status = DeviceStatus.OPENED;
+        try {
+            outStream.println(Protocol.OPEN);
+            onResponse(inStream.readLine());
+        } finally {
+            this.status = DeviceStatus.OPENED;
+        }
     }
 
     @Override
     public void close() throws Exception {
-        outStream.println(Protocol.CLOSE);
-        onResponse(inStream.readLine());
-        this.status = DeviceStatus.CLOSED;
+        try {
+            outStream.println(Protocol.CLOSE);
+            onResponse(inStream.readLine());
+        } finally {
+            this.status = DeviceStatus.CLOSED;
+        }
     }
 
     @Override
@@ -60,17 +66,19 @@ public class HalDevice implements IDevice {
 
     @Override
     public DeviceStatus getStatus() throws Exception {
-        if (DeviceStatus.CONNECTED == this.status) {
-            outStream.println(Protocol.GET_STATUS);
-            this.status = DeviceStatus.valueOf(onResponse(inStream.readLine()));
-        }
+//        if (DeviceStatus.CONNECTED == this.status) {
+//            outStream.println(Protocol.GET_STATUS);
+//            this.status = DeviceStatus.valueOf(onResponse(inStream.readLine()));
+//        }
         return this.status;
     }
 
     @Override
     public Params queryData(Data data) throws Exception {
-        outStream.println(Protocol.QUERRY_DATA + data.toString());
-        this.paramsVal.addData(onResponse(inStream.readLine()));
+        if (DeviceStatus.CONNECTED == this.status) {
+            outStream.println(Protocol.QUERRY_DATA + data.toString());
+            this.paramsVal.addData(onResponse(inStream.readLine()));
+        }
         return this.paramsVal;
     }
 
@@ -83,8 +91,10 @@ public class HalDevice implements IDevice {
 
     @Override
     public AcceptedParams getAcceptedParams() throws Exception {
-        outStream.println(Protocol.GET_PARAMS);
-        this.acceptedParams.addData(onResponse(inStream.readLine()));
+        if (DeviceStatus.CONNECTED == status) {
+            outStream.println(Protocol.GET_PARAMS);
+            this.acceptedParams.addData(onResponse(inStream.readLine()));
+        }
         return this.acceptedParams;
     }
 
@@ -116,8 +126,7 @@ public class HalDevice implements IDevice {
         try {
             // if type mismatch connection is opened and we need to close it
             checkType(device.getType());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             closeConnection();
             throw e;
         }

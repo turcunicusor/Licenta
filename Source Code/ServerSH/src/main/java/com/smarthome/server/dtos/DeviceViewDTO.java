@@ -1,8 +1,10 @@
 package com.smarthome.server.dtos;
 
+import com.smarthome.server.hal.Generic.Data;
 import com.smarthome.server.hal.Generic.IDevice;
 import com.smarthome.server.hal.Generic.ParamDescription;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DeviceViewDTO {
@@ -44,17 +46,21 @@ public class DeviceViewDTO {
         this.type = deviceHal.getDevice().getType();
         this.name = deviceHal.getDevice().getName();
         this.id = deviceHal.getDevice().getHash();
-        this.params = new HashMap<>();
         try {
             this.status = deviceHal.getStatus().toString().toLowerCase();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.params.put("intensitate", "100");
-        this.params.put("tensiune", "1");
-        this.acceptedParams = new HashMap<>();
-        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
-        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
+        try {
+            this.acceptedParams = deviceHal.getAcceptedParams();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            this.params = deviceHal.queryData(new Data(new ArrayList<>(acceptedParams.keySet())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public HashMap<String, String> getParams() {

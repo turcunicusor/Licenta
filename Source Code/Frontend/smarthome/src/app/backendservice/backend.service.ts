@@ -59,6 +59,10 @@ export class Utils {
   keyindex(param: DictionaryParm, key: string): any {
     return Object.keys(param).indexOf(key);
   }
+
+  checkEmpty(param: any): boolean {
+    return Object.keys(param).length === 0;
+  }
 }
 
 @Injectable()
