@@ -107,6 +107,8 @@ public class HalDevice implements IDevice {
                 outStream.close();
                 server.close();
             }
+            this.paramsVal = new Params();
+            this.acceptedParams = new AcceptedParams();
         } finally {
             this.status = DeviceStatus.DISCONNECTED;
         }

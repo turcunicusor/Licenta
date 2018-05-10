@@ -17,7 +17,7 @@ public class DeviceImpl implements IDevice {
             e.printStackTrace();
         }
         this.paramsVal = new Params();
-        paramsVal.put("defparam", "0");
+        paramsVal.put("intensitate", "0");
     }
 
     @Override

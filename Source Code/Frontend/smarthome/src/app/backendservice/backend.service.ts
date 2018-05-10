@@ -39,14 +39,14 @@ export class Device {
   public acceptedParams: DictionaryAccParm;
 
   constructor() {
-    this.name = 'DEFAULT';
-    this.type = 'led';
-    this.id = 'randomid';
-    this.ip = '127.0.0.1';
-    this.port = '8000';
-    this.status = 'DEFAULT';
-    this.params = {'intensitate': '80%', 'temperatura': '12grade'};
-    this.acceptedParams = {'intensitate': new ParameterDescription()};
+    this.name = '';
+    this.type = '';
+    this.id = '';
+    this.ip = '';
+    this.port = '';
+    this.status = '';
+    this.params = {};
+    this.acceptedParams = {};
   }
 }
 
@@ -70,7 +70,7 @@ export class BackendService {
   public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://dfd4f9ad.ngrok.io';
+  private server_url = 'http://4323cf53.ngrok.io';
   private token;
   private email;
   private auth_header;
