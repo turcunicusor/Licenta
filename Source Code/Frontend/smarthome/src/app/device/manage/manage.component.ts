@@ -15,10 +15,12 @@ export class ManageComponent implements OnInit, OnDestroy {
   device: Device;
   public isLoading;
   public connectionStatus: boolean;
+  public isOpened: boolean;
 
   constructor(private route: ActivatedRoute, public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     this.isLoading = true;
     this.connectionStatus = null;
+    this.isOpened = false;
   }
 
   ngOnInit() {
@@ -94,6 +96,7 @@ export class ManageComponent implements OnInit, OnDestroy {
             this.device.params = rest.params;
             this.device.acceptedParams = rest.acceptedParams;
             this.device.status = rest.status;
+            this.isOpened = this.device.status === 'opened';
           },
           (err: HttpErrorResponse) => {
             const message = this._bs.handleError(err);
@@ -112,6 +115,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.status = 'disconnected';
         this.device.params = {};
         this.device.acceptedParams = {};
+        this.isOpened = this.device.status === 'opened';
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);
@@ -119,16 +123,27 @@ export class ManageComponent implements OnInit, OnDestroy {
       });
   }
 
-  // onTestConnection(id: string) {
-  //   this._bs.testConnectionDevice(id).subscribe(res => {
-  //       this.connectionStatus = true;
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       this.connectionStatus = false;
-  //       const message = this._bs.handleError(err);
-  //       this.toastr.warning(message);
-  //     });
-  // }
+  onChange(isChecked: boolean) {
+    if (isChecked) {
+      this._bs.openDevice(this.device.id).subscribe(
+        res => {
+          this.device.status = 'opened';
+        },
+        (err: HttpErrorResponse) => {
+          const message = this._bs.handleError(err);
+          this.toastr.warning(message);
+        });
+    } else {
+      this._bs.closeDevice(this.device.id).subscribe(
+        res => {
+          this.device.status = 'closed';
+        },
+        (err: HttpErrorResponse) => {
+          const message = this._bs.handleError(err);
+          this.toastr.warning(message);
+        });
+    }
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

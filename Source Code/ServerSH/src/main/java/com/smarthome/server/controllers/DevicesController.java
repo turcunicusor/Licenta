@@ -83,7 +83,7 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @PostMapping("/testConnection")
+    @PutMapping("/testConnection")
     ResponseEntity testConnection(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         checkDevice(token, hash);
         try {
@@ -94,7 +94,7 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @PostMapping("/connect")
+    @PutMapping("/connect")
     ResponseEntity connect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         checkDevice(token, hash);
         try {
@@ -105,7 +105,7 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @PostMapping("/open")
+    @PutMapping("/open")
     ResponseEntity open(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         checkDevice(token, hash);
         try {
@@ -127,7 +127,7 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @PostMapping("/close")
+    @PutMapping("/close")
     ResponseEntity close(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         checkDevice(token, hash);
         try {
@@ -138,7 +138,7 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
-    @PostMapping("/disconnect")
+    @PutMapping("/disconnect")
     ResponseEntity disconnect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
         checkDevice(token, hash);
         try {

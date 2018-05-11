@@ -6,6 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     npm install --save bootstrap@next
     npm install ngx-toastr --save
     npm install @angular/animations --save
+	npm install titatoggle --save-dev
 	
 #Paleta de culori:
 	- 1. #d8e0bb

@@ -75,7 +75,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public Params queryData(Data data) throws Exception {
-        if (DeviceStatus.CONNECTED == this.status) {
+        if (DeviceStatus.CONNECTED == this.status  || DeviceStatus.OPENED == status) {
             outStream.println(Protocol.QUERRY_DATA + data.toString());
             this.paramsVal.addData(onResponse(inStream.readLine()));
         }
@@ -91,7 +91,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public AcceptedParams getAcceptedParams() throws Exception {
-        if (DeviceStatus.CONNECTED == status) {
+        if (DeviceStatus.CONNECTED == status || DeviceStatus.OPENED == status) {
             outStream.println(Protocol.GET_PARAMS);
             this.acceptedParams.addData(onResponse(inStream.readLine()));
         }
@@ -102,7 +102,7 @@ public class HalDevice implements IDevice {
     public void closeConnection() throws IOException {
         System.out.println("disconnected called");
         try {
-            if (this.status == DeviceStatus.CONNECTED) {
+            if (this.status == DeviceStatus.CONNECTED || this.status == DeviceStatus.OPENED) {
                 inStream.close();
                 outStream.close();
                 server.close();

@@ -10,9 +10,16 @@
             <button *ngIf="device.status.toLowerCase() === 'created' || device.status.toLowerCase() === 'disconnected'"
                     class="btn btn-info" style="float: left;" (click)="onConnect()">Connect
             </button>
-            <button *ngIf="device.status.toLowerCase() === 'connected'" class="btn btn-secondary"
-                    (click)="onDisconnect()" style="float: left;">Disconnect
+            <button *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
+                    class="btn btn-secondary" style="float: left;" (click)="onDisconnect()">Disconnect
             </button>
+            <div *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
+              class="form-check checkbox-slider-md checkbox-slider--a">
+              <label>
+                <input type="checkbox" (change)="onChange($event.target.checked)" [attr.ng-checked]="isOpened">
+                <span></span>
+              </label>
+            </div>
           </div>
           <div class="col">
             <p style="float: right;">Status:

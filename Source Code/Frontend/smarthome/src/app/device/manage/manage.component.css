@@ -33,3 +33,15 @@
 .modal-title {
   margin: 0 auto;
 }
+
+.form-check {
+  float: left;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+@media only screen and (max-width : 494px) {
+  .form-check {
+    margin-left: 0;
+  }
+}

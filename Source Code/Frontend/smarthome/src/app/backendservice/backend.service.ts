@@ -159,7 +159,7 @@ export class BackendService {
   }
 
   public register(json): Observable<any> {
-    return this.post('/register', json, this.def_header);
+    return this.post('/register', JSON.stringify(json), this.def_header);
   }
 
   public getAllUsers(): Observable<any> {
@@ -173,7 +173,7 @@ export class BackendService {
   }
 
   public updateProfile(json): Observable<any> {
-    return this.post('/user/profile', json);
+    return this.post('/user/profile', JSON.stringify(json));
   }
 
   public updateEmail(email) {
@@ -185,7 +185,7 @@ export class BackendService {
   }
 
   public addNewDevice(json) {
-    return this.post('/device', json);
+    return this.post('/device', JSON.stringify(json));
   }
 
   public getDevice(id: String): Observable<Device> {
@@ -201,14 +201,26 @@ export class BackendService {
   }
 
   public testConnectionDevice(id) {
-    return this._http.post(this.server_url + '/device/testConnection?device=' + id, '', {headers: this.auth_header});
+    return this._http.put(this.server_url + '/device/testConnection?device=' + id, '', {headers: this.auth_header});
   }
 
   public connectDevice(id) {
-    return this._http.post(this.server_url + '/device/connect?device=' + id, '', {headers: this.auth_header});
+    return this._http.put(this.server_url + '/device/connect?device=' + id, '', {headers: this.auth_header});
+  }
+
+  public openDevice(id) {
+    return this._http.put(this.server_url + '/device/open?device=' + id, '', {headers: this.auth_header});
+  }
+
+  public setParams(id, json) {
+    return this._http.post(this.server_url + '/device/setParams?device=' + id, JSON.stringify(json), {headers: this.auth_header});
+  }
+
+  public closeDevice(id) {
+    return this._http.put(this.server_url + '/device/close?device=' + id, '', {headers: this.auth_header});
   }
 
   public disconnectDevice(id) {
-    return this._http.post(this.server_url + '/device/disconnect?device=' + id, '', {headers: this.auth_header});
+    return this._http.put(this.server_url + '/device/disconnect?device=' + id, '', {headers: this.auth_header});
   }
 }
