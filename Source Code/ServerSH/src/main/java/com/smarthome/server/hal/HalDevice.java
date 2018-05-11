@@ -107,8 +107,8 @@ public class HalDevice implements IDevice {
                 outStream.close();
                 server.close();
             }
-            this.paramsVal = new Params();
-            this.acceptedParams = new AcceptedParams();
+            this.paramsVal.clear();
+            this.acceptedParams.clear();
         } finally {
             this.status = DeviceStatus.DISCONNECTED;
         }
@@ -125,14 +125,14 @@ public class HalDevice implements IDevice {
             throw new SocketException(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online.",
                     device.getIp().toString(), device.getPort(), device.getType()));
         }
+        this.status = DeviceStatus.CONNECTED;
         try {
             // if type mismatch connection is opened and we need to close it
             checkType(device.getType());
-        } catch (Exception e) {
+        } catch (IOException e) {
             closeConnection();
-            throw e;
+            throw new Exception(e.getMessage());
         }
-        this.status = DeviceStatus.CONNECTED;
     }
 
     @Override

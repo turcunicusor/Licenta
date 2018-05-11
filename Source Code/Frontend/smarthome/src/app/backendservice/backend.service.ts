@@ -70,7 +70,7 @@ export class BackendService {
   public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://4323cf53.ngrok.io';
+  private server_url = 'http://d230c94e.ngrok.io';
   private token;
   private email;
   private auth_header;

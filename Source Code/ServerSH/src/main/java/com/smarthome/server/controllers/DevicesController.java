@@ -2,6 +2,7 @@ package com.smarthome.server.controllers;
 
 import com.smarthome.server.dtos.DeviceDTO;
 import com.smarthome.server.dtos.DeviceViewDTO;
+import com.smarthome.server.dtos.ParamsDTO;
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.hal.Generic.IDevice;
@@ -77,24 +78,14 @@ public class DevicesController {
 
     @DeleteMapping()
     ResponseEntity delete(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceManager.getDevice(hash);
-        if (device == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
-        if (!device.getOwner().getEmail().equals(ownerEmail))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
-        deviceManager.deleteHalDevice(device.getHash());
+        checkDevice(token, hash);
+        deviceManager.deleteHalDevice(hash);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
     @PostMapping("/testConnection")
     ResponseEntity testConnection(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceManager.getDevice(hash);
-        if (device == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
-        if (!device.getOwner().getEmail().equals(ownerEmail))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        checkDevice(token, hash);
         try {
             deviceManager.getHalDevice(hash).testConnection();
         } catch (Exception e) {
@@ -105,12 +96,7 @@ public class DevicesController {
 
     @PostMapping("/connect")
     ResponseEntity connect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceManager.getDevice(hash);
-        if (device == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
-        if (!device.getOwner().getEmail().equals(ownerEmail))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        checkDevice(token, hash);
         try {
             deviceManager.getHalDevice(hash).connect();
         } catch (Exception e) {
@@ -119,14 +105,42 @@ public class DevicesController {
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
+    @PostMapping("/open")
+    ResponseEntity open(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        checkDevice(token, hash);
+        try {
+            deviceManager.getHalDevice(hash).open();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Open failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @PostMapping("/setParams")
+    ResponseEntity setParams(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody ParamsDTO paramsDTO) {
+        checkDevice(token, hash);
+        try {
+            deviceManager.getHalDevice(hash).command(paramsDTO.getParams());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Open failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    @PostMapping("/close")
+    ResponseEntity close(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
+        checkDevice(token, hash);
+        try {
+            deviceManager.getHalDevice(hash).close();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Close failed. Reason: " + e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
     @PostMapping("/disconnect")
     ResponseEntity disconnect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        String ownerEmail = TokenAuthenticationService.decodeToken(token);
-        Device device = deviceManager.getDevice(hash);
-        if (device == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
-        if (!device.getOwner().getEmail().equals(ownerEmail))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
+        checkDevice(token, hash);
         try {
             deviceManager.getHalDevice(hash).closeConnection();
         } catch (Exception e) {
@@ -156,6 +170,16 @@ public class DevicesController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
         }
+        return ResponseEntity.status(HttpStatus.OK).body("");
+    }
+
+    private ResponseEntity checkDevice(String token, String hash) {
+        String ownerEmail = TokenAuthenticationService.decodeToken(token);
+        Device device = deviceManager.getDevice(hash);
+        if (device == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
+        if (!device.getOwner().getEmail().equals(ownerEmail))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }

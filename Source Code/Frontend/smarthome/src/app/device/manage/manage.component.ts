@@ -62,6 +62,9 @@ export class ManageComponent implements OnInit, OnDestroy {
     this._bs.updateDevice(json, this.device.id).subscribe(
       res => {
         this.toastr.success('Device updated successfully.');
+        this.device.status = 'disconnected';
+        this.device.params = {};
+        this.device.acceptedParams = {};
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);
