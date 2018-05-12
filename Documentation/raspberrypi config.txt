@@ -1,0 +1,13 @@
+-> "GND" , "-"
+-> "5VPWR", "+"
+-> "SEMNAL IESIRE", "s"
+
+ethernet static, rpi disconnected:
+	- ip addr: 192.168.137.1
+	- subnet mask: 255.255.255.0
+	- raspberry pi add: 169.254.207.167
+
+rpi conected:
+	- 192.168.0.2-255
+	
+tutorial:		https://www.hackster.io/Anwaarullah/sharing-wifi-with-raspberry-pi-using-a-lan-cable-ae1f44
