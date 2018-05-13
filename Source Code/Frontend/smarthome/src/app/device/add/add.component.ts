@@ -16,7 +16,7 @@ export class AddComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSaveChanges(ip: string, port: string, type: string, name: string) {
+  onSaveChanges(ip: string, port: number, type: string, name: string) {
     const json = {ip: ip, port: port, type: type, name: name};
     this._bs.addNewDevice(json).subscribe(
       res => {

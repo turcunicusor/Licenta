@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -60,7 +59,7 @@ public class DevicesController {
     }
 
     @PostMapping()
-    ResponseEntity add(@RequestHeader("Authorization") String token, @Valid @RequestBody DeviceDTO deviceDTO) {
+    ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody DeviceDTO deviceDTO) {
         String userEmail = TokenAuthenticationService.decodeToken(token);
         User user = userRepository.findByEmail(userEmail);
         if (user == null)

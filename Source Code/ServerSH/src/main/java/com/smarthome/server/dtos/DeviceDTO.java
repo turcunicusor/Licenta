@@ -1,33 +1,36 @@
 package com.smarthome.server.dtos;
 
-import com.smarthome.server.entities.Device;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@JsonDeserialize
 public class DeviceDTO {
     @NotEmpty(message = "Please provide an Ip.")
     private String ip;
-    private int port;
-    @NotEmpty(message = "Please provide a Type.")
-    private String type;
     @NotEmpty(message = "Please provide a Name.")
     private String name;
+    private Integer port;
+    @NotEmpty(message = "Please provide a Type.")
+    private String type;
 
-    public DeviceDTO(String ip, int port, String type, String name) {
+    public DeviceDTO() {
+    }
+
+    public DeviceDTO(String ip, String name, int port, String type) {
         this.ip = ip;
         this.port = port;
         this.type = type;
         this.name = name;
     }
-
-    public DeviceDTO() {
-    }
-
-    public DeviceDTO(Device device){
-        this.ip = device.getIp().toString();
-        this.port = device.getPort();
-        this.type = device.getType();
-        this.name = device.getName();
-    }
+//
+//
+//
+//    public DeviceDTO(Device device){
+//        this.ip = device.getIp().toString();
+//        this.port = device.getPort();
+//        this.type = device.getType();
+//        this.name = device.getName();
+//    }
 
     public String getIp() {
         return ip;
@@ -37,11 +40,11 @@ public class DeviceDTO {
         this.ip = ip;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 

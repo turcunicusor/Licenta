@@ -17,16 +17,16 @@ public class SSLClient {
 
     public static void main(String[] args) {
         try {
-            InetAddress ip = InetAddress.getByName("127.0.0.1");
+            InetAddress ip = InetAddress.getByName("192.168.0.106");
             DeviceManager deviceManager = new DeviceManager();
             deviceManager.registerDevice(new HalDevice(ip, port, "led"));
-//            IDevice device = deviceManager.getDevice(ip, port);
+            IDevice device = deviceManager.getDevice(ip, port);
 //            device.open();
 //            device.close();
-//            device.getStatus();
+            device.getStatus();
 //            AcceptedParams acceptedParams = device.getAcceptedParams();
 ////            System.out.println(acceptedParams.get("intensintate"));
-//            device.closeConnection();
+            device.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,7 +34,7 @@ public class SSLClient {
     }
 
     public static void comandLineClient() {
-        System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo");
+        System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\secret_key");
         SSLSocketFactory sslSocketFactory =
                 (SSLSocketFactory) SSLSocketFactory.getDefault();
         try {

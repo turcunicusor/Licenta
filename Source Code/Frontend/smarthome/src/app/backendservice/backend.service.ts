@@ -72,7 +72,7 @@ export class BackendService {
   public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://ec1841d4.ngrok.io';
+  private server_url = 'http://d2174fe5.ngrok.io';
   private token;
   private email;
   private auth_header;
@@ -187,7 +187,7 @@ export class BackendService {
   }
 
   public addNewDevice(json) {
-    return this.post('/device', JSON.stringify(json));
+    return this.post('/device', json);
   }
 
   public getDevice(id: String): Observable<Device> {

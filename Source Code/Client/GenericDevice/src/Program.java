@@ -22,7 +22,7 @@ public class Program {
             System.out.println("Invalid port range");
             return;
         }
-        System.setProperty("javax.net.ssl.keyStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\demo");
+        System.setProperty("javax.net.ssl.keyStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\secret_key");
         System.setProperty("javax.net.ssl.keyStorePassword", "nicusor");
         CommunicationManager com = new CommunicationManager(ip, port, new DeviceImpl(deviceType));
         com.doWork();
