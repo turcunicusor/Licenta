@@ -3,10 +3,10 @@ package Concrete;
 import Generic.*;
 
 public class DeviceImpl implements IDevice {
-    private DeviceStatus status;
     private String type;
     private AcceptedParams acceptedParams;
     private Params paramsVal;
+    private boolean isOpened;
 
     public DeviceImpl(String type) {
         this.type = type.toLowerCase();
@@ -17,24 +17,33 @@ public class DeviceImpl implements IDevice {
             e.printStackTrace();
         }
         this.paramsVal = new Params();
-        paramsVal.put("intensitate", "0");
+        this.paramsVal.put("intensitate", "0");
+        this.isOpened = false;
+
+        // here i should check device status.
+        // more logic here.
     }
 
     @Override
     public void open() throws Exception {
         try {
             System.out.println("--DEBUG--open() called.");
-            status = DeviceStatus.OPENED;
+            this.isOpened = true;
         } catch (Exception e) {
             throw new Exception(String.format("Failed to open device. Reason: '%s'.", e.getMessage()));
         }
     }
 
     @Override
+    public Boolean isOpened() {
+        return isOpened;
+    }
+
+    @Override
     public void close() throws Exception {
         try {
             System.out.println("--DEBUG--close() called.");
-            status = DeviceStatus.CLOSED;
+            this.isOpened = false;
         } catch (Exception e) {
             throw new Exception(String.format("Failed to close device. Reason: '%s'.", e.getMessage()));
         }
@@ -43,12 +52,6 @@ public class DeviceImpl implements IDevice {
     @Override
     public void command(Params params) throws Exception {
         System.out.println("--DEBUG--command() called.");
-    }
-
-    @Override
-    public DeviceStatus getStatus() {
-        System.out.println("--DEBUG--getStatus() called.");
-        return status;
     }
 
     public Params queryData(Data data) {

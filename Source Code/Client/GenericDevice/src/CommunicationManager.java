@@ -60,13 +60,11 @@ public class CommunicationManager implements IMessage {
                     device.open();
                     outStream.println(Protocol.SUCCESS);
                     break;
+                case Protocol.IS_OPENED:
+                    outStream.println(Protocol.SUCCESS + device.isOpened().toString());
                 case Protocol.CLOSE:
                     device.close();
                     outStream.println(Protocol.SUCCESS);
-                    break;
-                case Protocol.GET_STATUS:
-                    DeviceStatus status = device.getStatus();
-                    outStream.println(Protocol.SUCCESS + status.toString());
                     break;
                 case Protocol.GET_TYPE:
                     String type = device.getType();

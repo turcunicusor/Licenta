@@ -15,12 +15,10 @@ export class ManageComponent implements OnInit, OnDestroy {
   device: Device;
   public isLoading;
   public connectionStatus: boolean;
-  public isOpened: boolean;
 
   constructor(private route: ActivatedRoute, public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     this.isLoading = true;
     this.connectionStatus = null;
-    this.isOpened = false;
   }
 
   ngOnInit() {
@@ -30,6 +28,7 @@ export class ManageComponent implements OnInit, OnDestroy {
       this._bs.getDevice(this.id).subscribe(
         res => {
           this.device = res;
+          console.log(this.device);
           this.isLoading = false;
         },
         (err: HttpErrorResponse) => {
@@ -93,10 +92,11 @@ export class ManageComponent implements OnInit, OnDestroy {
       res => {
         this._bs.getDevice(this.id).subscribe(
           rest => {
+            console.log(rest);
             this.device.params = rest.params;
             this.device.acceptedParams = rest.acceptedParams;
             this.device.status = rest.status;
-            this.isOpened = this.device.status === 'opened';
+            this.device.isOpened = rest.isOpened;
           },
           (err: HttpErrorResponse) => {
             const message = this._bs.handleError(err);
@@ -115,7 +115,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.status = 'disconnected';
         this.device.params = {};
         this.device.acceptedParams = {};
-        this.isOpened = this.device.status === 'opened';
+        this.device.isOpened = 'false';
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

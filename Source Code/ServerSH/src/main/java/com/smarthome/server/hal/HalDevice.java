@@ -16,6 +16,7 @@ public class HalDevice implements IDevice {
     private DeviceStatus status;
     private AcceptedParams acceptedParams;
     private Params paramsVal;
+    private Boolean isOpened;
 
     private Socket server;
     private PrintWriter outStream;
@@ -26,6 +27,7 @@ public class HalDevice implements IDevice {
         this.acceptedParams = new AcceptedParams();
         this.paramsVal = new Params();
         this.status = DeviceStatus.CREATED;
+        this.isOpened = false;
     }
 
     @Override
@@ -43,8 +45,9 @@ public class HalDevice implements IDevice {
         try {
             outStream.println(Protocol.OPEN);
             onResponse(inStream.readLine());
+            this.isOpened = true;
         } finally {
-            this.status = DeviceStatus.OPENED;
+//            this.status = DeviceStatus.OPENED;
         }
     }
 
@@ -53,9 +56,19 @@ public class HalDevice implements IDevice {
         try {
             outStream.println(Protocol.CLOSE);
             onResponse(inStream.readLine());
+            this.isOpened = false;
         } finally {
-            this.status = DeviceStatus.CLOSED;
+//            this.status = DeviceStatus.CLOSED;
         }
+    }
+
+    @Override
+    public Boolean isOpened() throws Exception {
+        if (DeviceStatus.CONNECTED == this.status) {
+            outStream.println(Protocol.IS_OPENED);
+            this.isOpened = Boolean.parseBoolean(onResponse(inStream.readLine()));
+        }
+        return isOpened;
     }
 
     @Override
@@ -75,7 +88,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public Params queryData(Data data) throws Exception {
-        if (DeviceStatus.CONNECTED == this.status  || DeviceStatus.OPENED == status) {
+        if (DeviceStatus.CONNECTED == this.status) {
             outStream.println(Protocol.QUERRY_DATA + data.toString());
             this.paramsVal.addData(onResponse(inStream.readLine()));
         }
@@ -91,7 +104,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public AcceptedParams getAcceptedParams() throws Exception {
-        if (DeviceStatus.CONNECTED == status || DeviceStatus.OPENED == status) {
+        if (DeviceStatus.CONNECTED == status) {
             outStream.println(Protocol.GET_PARAMS);
             this.acceptedParams.addData(onResponse(inStream.readLine()));
         }
@@ -102,7 +115,7 @@ public class HalDevice implements IDevice {
     public void closeConnection() throws IOException {
         System.out.println("disconnected called");
         try {
-            if (this.status == DeviceStatus.CONNECTED || this.status == DeviceStatus.OPENED) {
+            if (this.status == DeviceStatus.CONNECTED) {
                 inStream.close();
                 outStream.close();
                 server.close();

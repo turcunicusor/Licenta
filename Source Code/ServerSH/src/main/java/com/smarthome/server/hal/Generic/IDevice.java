@@ -13,6 +13,8 @@ public interface IDevice {
 
     void close() throws Exception;
 
+    Boolean isOpened() throws Exception;
+
     void command(Params params) throws Exception;
 
     DeviceStatus getStatus() throws Exception;

@@ -11,6 +11,7 @@ public class DeviceViewDTO {
     private String id;
     private String ip;
     private int port;
+    private Boolean isOpened;
     private String type;
     private String name;
     private String status;
@@ -58,6 +59,11 @@ public class DeviceViewDTO {
         }
         try {
             this.params = deviceHal.queryData(new Data(new ArrayList<>(acceptedParams.keySet())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            this.isOpened = deviceHal.isOpened();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,5 +131,13 @@ public class DeviceViewDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Boolean getOpened() {
+        return isOpened;
+    }
+
+    public void setOpened(Boolean opened) {
+        isOpened = opened;
     }
 }

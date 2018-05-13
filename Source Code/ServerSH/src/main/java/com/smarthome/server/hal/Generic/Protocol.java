@@ -7,7 +7,7 @@ public class Protocol {
     public static final byte OPEN = 102;
     public static final byte CLOSE = 103;
 
-    public static final byte GET_STATUS = 104;
+    public static final byte IS_OPENED = 104;
     public static final byte GET_TYPE = 105;
     public static final byte GET_PARAMS = 106;
 
