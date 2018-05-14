@@ -53,6 +53,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public void close() throws Exception {
+        System.out.println("Close called");
         try {
             outStream.println(Protocol.CLOSE);
             onResponse(inStream.readLine());

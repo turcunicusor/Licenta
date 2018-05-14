@@ -15,8 +15,12 @@
             </button>
             <div *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
               class="form-check checkbox-slider-md checkbox-slider--a">
-              <label>
-                <input type="checkbox" (change)="onChange($event.target.checked)" [attr.ng-checked]="device.isOpened">
+              <label *ngIf="device.isOpened">
+                <input type="checkbox" (change)="onChange($event.target.checked)" checked>
+                <span></span>
+              </label>
+              <label *ngIf="!device.isOpened">
+                <input type="checkbox" (change)="onChange($event.target.checked)">
                 <span></span>
               </label>
             </div>

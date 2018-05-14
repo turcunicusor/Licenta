@@ -36,6 +36,7 @@ public class DeviceImpl implements IDevice {
 
     @Override
     public Boolean isOpened() {
+        System.out.println("--DEBUG--isOpened() called.");
         return isOpened;
     }
 

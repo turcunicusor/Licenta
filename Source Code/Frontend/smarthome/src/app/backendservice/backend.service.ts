@@ -35,7 +35,7 @@ export class Device {
   public name: string;
   public type: string;
   public status: string;
-  public isOpened: string;
+  public isOpened: boolean;
   public params: DictionaryParm;
   public acceptedParams: DictionaryAccParm;
 
@@ -45,7 +45,6 @@ export class Device {
     this.id = '';
     this.ip = '';
     this.port = '';
-    this.isOpened = '';
     this.status = '';
     this.params = {};
     this.acceptedParams = {};
@@ -72,7 +71,7 @@ export class BackendService {
   public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://d2174fe5.ngrok.io';
+  private server_url = 'http://72c89a08.ngrok.io';
   private token;
   private email;
   private auth_header;
