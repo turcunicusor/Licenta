@@ -146,7 +146,7 @@ export class BackendService {
   }
 
   public logout(): Observable<any> {
-    return this.post('/user/logout', {email: this.email});
+    return this.post('/user/logout', '');
   }
 
   public logoutSucess() {
@@ -163,18 +163,13 @@ export class BackendService {
     return this.post('/register', JSON.stringify(json), this.def_header);
   }
 
-  public getAllUsers(): Observable<any> {
-    return this.get('/user/all');
-  }
-
   public profile(): Observable<any> {
     const url = '/user/profile';
-    const params = new HttpParams().set('email', this.email);
-    return this._http.get<User>(this.server_url + url, {headers: this.auth_header, params: params});
+    return this._http.get<User>(this.server_url + url, {headers: this.auth_header});
   }
 
   public updateProfile(json): Observable<any> {
-    return this.post('/user/profile', JSON.stringify(json));
+    return this.post('/user/profile', json);
   }
 
   public updateEmail(email) {

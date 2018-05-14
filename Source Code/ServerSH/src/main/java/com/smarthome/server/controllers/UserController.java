@@ -1,11 +1,9 @@
 package com.smarthome.server.controllers;
 
-import com.smarthome.server.dtos.EmailDTO;
-import com.smarthome.server.dtos.LogoutDTO;
 import com.smarthome.server.dtos.ProfileDTO;
-import com.smarthome.server.dtos.UserDTO;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.repositories.UserRepository;
+import com.smarthome.server.security.TokenAuthenticationService;
 import com.smarthome.server.service.DeviceManager;
 import com.smarthome.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -37,10 +33,11 @@ public class UserController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity logout(@RequestBody LogoutDTO logout) {
+    ResponseEntity logout(@RequestHeader("Authorization") String token) {
         try {
-            userService.loggedOut(logout.getEmail());
-            deviceManager.userLogout(logout.getEmail());
+            String userEmail = TokenAuthenticationService.decodeToken(token);
+            userService.loggedOut(userEmail);
+            deviceManager.userLogout(userEmail);
             return ResponseEntity.status(HttpStatus.OK).body("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,19 +46,25 @@ public class UserController {
     }
 
     @GetMapping(value = "/profile")
-    ResponseEntity profile(@RequestParam("email") String email) {
-        User user = userService.findUserByEmail(email);
+    ResponseEntity profile(@RequestHeader("Authorization") String token) {
+        String userEmail = TokenAuthenticationService.decodeToken(token);
+        User user = userService.findUserByEmail(userEmail);
         if (user == null)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
         return ResponseEntity.status(HttpStatus.OK).body(user.toUserDTO());
     }
 
     @PostMapping(value = "/profile")
-    ResponseEntity changeProfile(@Valid @RequestBody ProfileDTO profile) {
+    ResponseEntity changeProfile(@RequestHeader("Authorization") String token, @Valid @RequestBody ProfileDTO profile) {
+        String userEmail = TokenAuthenticationService.decodeToken(token);
+        System.out.println("useremail" + userEmail);
+        System.out.println("profileemail" + profile.getOldEmail());
+        if (!userEmail.equals(profile.getOldEmail()))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         User user = userService.findUserByEmail(profile.getOldEmail());
         if (user == null)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No user found with that email.");
-        if (!profile.getNewPassword().isEmpty()|| !profile.getOldPassword().isEmpty()) {
+        if (!profile.getNewPassword().isEmpty() || !profile.getOldPassword().isEmpty()) {
             if (!passwordEncoder.matches(profile.getOldPassword(), user.getPassword()))
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid old password.");
             else {
@@ -73,19 +76,5 @@ public class UserController {
         user.setEmail(profile.getNewEmail());
         userService.update(user);
         return ResponseEntity.status(HttpStatus.OK).body("");
-    }
-
-    @GetMapping("/all")
-    Iterable<UserDTO> getAll() {
-        List<User> users = userRepository.findAll();
-        List<UserDTO> usersDto = new ArrayList<>();
-        for (User user : users)
-            usersDto.add(user.toUserDTO());
-        return usersDto;
-    }
-
-    @PostMapping()
-    User getByEmail(@Valid @RequestBody EmailDTO email) {
-        return userRepository.findByEmail(email.getEmail());
     }
 }
