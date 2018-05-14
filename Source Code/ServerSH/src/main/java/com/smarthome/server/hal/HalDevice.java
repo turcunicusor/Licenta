@@ -74,6 +74,7 @@ public class HalDevice implements IDevice {
 
     @Override
     public void command(Params params) throws Exception {
+        System.out.println("Command called." + params.toString());
         outStream.println(Protocol.COMMAND + params.toString());
         onResponse(inStream.readLine());
     }

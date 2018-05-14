@@ -214,7 +214,9 @@ export class BackendService {
   }
 
   public setParams(id, json) {
-    return this._http.post(this.server_url + '/device/setParams?device=' + id, JSON.stringify(json), {headers: this.auth_header});
+    const body = {};
+    body['params'] = json;
+    return this._http.post(this.server_url + '/device/setParams?device=' + id, body, {headers: this.auth_header});
   }
 
   public closeDevice(id) {

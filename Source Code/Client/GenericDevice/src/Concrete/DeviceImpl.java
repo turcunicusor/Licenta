@@ -53,6 +53,8 @@ public class DeviceImpl implements IDevice {
     @Override
     public void command(Params params) throws Exception {
         System.out.println("--DEBUG--command() called.");
+        this.paramsVal = params;
+        System.out.println(paramsVal.toString());
     }
 
     public Params queryData(Data data) {

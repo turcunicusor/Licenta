@@ -77,14 +77,16 @@ public class DevicesController {
 
     @DeleteMapping()
     ResponseEntity delete(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         deviceManager.deleteHalDevice(hash);
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
     @PutMapping("/testConnection")
     ResponseEntity testConnection(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).testConnection();
         } catch (Exception e) {
@@ -95,7 +97,8 @@ public class DevicesController {
 
     @PutMapping("/connect")
     ResponseEntity connect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).connect();
         } catch (Exception e) {
@@ -106,7 +109,8 @@ public class DevicesController {
 
     @PutMapping("/open")
     ResponseEntity open(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).open();
         } catch (Exception e) {
@@ -117,8 +121,10 @@ public class DevicesController {
 
     @PostMapping("/setParams")
     ResponseEntity setParams(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody ParamsDTO paramsDTO) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
+            System.out.println("ParamsDTO"+paramsDTO.getParams());
             deviceManager.getHalDevice(hash).command(paramsDTO.getParams());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Open failed. Reason: " + e.getMessage());
@@ -128,7 +134,8 @@ public class DevicesController {
 
     @PutMapping("/close")
     ResponseEntity close(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).close();
         } catch (Exception e) {
@@ -139,7 +146,8 @@ public class DevicesController {
 
     @PutMapping("/disconnect")
     ResponseEntity disconnect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        checkDevice(token, hash);
+        ResponseEntity response =  checkDevice(token, hash);
+        if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).closeConnection();
         } catch (Exception e) {
