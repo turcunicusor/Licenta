@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/roles")
-//@CrossOrigin
 public class RolesController {
     private final RoleRepository roleRepository;
 

@@ -42,7 +42,7 @@ public class DeviceViewDTO {
 //    }
 
     public DeviceViewDTO(IDevice deviceHal) {
-        this.ip = deviceHal.getDevice().getIp().toString();
+        this.ip = deviceHal.getDevice().getIp().getHostAddress();
         this.port = deviceHal.getDevice().getPort();
         this.type = deviceHal.getDevice().getType();
         this.name = deviceHal.getDevice().getName();
