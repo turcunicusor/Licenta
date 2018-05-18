@@ -127,7 +127,7 @@ public class DevicesController {
             System.out.println("ParamsDTO"+paramsDTO.getParams());
             deviceManager.getHalDevice(hash).command(paramsDTO.getParams());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Open failed. Reason: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Set parameter failed. Reason: " + e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
