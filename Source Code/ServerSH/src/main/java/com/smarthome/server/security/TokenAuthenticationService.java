@@ -28,7 +28,6 @@ public class TokenAuthenticationService {
 
     static Authentication getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        System.out.println(token);
         if (token != null) {
             try {
                 String userEmail = TokenAuthenticationService.decodeToken(token);

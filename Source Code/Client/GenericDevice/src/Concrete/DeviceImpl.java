@@ -2,6 +2,8 @@ package Concrete;
 
 import Generic.*;
 
+import java.util.Map;
+
 public class DeviceImpl implements IDevice {
     private String type;
     private AcceptedParams acceptedParams;
@@ -53,8 +55,9 @@ public class DeviceImpl implements IDevice {
     @Override
     public void command(Params params) throws Exception {
         System.out.println("--DEBUG--command() called.");
-        this.paramsVal = params;
-        System.out.println(paramsVal.toString());
+        for (Map.Entry<String, String> entry : params.entrySet())
+            this.paramsVal.put(entry.getKey(), entry.getValue());
+        // each device extra logic
     }
 
     public Params queryData(Data data) {

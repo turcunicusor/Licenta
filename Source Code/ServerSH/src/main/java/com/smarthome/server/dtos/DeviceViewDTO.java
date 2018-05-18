@@ -18,29 +18,6 @@ public class DeviceViewDTO {
     private HashMap<String, ParamDescription> acceptedParams;
     private HashMap<String, String> params;
 
-//    public DeviceViewDTO(String id, String ip, int port, String type, String name) {
-//        this.id = id;
-//        this.ip = ip;
-//        this.port = port;
-//        this.type = type;
-//        this.name = name;
-//        this.acceptedParams = new HashMap<>();
-//        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
-//        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
-//        this.params = new HashMap<>();
-//        this.params.put("intensitate", "0");
-//        this.params.put("tensiune", "1");
-//    }
-//
-//    public DeviceViewDTO() {
-//        this.acceptedParams = new HashMap<>();
-//        this.acceptedParams.put("intensitate", new ParamDescription(false, "int"));
-//        this.acceptedParams.put("tensiune", new ParamDescription(true, "boolean"));
-//        this.params = new HashMap<>();
-//        this.params.put("intensitate", "0");
-//        this.params.put("tensiune", "1");
-//    }
-
     public DeviceViewDTO(IDevice deviceHal) {
         this.ip = deviceHal.getDevice().getIp().getHostAddress();
         this.port = deviceHal.getDevice().getPort();

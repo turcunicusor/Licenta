@@ -15,3 +15,12 @@ rpi conected:
 	- 192.168.0.2-255
 	
 tutorial:		https://www.hackster.io/Anwaarullah/sharing-wifi-with-raspberry-pi-using-a-lan-cable-ae1f44
+
+https://tkkrlab.nl/wiki/Arduino_37_sensors
+
+Smarthome devices:
+	- rgba led: lampa - done - gpio 0,1,2; dnc9
+	- releu: door lock - pwr5, pin4 la + ; s portocaliu la gpio 3, - galben la ground pin6
+	- laser: securitylaser
+	- senzor temperatura: senzor temperatura
+	- 

@@ -71,7 +71,7 @@ export class BackendService {
   public deviceTypes: string[];
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://72c89a08.ngrok.io';
+  private server_url = 'http://3f74303a.ngrok.io';
   private token;
   private email;
   private auth_header;
@@ -79,7 +79,7 @@ export class BackendService {
 
   constructor(private _http: HttpClient, public router: Router) {
     this.deviceTypes = [];
-    this.deviceTypes.push('led', 'rbga led', 'doorlock', 'centralheating', 'temperature sensor');
+    this.deviceTypes.push('lamp', 'rbga led', 'doorlock', 'centralheating', 'temperature sensor');
     this.token = 'Bearer ';
     this.email = null;
     this.isLoggedIn = false;
