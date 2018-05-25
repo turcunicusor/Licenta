@@ -5,7 +5,7 @@ import com.smarthome.server.dtos.DeviceViewDTO;
 import com.smarthome.server.dtos.ParamsDTO;
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
-import com.smarthome.server.hal.Generic.IDevice;
+import com.smarthome.server.hal.generic.IDevice;
 import com.smarthome.server.repositories.DeviceRepository;
 import com.smarthome.server.repositories.UserRepository;
 import com.smarthome.server.security.TokenAuthenticationService;

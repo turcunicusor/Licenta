@@ -1,7 +1,7 @@
 package com.smarthome.server.hal;
 
 import com.smarthome.server.entities.Device;
-import com.smarthome.server.hal.Generic.*;
+import com.smarthome.server.hal.generic.*;
 
 import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;

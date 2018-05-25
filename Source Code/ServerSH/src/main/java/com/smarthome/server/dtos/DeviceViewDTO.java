@@ -1,8 +1,8 @@
 package com.smarthome.server.dtos;
 
-import com.smarthome.server.hal.Generic.Data;
-import com.smarthome.server.hal.Generic.IDevice;
-import com.smarthome.server.hal.Generic.ParamDescription;
+import com.smarthome.server.hal.generic.Data;
+import com.smarthome.server.hal.generic.IDevice;
+import com.smarthome.server.hal.generic.ParamDescription;
 
 import java.util.ArrayList;
 import java.util.HashMap;

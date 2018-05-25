@@ -1,6 +1,6 @@
 package com.smarthome.server.dtos;
 
-import com.smarthome.server.hal.Generic.Params;
+import com.smarthome.server.hal.generic.Params;
 
 public class ParamsDTO {
     private Params params;

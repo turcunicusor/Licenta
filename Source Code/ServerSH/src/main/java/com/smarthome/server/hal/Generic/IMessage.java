@@ -1,4 +1,4 @@
-package com.smarthome.server.hal.Generic;
+package com.smarthome.server.hal.generic;
 
 public interface IMessage {
     void onCommand(String command);

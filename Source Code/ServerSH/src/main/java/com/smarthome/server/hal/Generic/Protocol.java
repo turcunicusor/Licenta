@@ -1,4 +1,4 @@
-package com.smarthome.server.hal.Generic;
+package com.smarthome.server.hal.generic;
 
 public class Protocol {
     public static final byte EXCEPTION = 101;

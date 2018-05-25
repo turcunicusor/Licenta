@@ -2,7 +2,7 @@ package com.smarthome.server.service;
 
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
-import com.smarthome.server.hal.Generic.IDevice;
+import com.smarthome.server.hal.generic.IDevice;
 import com.smarthome.server.hal.HalDevice;
 import com.smarthome.server.repositories.DeviceRepository;
 import com.smarthome.server.repositories.UserRepository;
