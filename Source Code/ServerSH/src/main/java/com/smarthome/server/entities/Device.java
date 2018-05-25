@@ -10,14 +10,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "device")
 @Transactional
-public class Device {
+public class Device{
     @Id
     @Column(name = "device_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private InetAddress ip;
     private int port;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private User owner;
     @Column(name = "last_accessed")
@@ -37,6 +37,18 @@ public class Device {
         this.name = name;
         this.hash = UUID.randomUUID().toString();
         lastAccessed = new Date();
+    }
+
+    public static Device clone(Device device){
+        Device deviceCloned = new Device();
+        deviceCloned.setIp(device.getIp());
+        deviceCloned.setPort(device.getPort());
+        deviceCloned.setOwner(device.getOwner());
+        deviceCloned.setLastAccessed(device.getLastAccessed());
+        deviceCloned.setType(device.getType());
+        deviceCloned.setName(device.getName());
+        deviceCloned.setHash(device.getHash());
+        return deviceCloned;
     }
 
     public Long getId() {
@@ -85,6 +97,10 @@ public class Device {
 
     public String getHash() {
         return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public void setIp(InetAddress ip) {

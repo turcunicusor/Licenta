@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -21,17 +22,20 @@ public class DeviceManager {
     private final DeviceRepository deviceRepository;
 
     private HashMap<String, IDevice> halDevices;
+    private HashMap<String, Integer> deviceIpPort;
 
     @Autowired
     public DeviceManager(UserRepository userRepository, DeviceRepository deviceRepository) {
         this.halDevices = new HashMap<>();
         this.userRepository = userRepository;
         this.deviceRepository = deviceRepository;
+        this.deviceIpPort = new HashMap<>();
     }
 
     public void editDevice(Device device) throws IOException {
-        halDevices.get(device.getHash()).closeConnection();
-        halDevices.get(device.getHash()).setDevice(device);
+        this.deviceIpPort.put(device.getIp().getHostAddress(), device.getPort());
+        this.halDevices.get(device.getHash()).closeConnection();
+        this.halDevices.get(device.getHash()).setDevice(device);
         this.deviceRepository.save(device);
     }
 
@@ -44,8 +48,15 @@ public class DeviceManager {
     }
 
     public void registerDevice(Device device) {
+        this.deviceIpPort.put(device.getIp().getHostAddress(), device.getPort());
         this.deviceRepository.save(device);
         this.halDevices.put(device.getHash(), new HalDevice(device));
+    }
+
+    public void checkValidIpAndPort(Device device) throws Exception {
+        for (Map.Entry<String, Integer> entry : this.deviceIpPort.entrySet())
+            if(entry.getKey().equals(device.getIp().getHostAddress()) && entry.getValue().equals(device.getPort()))
+                throw new Exception("This ip and port conflicts with other device ip and port.");
     }
 
     public void deleteHalDevice(String hash) {
@@ -56,6 +67,7 @@ public class DeviceManager {
             System.err.println("deleteHalDevice");
             e.printStackTrace();
         }
+        this.deviceIpPort.remove(device.getDevice().getIp().getHostAddress());
         this.halDevices.remove(hash);
         this.deviceRepository.delete(device.getDevice());
     }

@@ -138,7 +138,7 @@ public class HalDevice implements IDevice {
             inStream = new BufferedReader(new InputStreamReader(server.getInputStream()));
         } catch (Exception e) {
             throw new SocketException(String.format("Cannot connect to '%s:%s' type '%s'. Make sure that device is online and ready to use.",
-                    device.getIp().toString(), device.getPort(), device.getType()));
+                    device.getIp().getHostAddress(), device.getPort(), device.getType()));
         }
         this.status = DeviceStatus.CONNECTED;
         try {

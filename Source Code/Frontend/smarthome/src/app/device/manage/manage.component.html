@@ -10,10 +10,12 @@
             <button *ngIf="device.status.toLowerCase() === 'created' || device.status.toLowerCase() === 'disconnected'"
                     class="btn btn-info" style="float: left;" (click)="onConnect()">Connect
             </button>
-            <button *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
-                    class="btn btn-secondary" style="float: left;" (click)="onDisconnect()">Disconnect
+            <button
+              *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
+              class="btn btn-secondary" style="float: left;" (click)="onDisconnect()">Disconnect
             </button>
-            <div *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
+            <div
+              *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
               class="form-check checkbox-slider-md checkbox-slider--a">
               <label *ngIf="device.isOpened">
                 <input type="checkbox" (change)="onChange($event.target.checked)" checked>
@@ -72,13 +74,14 @@
       </div>
 
       <form class="containerel border border-danger rounded bg_color_red innerdiv"
-            (submit)="onSaveDangerZone(ip.value, port.value, type.value)">
+            (submit)="onSaveDangerZone(ip.value, port.value, _bs.deviceTypes[type.value])">
         <h4 class="text-center">Danger zone</h4>
         <div class="form-group row">
           <label for="inputip"
                  class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Ip</label>
           <div class="col-lg-6">
-            <input id="inputip" class="form-control" type="text" value="{{device.ip}}" placeholder="Ip" #ip required
+            <input #ip id="inputip" class="form-control" type="text" [(ngModel)]="this.device.ip" name="ip"
+                   placeholder="Ip" required
                    pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"
                    title="Not a valid ip address.">
           </div>
@@ -87,9 +90,10 @@
           <label for="inputport"
                  class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Port</label>
           <div class="col-lg-6">
-            <input id="inputport" class="form-control" type="text" value="{{device.port}}" placeholder="Port" required
+            <input #port id="inputport" class="form-control" type="number" [(ngModel)]="this.device.port" name="port"
+                   placeholder="Port" required
                    pattern="^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
-                   title="Invalid port. Port range: [0,65535]." #port>
+                   title="Invalid port. Port range: [0,65535].">
           </div>
         </div>
         <div class="form-group row">
@@ -98,8 +102,8 @@
           <div class="col-lg-6">
             <select class="form-control" id="inputtype" #type>
               <ng-container *ngFor="let option of _ut.keys(_bs.deviceTypes)">
-                <option *ngIf="!(option === device.type)">{{option}}</option>
-                <option *ngIf="option === device.type" selected="selected">{{option}}</option>
+                <option *ngIf="!(_bs.deviceTypes[option] === device.type)">{{option}}</option>
+                <option *ngIf="_bs.deviceTypes[option] === device.type" selected="selected">{{option}}</option>
               </ng-container>
             </select>
           </div>

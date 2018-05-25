@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -70,14 +69,28 @@ public class DevicesController {
         } catch (UnknownHostException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
         }
+
+        try {
+            deviceManager.checkValidIpAndPort(device);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e.getMessage());
+        }
+
         device.setOwner(user);
         deviceManager.registerDevice(device);
+
+        try {
+            deviceManager.getHalDevice(device.getHash()).testConnection();
+        } catch (Exception e) {
+            deviceManager.deleteHalDevice(device.getHash());
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Invalid device configuration. Please make sure configuration is valid and device is online.");
+        }
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
     @DeleteMapping()
     ResponseEntity delete(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         deviceManager.deleteHalDevice(hash);
         return ResponseEntity.status(HttpStatus.OK).body("");
@@ -85,7 +98,7 @@ public class DevicesController {
 
     @PutMapping("/testConnection")
     ResponseEntity testConnection(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).testConnection();
@@ -97,7 +110,7 @@ public class DevicesController {
 
     @PutMapping("/connect")
     ResponseEntity connect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).connect();
@@ -109,7 +122,7 @@ public class DevicesController {
 
     @PutMapping("/open")
     ResponseEntity open(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).open();
@@ -121,10 +134,10 @@ public class DevicesController {
 
     @PostMapping("/setParams")
     ResponseEntity setParams(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody ParamsDTO paramsDTO) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
-            System.out.println("ParamsDTO"+paramsDTO.getParams());
+            System.out.println("ParamsDTO" + paramsDTO.getParams());
             deviceManager.getHalDevice(hash).command(paramsDTO.getParams());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Set parameter failed. Reason: " + e.getMessage());
@@ -134,7 +147,7 @@ public class DevicesController {
 
     @PutMapping("/close")
     ResponseEntity close(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).close();
@@ -146,7 +159,7 @@ public class DevicesController {
 
     @PutMapping("/disconnect")
     ResponseEntity disconnect(@RequestHeader("Authorization") String token, @RequestParam("device") String hash) {
-        ResponseEntity response =  checkDevice(token, hash);
+        ResponseEntity response = checkDevice(token, hash);
         if (response.getStatusCode() != HttpStatus.OK) return response;
         try {
             deviceManager.getHalDevice(hash).closeConnection();
@@ -160,6 +173,9 @@ public class DevicesController {
     ResponseEntity edit(@RequestHeader("Authorization") String token, @RequestParam("device") String hash, @RequestBody DeviceDTO deviceDTO) {
         String ownerEmail = TokenAuthenticationService.decodeToken(token);
         Device device = deviceManager.getDevice(hash);
+
+        Device deviceCache = Device.clone(device);
+
         if (device == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No device found with that hash.");
         if (!device.getOwner().getEmail().equals(ownerEmail))
@@ -174,9 +190,19 @@ public class DevicesController {
         }
         try {
             deviceManager.editDevice(device);
-        } catch (IOException e) {
+            deviceManager.checkValidIpAndPort(device);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
         }
+
+        try {
+            deviceManager.getHalDevice(device.getHash()).testConnection();
+        } catch (Exception e) {
+            this.deviceManager.deleteHalDevice(device.getHash());
+            this.deviceManager.registerDevice(deviceCache);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: 'Invalid device configuration. Please make sure configuration is valid and device is online'.");
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 

@@ -15,6 +15,9 @@ export class ManageComponent implements OnInit, OnDestroy {
   device: Device;
   public isLoading;
   public connectionStatus: boolean;
+  private cachedIp;
+  private cachedPort;
+  private cachedType;
 
   constructor(private route: ActivatedRoute, public _bs: BackendService, private toastr: ToastrService, public _ut: Utils) {
     this.isLoading = true;
@@ -29,6 +32,9 @@ export class ManageComponent implements OnInit, OnDestroy {
         res => {
           this.device = res;
           this.isLoading = false;
+          this.cachedIp = this.device.ip;
+          this.cachedPort = this.device.port;
+          this.cachedType = this.device.type;
         },
         (err: HttpErrorResponse) => {
           const message = this._bs.handleError(err);
@@ -66,6 +72,9 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   onSaveDangerZone(ip: string, port: string, type: string) {
+    const cachedIp = this.device.ip;
+    const cachedPort = this.device.port;
+    const cachedType = this.device.type;
     const json = {ip: ip, port: port, type: type, name: ''};
     this._bs.updateDevice(json, this.device.id).subscribe(
       res => {
@@ -73,8 +82,14 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.status = 'disconnected';
         this.device.params = {};
         this.device.acceptedParams = {};
+        this.cachedIp = this.device.ip;
+        this.cachedPort = this.device.port;
+        this.cachedType = this.device.type;
       },
       (err: HttpErrorResponse) => {
+        this.device.ip = this.cachedIp;
+        this.device.port = this.cachedPort;
+        this.device.type = this.cachedType;
         const message = this._bs.handleError(err);
         this.toastr.warning(message);
       });

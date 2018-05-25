@@ -23,6 +23,7 @@ import {AuthGuardService} from './backendservice/auth-guard.service';
 import { AddComponent } from './device/add/add.component';
 import { ViewComponent } from './device/view/view.component';
 import { ManageComponent } from './device/manage/manage.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ManageComponent } from './device/manage/manage.component';
     AngularFontAwesomeModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    FormsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-center',
