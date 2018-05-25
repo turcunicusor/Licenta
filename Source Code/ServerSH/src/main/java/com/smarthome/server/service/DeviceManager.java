@@ -1,6 +1,5 @@
 package com.smarthome.server.service;
 
-
 import com.smarthome.server.entities.Device;
 import com.smarthome.server.entities.User;
 import com.smarthome.server.hal.Generic.IDevice;

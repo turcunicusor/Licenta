@@ -2,7 +2,7 @@
   <div class="border border-secondary rounded bg_color_green">
     <h1 class="display-4">Add device</h1>
     <form class="container-fluid "
-          (submit)="onSaveChanges(ip.value, port.value, type.value, name.value)">
+          (submit)="onSaveChanges(ip.value, port.value, _bs.deviceTypes[type.value], name.value)">
       <div class="form-group row">
         <label for="inputname"
                class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Name</label>
@@ -32,7 +32,7 @@
                class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Type</label>
         <div class="col-lg-6">
           <select class="form-control" id="inputtype" #type>
-            <ng-container *ngFor="let option of _bs.deviceTypes">
+            <ng-container *ngFor="let option of _ut.keys(_bs.deviceTypes)">
               <option>{{option}}</option>
             </ng-container>
           </select>

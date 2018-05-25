@@ -97,7 +97,7 @@
                  class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">Type</label>
           <div class="col-lg-6">
             <select class="form-control" id="inputtype" #type>
-              <ng-container *ngFor="let option of _bs.deviceTypes">
+              <ng-container *ngFor="let option of _ut.keys(_bs.deviceTypes)">
                 <option *ngIf="!(option === device.type)">{{option}}</option>
                 <option *ngIf="option === device.type" selected="selected">{{option}}</option>
               </ng-container>

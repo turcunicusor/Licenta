@@ -16,12 +16,11 @@ export const router: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent}, // canActivate: [AuthGuard]},
-  {path: 'devices', component: ViewComponent},
-  {path: 'devices/add', component: AddComponent},
-  {path: 'devices/manage/:id', component: ManageComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'devices', component: ViewComponent, canActivate: [AuthGuard]},
+  {path: 'devices/add', component: AddComponent, canActivate: [AuthGuard]},
+  {path: 'devices/manage/:id', component: ManageComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotfoundComponent},
-  // {path: 'notfound', component: NotfoundComponent}
 ];
 
 // exporter

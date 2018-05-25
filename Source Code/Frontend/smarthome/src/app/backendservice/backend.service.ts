@@ -68,18 +68,17 @@ export class Utils {
 
 @Injectable()
 export class BackendService {
-  public deviceTypes: string[];
+  public deviceTypes: DictionaryParm;
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://3f74303a.ngrok.io';
+  private server_url = 'http://6b2508ef.ngrok.io';
   private token;
   private email;
   private auth_header;
   private def_header;
 
   constructor(private _http: HttpClient, public router: Router) {
-    this.deviceTypes = [];
-    this.deviceTypes.push('lamp', 'securitylaser', 'doorlock', 'lightbulb', 'temperature sensor');
+    this.deviceTypes = {};
     this.token = 'Bearer ';
     this.email = null;
     this.isLoggedIn = false;
@@ -90,6 +89,15 @@ export class BackendService {
     this.def_header = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+
+    this.initDeviceTypes();
+  }
+
+  public initDeviceTypes() {
+    this.deviceTypes['Lamp'] = 'lamp';
+    this.deviceTypes['Security Laser'] = 'securitylaser';
+    this.deviceTypes['Door Lock'] = 'doorlock';
+    this.deviceTypes['Light Bulb'] = 'lightbulb';
   }
 
   public setToken(token: string) {
@@ -160,7 +168,7 @@ export class BackendService {
   }
 
   public register(json): Observable<any> {
-    return this.post('/register', JSON.stringify(json), this.def_header);
+    return this.post('/register', json, this.def_header);
   }
 
   public profile(): Observable<any> {

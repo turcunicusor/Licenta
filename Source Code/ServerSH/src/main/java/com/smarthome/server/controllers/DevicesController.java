@@ -50,7 +50,7 @@ public class DevicesController {
     }
 
     @GetMapping("/all")
-    public List<DeviceViewDTO> getAllByEmail(@RequestHeader("Authorization") String token) {
+    public List<DeviceViewDTO> getAll(@RequestHeader("Authorization") String token) {
         String userEmail = TokenAuthenticationService.decodeToken(token);
         List<DeviceViewDTO> devices = new ArrayList<>();
         for (Device device : deviceRepository.findAllByOwner(userRepository.findByEmail(userEmail)))
