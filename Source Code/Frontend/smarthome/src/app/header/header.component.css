@@ -1,0 +1,10 @@
+.btn {
+  margin: 5px;
+  /*margin-left:10%;*/
+  /*margin-right:10%;*/
+}
+
+.btn-welcome :focus, .btn-welcome:active {
+  outline: none !important;
+  box-shadow: none;
+}

@@ -73,7 +73,7 @@ export class BackendService {
   public timeout = 1000;
   private server_url = 'http://6b2508ef.ngrok.io';
   private token;
-  private email;
+  public email;
   private auth_header;
   private def_header;
 

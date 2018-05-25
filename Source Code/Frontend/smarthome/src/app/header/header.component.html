@@ -15,43 +15,80 @@
         <div class="nav-link noselect" (click)="redirect('/devices')">My Devices</div>
       </li>
       <!--<li class="nav-item pointer" [routerLinkActive]="['active']">-->
-        <!--<div class="nav-link noselect" (click)="redirect('/devices/manage')">Manage</div>-->
+      <!--<div class="nav-link noselect" (click)="redirect('/devices/manage')">Manage</div>-->
       <!--</li>-->
       <li class="nav-item pointer" [routerLinkActive]="['active']">
         <div class="nav-link" (click)="redirect('/devices/add')">Add</div>
       </li>
     </ul>
 
-    <div class="navbar-nav" role="toolbar">
-      <!--<div class="btn-group mr-2" role="group" aria-label="Search">-->
-        <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
-        <!--<button class="btn btn-outline-success my-sm-0" type="submit">Search</button>-->
-      <!--</div>-->
-
-      <div *ngIf="!this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">
-        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Login">
+    <ul class="navbar-nav">
+      <ng-container *ngIf="!this._bs.isLoggedIn">
+        <li class="nav-item pointer">
+          <button type="button" class="btn btn-outline-secondary btn-welcome d-none d-lg-block d-md-block" disabled>Welcome user!</button>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="this._bs.isLoggedIn">
+        <li class="nav-item pointer">
+          <button type="button" class="btn btn-outline-success btn-welcome d-none d-lg-block d-md-block" disabled>Welcome {{_bs.email}}!</button>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="!this._bs.isLoggedIn">
+        <li class="nav-item pointer">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('login')">Login
           </button>
-        </div>
-        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Sign up">
+        </li>
+        <li class="nav-item pointer">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('register')">Sign up
           </button>
-        </div>
-      </div>
-      <div *ngIf="this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">
-        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">
+        </li>
+      </ng-container>
+      <ng-container *ngIf="this._bs.isLoggedIn">
+        <li class="nav-item pointer">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="this._bs.redirect('profile')">Profile
           </button>
-        </div>
-        <div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">
+        </li>
+        <li class="nav-item pointer">
           <button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"
                   (click)="logout()">Logout
           </button>
-        </div>
-      </div>
-    </div>
+        </li>
+      </ng-container>
+    </ul>
+
+    <!--<div class="navbar-nav" role="toolbar">-->
+    <!--<div class="justify-content-center btn-group mr-2" role="group" aria-label="Welcome">-->
+    <!--&lt;!&ndash;<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;-->
+    <!--<button class="btn btn-outline-success my-sm-0" type="submit">Welcome user!</button>-->
+    <!--</div>-->
+
+    <!--<div *ngIf="!this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">-->
+    <!--<div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Login">-->
+    <!--<button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"-->
+    <!--(click)="this._bs.redirect('login')">Login-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--<div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Sign up">-->
+    <!--<button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"-->
+    <!--(click)="this._bs.redirect('register')">Sign up-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="this._bs.isLoggedIn" class="justify-content-center btn-group mr-2">-->
+    <!--<div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">-->
+    <!--<button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"-->
+    <!--(click)="this._bs.redirect('profile')">Profile-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--<div class="btn-group mr-sm-2 mr-2" role="group" aria-label="Profile">-->
+    <!--<button type="button" class="btn btn-outline-primary" appCloseMenu [menu]="menu"-->
+    <!--(click)="logout()">Logout-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
   </aside>
 </nav>
