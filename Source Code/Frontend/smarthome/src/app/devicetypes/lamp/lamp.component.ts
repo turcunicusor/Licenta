@@ -15,15 +15,16 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
   isSliced: Boolean;
   defaults: any;
   @Input() deviceId: string;
-  @Input() params: any;
+  @Input() params: {};
 
   constructor(public _bs: BackendService, private toastr: ToastrService) {
     this.isSliced = true;
+    //               red    yellow green  aqua   blue   violet
     this.defaults = [false, false, false, false, false, false];
-    this.initDefaults(this.params['red'], this.params['blue'], this.params['green']);
   }
 
   ngOnInit() {
+    this.initDefaults(this.params['red'], this.params['green'], this.params['blue']);
   }
 
   ngOnDestroy() {
@@ -31,7 +32,22 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initDefaults(red, green, blue) {
-    // if(red &&)
+    red = red === 'true';
+    green = green === 'true';
+    blue = blue === 'true';
+    if (red && !green && !blue) {
+      this.defaults[0] = true;
+    } else if (!red && green && !blue) {
+      this.defaults[2] = true;
+    } else if (!red && !green && blue) {
+      this.defaults[4] = true;
+    } else if (red && green && !blue) {
+      this.defaults[1] = true;
+    } else if (!red && green && blue) {
+      this.defaults[3] = true;
+    } else if (red && !green && blue) {
+      this.defaults[5] = true;
+    }
   }
 
   unsliceElements() {
@@ -60,11 +76,7 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   colorSelected(color, state) {
-    console.log(color + ' ' + state);
     const params = {'red': false, 'green': false, 'blue': false};
-    if (state === false) {
-      return params;
-    }
     switch (color) {
       case 'red':
         params[color] = state;
@@ -94,7 +106,7 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    const pieceSize = 100 / 7;
+    const pieceSize = 100 / 6;
     const data = [
       {
         name: 'red',
@@ -131,7 +143,8 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
         renderTo: 'chartTarget',
         plotBackgroundColor: null,
         plotBorderWidth: null,
-        plotShadow: false
+        plotShadow: false,
+        backgroundColor: 'rgba(255, 255, 255, 0.0)',
       },
       title: {
         text: 'Lamp',
@@ -141,7 +154,7 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
         pointFormatter: function () {
           const point = this;
           return '<span style="color:' + this.color + '">\u25CF</span> '
-            + '<b>' + (point.y > 0 ? 'On' : 'off') + '</b><br/>';
+            + '<b>' + (this.sliced > 0 ? 'On' : 'off') + '</b><br/>';
         }
       },
       plotOptions: {

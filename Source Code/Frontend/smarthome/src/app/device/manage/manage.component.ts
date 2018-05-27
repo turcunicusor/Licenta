@@ -5,7 +5,6 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {LampComponent} from '../../devicetypes/lamp/lamp.component';
 
-
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
