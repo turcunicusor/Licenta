@@ -1,13 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {BackendService, Device, Utils} from '../../backendservice/backend.service';
 import {ActivatedRoute} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {LampComponent} from '../../devicetypes/lamp/lamp.component';
+
 
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.css']
+  styleUrls: ['./manage.component.css'],
 })
 export class ManageComponent implements OnInit, OnDestroy {
   id: string;
@@ -23,7 +25,6 @@ export class ManageComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.connectionStatus = null;
   }
-
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -48,21 +49,6 @@ export class ManageComponent implements OnInit, OnDestroy {
     this._bs.updateDevice(json, this.device.id).subscribe(
       res => {
         this.toastr.success('Device name updated successfully.');
-      },
-      (err: HttpErrorResponse) => {
-        const message = this._bs.handleError(err);
-        this.toastr.warning(message);
-      });
-    return false;
-  }
-
-  onSaveParam(key: string, valueindex: string) {
-    const value = ((document.getElementById('param' + valueindex) as HTMLInputElement).value);
-    const params = {};
-    params[key] = value;
-    this._bs.setParams(this.device.id, params).subscribe(
-      res => {
-        this.toastr.success('Parameter \'' + key + '\' updated successfully.');
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

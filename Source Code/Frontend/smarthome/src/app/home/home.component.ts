@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../backendservice/backend.service';
-import {HttpErrorResponse} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -12,9 +11,7 @@ import {ToastrService} from 'ngx-toastr';
 
 
 export class HomeComponent implements OnInit {
-  public dataGet;
-
-  constructor(public _bs: BackendService,  private toastr: ToastrService) {
+  constructor(public _bs: BackendService, private toastr: ToastrService) {
   }
 
   ngOnInit() {

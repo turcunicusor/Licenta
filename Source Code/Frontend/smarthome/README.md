@@ -7,6 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     npm install ngx-toastr --save
     npm install @angular/animations --save
 	npm install titatoggle --save-dev
+	npm install --save highcharts && npm install --save-dev @types/highcharts
 	
 #Paleta de culori:
 	- 1. #d8e0bb
@@ -14,3 +15,5 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 	- 3. #86a3c3
 	- 4. #7268a6
 	- 5. #6b3074
+	
+	

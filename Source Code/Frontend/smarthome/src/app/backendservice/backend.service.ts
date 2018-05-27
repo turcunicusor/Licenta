@@ -71,7 +71,7 @@ export class BackendService {
   public deviceTypes: DictionaryParm;
   public isLoggedIn;
   public timeout = 1000;
-  private server_url = 'http://6b2508ef.ngrok.io';
+  private server_url = 'http://23ba28a2.ngrok.io';
   private token;
   public email;
   private auth_header;

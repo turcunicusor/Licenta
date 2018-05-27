@@ -24,7 +24,7 @@ import { AddComponent } from './device/add/add.component';
 import { ViewComponent } from './device/view/view.component';
 import { ManageComponent } from './device/manage/manage.component';
 import {FormsModule} from '@angular/forms';
-
+import { LampComponent } from './devicetypes/lamp/lamp.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +40,7 @@ import {FormsModule} from '@angular/forms';
     AddComponent,
     ViewComponent,
     ManageComponent,
+    LampComponent,
   ],
   imports: [
     BrowserModule,

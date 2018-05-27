@@ -14,18 +14,18 @@
               *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
               class="btn btn-secondary" style="float: left;" (click)="onDisconnect()">Disconnect
             </button>
-            <div
-              *ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"
-              class="form-check checkbox-slider-md checkbox-slider--a">
-              <label *ngIf="device.isOpened">
-                <input type="checkbox" (change)="onChange($event.target.checked)" checked>
-                <span></span>
-              </label>
-              <label *ngIf="!device.isOpened">
-                <input type="checkbox" (change)="onChange($event.target.checked)">
-                <span></span>
-              </label>
-            </div>
+            <!--<div-->
+            <!--*ngIf="device.status.toLowerCase() === 'connected' || device.status.toLowerCase() === 'opened' || device.status.toLowerCase() === 'closed'"-->
+            <!--class="form-check checkbox-slider-md checkbox-slider&#45;&#45;a">-->
+            <!--<label *ngIf="device.isOpened">-->
+            <!--<input type="checkbox" (change)="onChange($event.target.checked)" checked>-->
+            <!--<span></span>-->
+            <!--</label>-->
+            <!--<label *ngIf="!device.isOpened">-->
+            <!--<input type="checkbox" (change)="onChange($event.target.checked)">-->
+            <!--<span></span>-->
+            <!--</label>-->
+            <!--</div>-->
           </div>
           <div class="col">
             <p style="float: right;">Status:
@@ -52,25 +52,28 @@
           <p class="text-info text-center">No parameters are displayed when device is offline.</p>
         </div>
         <ng-container *ngIf="!_ut.checkEmpty(device.params)">
-          <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
-            <div class="containerel input-group mb-3 row bg_color_green innerdiv">
-              <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
-              <ng-container>
-                <input *ngIf="!device.acceptedParams[key].readOnly" id="param{{i}}" class="form-control" type="text"
-                       value="{{device.params[key]}}"
-                       placeholder="{{key}}" required>
-                <input *ngIf="device.acceptedParams[key].readOnly" class="form-control" type="text"
-                       value="{{device.params[key]}}"
-                       placeholder="{{key}}" required disabled="disabled">
-              </ng-container>
-              <div *ngIf="!device.acceptedParams[key].readOnly" class="input-group-appended">
-                <button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"
-                        (click)="onSaveParam(key, i)">Save
-                </button>
-              </div>
-            </div>
-          </ng-container>
+          <app-lamp *ngIf="device.type=='lamp'" [deviceId]="device.id"></app-lamp>
         </ng-container>
+        <!--<ng-container *ngIf="!_ut.checkEmpty(device.params)">-->
+        <!--<ng-container *ngFor="let key of _ut.keys(device.params); let i = index">-->
+        <!--<div class="containerel input-group mb-3 row bg_color_green innerdiv">-->
+        <!--<label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>-->
+        <!--<ng-container>-->
+        <!--<input *ngIf="!device.acceptedParams[key].readOnly" id="param{{i}}" class="form-control" type="text"-->
+        <!--value="{{device.params[key]}}"-->
+        <!--placeholder="{{key}}" required>-->
+        <!--<input *ngIf="device.acceptedParams[key].readOnly" class="form-control" type="text"-->
+        <!--value="{{device.params[key]}}"-->
+        <!--placeholder="{{key}}" required disabled="disabled">-->
+        <!--</ng-container>-->
+        <!--<div *ngIf="!device.acceptedParams[key].readOnly" class="input-group-appended">-->
+        <!--<button type="button" class="btn btn-outline-success btn-group-lg btn-group-sm"-->
+        <!--(click)="onSaveParam(key, i)">Save-->
+        <!--</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</ng-container>-->
+        <!--</ng-container>-->
       </div>
 
       <form class="containerel border border-danger rounded bg_color_red innerdiv"
