@@ -189,8 +189,8 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
         }
         try {
-            deviceManager.editDevice(device);
             deviceManager.checkValidIpAndPort(device);
+            deviceManager.editDevice(device);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
         }

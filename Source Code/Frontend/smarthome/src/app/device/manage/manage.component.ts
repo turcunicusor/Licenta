@@ -24,6 +24,7 @@ export class ManageComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.connectionStatus = null;
   }
+
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -75,8 +76,10 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.ip = this.cachedIp;
         this.device.port = this.cachedPort;
         this.device.type = this.cachedType;
+        this.device.status = 'disconnected';
         const message = this._bs.handleError(err);
         this.toastr.warning(message);
+        this.device.params = {};
       });
     return false;
   }
