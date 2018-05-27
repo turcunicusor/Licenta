@@ -48,7 +48,6 @@ import { LampComponent } from './devicetypes/lamp/lamp.component';
     AngularFontAwesomeModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    FormsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-center',

@@ -25,6 +25,19 @@ export class ManageComponent implements OnInit, OnDestroy {
     this.connectionStatus = null;
   }
 
+  updateInputValues(ip, port, type) {
+    (<HTMLInputElement>document.getElementById('inputip')).value = ip;
+    (<HTMLInputElement>document.getElementById('inputport')).value = port;
+  }
+
+  updateDangerZone(status) {
+    if (status) {
+      (<HTMLInputElement>document.getElementById('dangerZoneFieldSet')).setAttribute('disabled', 'disabled');
+    } else {
+      (<HTMLInputElement>document.getElementById('dangerZoneFieldSet')).removeAttribute('disabled');
+    }
+  }
+
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -77,6 +90,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.port = this.cachedPort;
         this.device.type = this.cachedType;
         this.device.status = 'disconnected';
+        this.updateInputValues(this.device.ip, this.device.port, this.device.type);
         const message = this._bs.handleError(err);
         this.toastr.warning(message);
         this.device.params = {};
@@ -106,6 +120,7 @@ export class ManageComponent implements OnInit, OnDestroy {
             this.device.acceptedParams = rest.acceptedParams;
             this.device.status = rest.status;
             this.device.isOpened = rest.isOpened;
+            this.updateDangerZone(true);
           },
           (err: HttpErrorResponse) => {
             const message = this._bs.handleError(err);
@@ -125,6 +140,7 @@ export class ManageComponent implements OnInit, OnDestroy {
         this.device.params = {};
         this.device.acceptedParams = {};
         this.device.isOpened = false;
+        this.updateDangerZone(false);
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);
