@@ -98,6 +98,21 @@ export class ManageComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  onSaveParam(key: string, valueindex: string) {
+    const value = ((document.getElementById('param' + valueindex) as HTMLInputElement).value);
+    const params = {};
+    params[key] = value;
+    this._bs.setParams(this.device.id, params).subscribe(
+      res => {
+        this.toastr.success('Parameter \'' + key + '\' updated successfully.');
+      },
+      (err: HttpErrorResponse) => {
+        const message = this._bs.handleError(err);
+        this.toastr.warning(message);
+      });
+    return false;
+  }
+
   onDeleteDevice() {
     this._bs.deleteDevice(this.device.id).subscribe(
       res => {

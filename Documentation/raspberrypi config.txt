@@ -20,6 +20,6 @@ https://tkkrlab.nl/wiki/Arduino_37_sensors
 
 Smarthome devices:
 	- rgba led: lampa - done - gpio 0,1,2; dnc9; port 8000
-	- releu: door lock - pwr5, pin4 la + ; s portocaliu la gpio 3, - galben la ground pin6, port 8001
+	- releu: door lock - pwr5, pin4 la + ; s portocaliu la gpio 3, - galben la ground dnc 25, port 8001
 	- laser: securitylaser - s exterior alb conectat la gpio 4, - negru dnc 14, port 8002
 	- light bulb: port 8003, gpio 5,6

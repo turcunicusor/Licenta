@@ -65,9 +65,9 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
     const params = this.colorSelected(event.point.name, state);
     this._bs.setParams(this.deviceId, params).subscribe(
       res => {
-        if (state === true) {
-          this.toastr.success('State \'' + event.point.name + '\' updated successfully.');
-        }
+        // if (state === true) {
+        //   this.toastr.success('State \'' + event.point.name + '\' updated successfully.');
+        // }
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);
