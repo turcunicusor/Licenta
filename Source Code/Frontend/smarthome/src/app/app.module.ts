@@ -23,8 +23,9 @@ import {AuthGuardService} from './backendservice/auth-guard.service';
 import { AddComponent } from './device/add/add.component';
 import { ViewComponent } from './device/view/view.component';
 import { ManageComponent } from './device/manage/manage.component';
-import {FormsModule} from '@angular/forms';
 import { LampComponent } from './devicetypes/lamp/lamp.component';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { LampComponent } from './devicetypes/lamp/lamp.component';
     AngularFontAwesomeModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    Angular2FontawesomeModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-center',
