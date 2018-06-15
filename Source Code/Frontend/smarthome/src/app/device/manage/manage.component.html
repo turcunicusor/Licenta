@@ -51,6 +51,11 @@
         <div *ngIf="_ut.checkEmpty(device.params)" class="containerel input-group bg_color_green innerdiv">
           <p class="text-info text-center">No parameters are displayed when device is offline.</p>
         </div>
+        <!--debug-->
+        <app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>
+        <app-securitylaser *ngIf="device.type==='securitylaser'" [deviceId]="device.id" [params]="device.params"></app-securitylaser>
+        <app-lightbulb *ngIf="device.type==='lightbulb'" [deviceId]="device.id" [params]="device.params"></app-lightbulb>
+        <!--debug-->
         <ng-container *ngIf="!_ut.checkEmpty(device.params)">
           <app-lamp *ngIf="device.type==='lamp'" [deviceId]="device.id" [params]="device.params"></app-lamp>
           <ng-container *ngIf="device.type!=='lamp'">

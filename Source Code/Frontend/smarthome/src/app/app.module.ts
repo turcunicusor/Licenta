@@ -18,13 +18,15 @@ import {AppSettingsDirective} from './app-settings.directive';
 
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { ProfileComponent } from './profile/profile.component';
+import {ProfileComponent} from './profile/profile.component';
 import {AuthGuardService} from './backendservice/auth-guard.service';
-import { AddComponent } from './device/add/add.component';
-import { ViewComponent } from './device/view/view.component';
-import { ManageComponent } from './device/manage/manage.component';
-import { LampComponent } from './devicetypes/lamp/lamp.component';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
+import {AddComponent} from './device/add/add.component';
+import {ViewComponent} from './device/view/view.component';
+import {ManageComponent} from './device/manage/manage.component';
+import {LampComponent} from './devicetypes/lamp/lamp.component';
+import { DoorlockComponent } from './devicetypes/doorlock/doorlock.component';
+import { SecuritylaserComponent } from './devicetypes/securitylaser/securitylaser.component';
+import { LightbulbComponent } from './devicetypes/lightbulb/lightbulb.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,9 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     ViewComponent,
     ManageComponent,
     LampComponent,
+    DoorlockComponent,
+    SecuritylaserComponent,
+    LightbulbComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,6 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
     AngularFontAwesomeModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    Angular2FontawesomeModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-center',
