@@ -13,5 +13,4 @@ public class Protocol {
 
     public static final byte COMMAND = 107;
     public static final byte QUERRY_DATA = 108;
-
 }
