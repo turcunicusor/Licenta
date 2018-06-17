@@ -1,5 +1,6 @@
 package com.smarthome.server;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/error.*|/roles.*")))
                 .build().enable(true)
                 .apiInfo(apiInfo())
                 .securityContexts(Lists.newArrayList(securityContext()))
@@ -46,7 +47,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("SmartHome")
+                .title("Smart Home")
                 .description("Diploma project")
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
