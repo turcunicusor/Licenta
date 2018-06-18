@@ -10,7 +10,7 @@ public class AcceptedParams extends HashMap<String, ParamDescription> {
     private static String separator_parm_desc = ":";
 
     public void addData(String data) throws Exception {
-        // key=value1|value2;key=value
+        // key=isReadOnly:type;key=isReadOnly:type
         this.clear();
         if (data.isEmpty()) return;
         List<String> pairs = Arrays.asList(data.split(separator_pairs));
