@@ -1,4 +1,4 @@
-## Lucrare de Licență „Implementarea unui sistem software de tip Smart Home”
+# „Implementarea unui sistem software de tip Smart Home”
 
 ## 1. [Documentație](https://github.com/turcunicusor/Licenta/blob/master/Documentation "Apasă aici pentru a accesa documentația.")
 
@@ -6,7 +6,10 @@
  * ### [Aplicație web](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Frontend/smarthome "Apasă aici pentru a accesa codul sursă.")
 
  * ### [Dispozitive inteligente](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices "Apasă aici pentru a accesa codul sursă.")
-
+   * ### [Laser de securitate](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices/SecurityLaser "Apasă aici pentru a accesa codul sursă.")
+    * ### [Lampă](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices/Lamp "Apasă aici pentru a accesa codul sursă.")
+    * ### [Încuietarea ușii](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices/DoorLock "Apasă aici pentru a accesa codul sursă.")
+    * ### [Bec](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices/LightBulb "Apasă aici pentru a accesa codul sursă.")
  * ### [Server java](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/ServerSH "Apasă aici pentru a accesa codul sursă.")
 
 ###### Creat de [_**`Nicușor TURCU`**_](https://github.com/turcunicusor "Github")
