@@ -4,19 +4,19 @@ Acest proiect a fost generat folosind [Angular CLI](https://github.com/angular/a
 
 # Dependencies
 
-```shell
+```console
     npm install --save bootstrap@next
 ```
-```shell
+```console
     npm install ngx-toastr --save
 ```
-```shell
+```console
     npm install @angular/animations --save
 ```
-```shell
+```console
 	npm install --save highcharts && npm install --save-dev @types/highcharts
 ```
-```shell
+```console
 	npm install --save font-awesome angular-font-awesome
 ```
 	
