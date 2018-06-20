@@ -3,21 +3,28 @@
 Acest proiect a fost generat folosind [Angular CLI](https://github.com/angular/angular-cli) versiunea 1.7.4.
 
 # Dependencies
+
 ```shell
     npm install --save bootstrap@next
+```
+```shell
     npm install ngx-toastr --save
+```
+```shell
     npm install @angular/animations --save
+```
+```shell
 	npm install --save highcharts && npm install --save-dev @types/highcharts
+```
+```shell
 	npm install --save font-awesome angular-font-awesome
 ```
 	
 # Paleta de culori:
-Test culori <span style="color:blue">some *blue* text</span>.
-
-	- 1. #d8e0bb
-	- 2. #b6cec7
-	- 3. #86a3c3
-	- 4. #7268a6
-	- 5. #6b3074
+- ![#d8e0bb](https://placehold.it/15/d8e0bb/000000?text=+) `#d8e0bb`
+- ![#b6cec7](https://placehold.it/15/b6cec7/000000?text=+) `#b6cec7`
+- ![#86a3c3](https://placehold.it/15/86a3c3/000000?text=+) `#86a3c3`
+- ![#7268a6](https://placehold.it/15/7268a6/000000?text=+) `#7268a6`
+- ![#6b3074](https://placehold.it/15/6b3074/000000?text=+) `#6b3074`
 
 ###### Creat de [_**`Nicușor TURCU`**_](https://github.com/turcunicusor "Github")
