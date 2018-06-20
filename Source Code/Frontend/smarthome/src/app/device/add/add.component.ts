@@ -21,6 +21,10 @@ export class AddComponent implements OnInit {
     this._bs.addNewDevice(json).subscribe(
       res => {
         this.toastr.success('You can visualize your devices on view page.', 'Device added successfully.');
+        (<HTMLInputElement>document.getElementById('inputname')).value = '';
+        (<HTMLInputElement>document.getElementById('inputip')).value = '';
+        (<HTMLInputElement>document.getElementById('inputport')).value = '';
+
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

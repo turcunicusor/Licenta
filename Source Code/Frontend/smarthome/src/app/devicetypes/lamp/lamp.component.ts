@@ -19,8 +19,8 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public _bs: BackendService, private toastr: ToastrService) {
     this.isSliced = true;
-    //               red    yellow green  aqua   blue   violet
-    this.defaults = [false, false, false, false, false, false];
+    //               red    yellow green  aqua   blue   violet white
+    this.defaults = [false, false, false, false, false, false, false];
   }
 
   ngOnInit() {
@@ -47,6 +47,8 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
       this.defaults[3] = true;
     } else if (red && !green && blue) {
       this.defaults[5] = true;
+    } else if (red && green && blue) {
+      this.defaults[6] = true;
     }
   }
 
@@ -99,6 +101,11 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
         params['blue'] = state;
         params['red'] = state;
         break;
+      case 'white':
+        params['red'] = state;
+        params['green'] = state;
+        params['blue'] = state;
+        break;
       default:
         break;
     }
@@ -110,27 +117,31 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
     const data = [
       {
         name: 'red',
-        color: 'rgba(255, 0, 0, 1)',
+        color: 'rgba(237, 28, 36, 1)',
       },
       {
         name: 'yellow',
-        color: 'rgba(255, 255, 0, 1)',
+        color: 'rgba(228, 244, 80, 1)',
       },
       {
         name: 'green',
-        color: 'rgba(0, 255, 0, 1)',
+        color: 'rgba(8, 202, 63, 1)',
       },
       {
         name: 'aqua',
-        color: 'rgba(0, 255, 255, 1)',
+        color: 'rgba(89, 197, 199, 1)',
       },
       {
         name: 'blue',
-        color: 'rgba(0, 0, 255, 1)',
+        color: 'rgba(23, 93, 221, 1)',
       },
       {
         name: 'violet',
-        color: 'rgba(255, 0, 255, 1)',
+        color: 'rgba(202, 82, 181, 1)',
+      },
+      {
+        name: 'white',
+        color: 'rgba(252, 242, 241, 1)',
       }
     ];
     data.forEach((item, index) => {
@@ -147,7 +158,7 @@ export class LampComponent implements OnInit, AfterViewInit, OnDestroy {
         backgroundColor: 'rgba(255, 255, 255, 0.0)',
       },
       title: {
-        text: 'Lamp',
+        text: '',
         x: -20 // center
       },
       tooltip: {
