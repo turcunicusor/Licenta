@@ -5,15 +5,15 @@ Acest proiect a fost generat folosind [Angular CLI](https://github.com/angular/a
 # Dependencies
 
 ```console
-    npm install --save bootstrap@next
+npm install --save bootstrap@next
 
-    npm install ngx-toastr --save
+npm install ngx-toastr --save
 
-    npm install @angular/animations --save
+npm install @angular/animations --save
 
-	npm install --save highcharts && npm install --save-dev @types/highcharts
+npm install --save highcharts && npm install --save-dev @types/highcharts
 	
-	npm install --save font-awesome angular-font-awesome
+npm install --save font-awesome angular-font-awesome
 ```
 	
 # Paleta de culori:
