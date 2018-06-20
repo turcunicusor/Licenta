@@ -52,13 +52,19 @@
           <p class="text-info text-center">No parameters are displayed when device is offline.</p>
         </div>
         <!--debug-->
-        <app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>
-        <app-securitylaser *ngIf="device.type==='securitylaser'" [deviceId]="device.id" [params]="device.params"></app-securitylaser>
-        <app-lightbulb *ngIf="device.type==='lightbulb'" [deviceId]="device.id" [params]="device.params"></app-lightbulb>
+        <!--<app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>-->
+        <!--<app-lightbulb *ngIf="device.type==='lightbulb'" [deviceId]="device.id" [params]="device.params"></app-lightbulb>-->
+        <!--<app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>-->
+
         <!--debug-->
         <ng-container *ngIf="!_ut.checkEmpty(device.params)">
           <app-lamp *ngIf="device.type==='lamp'" [deviceId]="device.id" [params]="device.params"></app-lamp>
-          <ng-container *ngIf="device.type!=='lamp'">
+          <app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>
+          <app-securitylaser *ngIf="device.type==='securitylaser'" [deviceId]="device.id" [params]="device.params"></app-securitylaser>
+          <app-lightbulb *ngIf="device.type==='lightbulb'" [deviceId]="device.id" [params]="device.params"></app-lightbulb>
+
+
+          <ng-container *ngIf="device.type!=='lamp' && device.type!=='doorlock' && device.type!=='securitylaser' && device.type!=='lightbulb'">
             <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
               <div class="containerel input-group mb-3 row bg_color_green innerdiv">
                 <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>
@@ -144,7 +150,7 @@
         </fieldset>
       </form>
       <div style='float: right;'>
-        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#deletionConfirm">Delete device
+        <button id="buttonDeleteDevice" type="button" class="btn btn-dark" data-toggle="modal" data-target="#deletionConfirm">Delete device
         </button>
       </div>
     </div>

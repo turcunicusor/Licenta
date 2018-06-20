@@ -15,7 +15,9 @@
   transform-style: preserve-3d;
 }
 
-.carousel-inner .img{
-  width: 100%;
-  height: 100%;
-}
+/*.carousel-inner .img .fill-screen{*/
+  /*width: 300vh;*/
+  /*height: 300vh;*/
+/*}*/
+
+/*.img {height:100%; width:100% }*/

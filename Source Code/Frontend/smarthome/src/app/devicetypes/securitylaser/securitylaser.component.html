@@ -1,3 +1,26 @@
-<p>
-  securitylaser works!
-</p>
+<div class="containerel innerdiv">
+  <div class="container justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center">
+      <ng-container *ngIf="!this.status">
+        <img (click)="onLaserClick(true)" src="../../../assets/img/securitylaser/laser_off.png" height="68" width="261">
+      </ng-container >
+
+      <ng-container *ngIf="this.status">
+        <img (click)="onLaserClick(false)" src="../../../assets/img/securitylaser/laser_on.png" height="68" width="261">
+      </ng-container>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <ng-container *ngIf="!this.status">
+        <div class="alert alert-danger w-100" role="alert">
+          <h5 class="alert-heading">Security Off!</h5>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="this.status">
+        <div class="alert alert-success w-100" role="alert">
+          <h5 class="alert-heading">Security On!</h5>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

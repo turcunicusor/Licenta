@@ -33,8 +33,10 @@ export class ManageComponent implements OnInit, OnDestroy {
   updateDangerZone(status) {
     if (status) {
       (<HTMLInputElement>document.getElementById('dangerZoneFieldSet')).setAttribute('disabled', 'disabled');
+      (<HTMLInputElement>document.getElementById('buttonDeleteDevice')).setAttribute('disabled', 'disabled');
     } else {
       (<HTMLInputElement>document.getElementById('dangerZoneFieldSet')).removeAttribute('disabled');
+      (<HTMLInputElement>document.getElementById('buttonDeleteDevice')).removeAttribute('disabled');
     }
   }
 

@@ -1,5 +1,40 @@
 <div class="containerel innerdiv">
-  doorlock works!
-  <i class="fa fa-lock fa-5x"></i>
-  <i class="fa fa-unlock fa-5x"></i>
+  <div class="container justify-content-center align-items-center">
+    <!--v1-->
+    <!--<div class="row justify-content-center align-items-center">-->
+      <!--<ng-container *ngIf="this.status">-->
+        <!--<i class="fa fa-lock fa-4x" (click)="onLockClick(false)"></i>-->
+      <!--</ng-container >-->
+
+      <!--<ng-container *ngIf="!this.status">-->
+        <!--<i class="fa fa-unlock fa-4x" (click)="onLockClick(true)"></i>-->
+      <!--</ng-container>-->
+    <!--</div>-->
+
+    <!--v2-->
+    <div class="row justify-content-center align-items-center">
+      <ng-container *ngIf="this.status">
+        <img (click)="onLockClick(false)" src="../../../assets/img/doorlock/lock_on.png" >
+      </ng-container >
+
+      <ng-container *ngIf="!this.status">
+        <img (click)="onLockClick(true)" src="../../../assets/img/doorlock/lock_off.png" >
+      </ng-container>
+    </div>
+
+
+    <div class="row justify-content-center align-items-center">
+      <ng-container *ngIf="this.status">
+        <div class="alert alert-success w-100" role="alert">
+          <h5 class="alert-heading">Door is close!</h5>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!this.status">
+        <div class="alert alert-danger w-100" role="alert">
+          <h5 class="alert-heading">Door is open!</h5>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </div>
