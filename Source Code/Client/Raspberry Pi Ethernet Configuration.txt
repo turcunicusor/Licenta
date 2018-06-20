@@ -1,7 +1,0 @@
-Prin adaptor usb, conectat la primul usb dupa ethernet:
-	169.254.207.167
-Daca adaptorul este conectat imi da aceeasi adresa si cand il conectez la net
-Daca scot adaptorul imi da ip:
-	192.168.43.13
-	
-Conectiune fara net la ethernet imi da ip cu 169...
