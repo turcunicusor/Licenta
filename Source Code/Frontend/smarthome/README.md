@@ -14,7 +14,10 @@ Acest proiect a fost generat folosind [Angular CLI](https://github.com/angular/a
     npm install @angular/animations --save
 ```
 ```console
-	npm install --save highcharts && npm install --save-dev @types/highcharts
+	npm install --save highcharts
+```
+```console
+	npm install --save-dev @types/highcharts
 ```
 ```console
 	npm install --save font-awesome angular-font-awesome
