@@ -1,9 +1,9 @@
-#carouselHome {
-  max-height: 800px;
-}
+/*#carouselHome {*/
+/*max-height: 800px;*/
+/*}*/
 
 .carousel-caption {
-  top: 45%;
+  top: 50%;
   transform: translateY(-50%);
   bottom: initial;
   /*max-width: 400px;*/
@@ -16,8 +16,38 @@
 }
 
 /*.carousel-inner .img .fill-screen{*/
-  /*width: 300vh;*/
-  /*height: 300vh;*/
+/*width: 300vh;*/
+/*height: 300vh;*/
 /*}*/
 
-/*.img {height:100%; width:100% }*/
+.img {
+  width: 100%;
+}
+
+.device .alert {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.section-heading {
+  text-transform: uppercase;
+  color: gray;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.trans {
+  cursor: pointer;
+}
+
+
+.trans:hover {
+  transition: all .2s ease-in-out;
+  transform: scale(1.3);
+}
+
+.deviceTitle {
+  /*font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;*/
+  margin-top: 15px;
+  color: var(--colordevices);
+}

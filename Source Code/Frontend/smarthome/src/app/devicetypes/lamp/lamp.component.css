@@ -7,3 +7,6 @@
   padding: 15px;
   margin: auto;
 }
+#chartTarget{
+  cursor: pointer;
+}

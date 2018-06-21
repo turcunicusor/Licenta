@@ -8,6 +8,6 @@
   margin: auto;
 }
 
-.i {
-  position: relative;
+.img {
+  cursor: pointer;
 }

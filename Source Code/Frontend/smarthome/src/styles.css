@@ -9,6 +9,14 @@
 
   --color6: rgba(182, 206, 199, 0.15);
   --color7: rgba(226, 18, 18, 0.15);
+
+  --color1rgb: rgba(216,224,187,0.4);
+  --color2rgb: rgba(182,206,199,0.4);
+  --color3rgb: rgba(134,163,195,0.4);
+  --color4rgb: rgba(114,104,166,0.4);
+  --color5rgb: rgba(107,48,116,0.4);
+
+  --colordevices: #637c9b;
 }
 
 .bg_color_green {
