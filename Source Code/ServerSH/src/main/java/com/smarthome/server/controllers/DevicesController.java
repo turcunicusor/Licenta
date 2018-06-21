@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -182,27 +183,35 @@ public class DevicesController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not enough privileges.");
         try {
             if (!deviceDTO.getIp().isEmpty()) device.setIp(InetAddress.getByName(deviceDTO.getIp()));
-            if (deviceDTO.getPort() != 0) device.setPort(deviceDTO.getPort());
+            if (deviceDTO.getPort() != null)
+                if (deviceDTO.getPort() != 0) device.setPort(deviceDTO.getPort());
             if (!deviceDTO.getType().isEmpty()) device.setType(deviceDTO.getType());
             if (!deviceDTO.getName().isEmpty()) device.setName(deviceDTO.getName());
         } catch (UnknownHostException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(String.format("Ip '%s' is not a valid ip address.", deviceDTO.getIp()));
         }
-        try {
-            deviceManager.checkValidIpAndPort(device);
-            deviceManager.editDevice(device);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
-        }
+        if (!deviceDTO.getIp().isEmpty() || deviceDTO.getPort() != null || !deviceDTO.getType().isEmpty()) {
+            try {
+                deviceManager.checkValidIpAndPort(device);
+                deviceManager.editDevice(device);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: " + e.getMessage());
+            }
 
-        try {
-            deviceManager.getHalDevice(device.getHash()).testConnection();
-        } catch (Exception e) {
-            this.deviceManager.deleteHalDevice(device.getHash());
-            this.deviceManager.registerDevice(deviceCache);
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: 'Invalid device configuration. Please make sure configuration is valid and device is online'.");
+            try {
+                deviceManager.getHalDevice(device.getHash()).testConnection();
+            } catch (Exception e) {
+                this.deviceManager.deleteHalDevice(device.getHash());
+                this.deviceManager.registerDevice(deviceCache);
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Failed to edit device. Reason: 'Invalid device configuration. Please make sure configuration is valid and device is online'.");
+            }
+        } else {
+            try {
+                deviceManager.editDevice(device);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
         return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
