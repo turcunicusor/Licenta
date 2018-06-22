@@ -12,8 +12,6 @@ npm install ngx-toastr --save
 npm install @angular/animations --save
 
 npm install --save highcharts && npm install --save-dev @types/highcharts
-	
-npm install --save font-awesome angular-font-awesome
 ```
 	
 # Paleta de culori:
