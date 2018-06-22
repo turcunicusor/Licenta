@@ -79,6 +79,40 @@
   color: var(--colordevices);
 }
 
+.half {
+  width: 40%;
+  margin-left: 30%;
+}
+
+#customhr{
+  max-width: 50px;
+  border-width: 3px;
+  border-color: var(--color5rgb);
+}
+
+.nicebtn {
+  border-radius: 300px;
+}
+
+.btn-xlarge {
+  padding: 14px 30px;
+  font-size: 18px; //change this to your desired size
+line-height: normal;
+  /*-webkit-border-radius: 8px;*/
+  /*-moz-border-radius: 8px;*/
+  /*border-radius: 8px;*/
+}
+
 .mb-0 {
   font-size: 1.4em;
+}
+
+.adv{
+
+  color: var(--color5);
+  /*font-weight: bold;*/
+}
+
+.adv-txt{
+  font-size: 1.1em;
 }
