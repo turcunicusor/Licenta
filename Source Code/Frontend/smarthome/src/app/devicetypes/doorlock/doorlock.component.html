@@ -14,16 +14,16 @@
     <!--v2-->
     <div class="row justify-content-center align-items-center">
       <ng-container *ngIf="this.status">
-        <img (click)="onLockClick(false)" src="../../../assets/img/doorlock/lock_on.png" >
+        <img (click)="onLockClick(false)" src="../../../assets/img/doorlock/lock_on.png"  width="165" height="189">
       </ng-container >
 
       <ng-container *ngIf="!this.status">
-        <img (click)="onLockClick(true)" src="../../../assets/img/doorlock/lock_off.png" >
+        <img (click)="onLockClick(true)" src="../../../assets/img/doorlock/lock_off.png" width="165" height="189">
       </ng-container>
     </div>
 
 
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center" style="padding-top: 30px">
       <ng-container *ngIf="this.status">
         <div class="alert alert-success w-100" role="alert">
           <h5 class="alert-heading">Door is close!</h5>
