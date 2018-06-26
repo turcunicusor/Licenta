@@ -12,4 +12,6 @@
     * ### [Bec](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/Client/Devices/LightBulb "Apasă aici pentru a accesa codul sursă.")
  * ### [Server java](https://github.com/turcunicusor/Licenta/tree/master/Source%20Code/ServerSH "Apasă aici pentru a accesa codul sursă.")
 
+## 2. [Licenta2018TurcuNicușor](https://github.com/turcunicusor/Licenta/tree/master/Licenta2018TurcuNicu%C8%99or "Apasă aici pentru a accesa acest folder.")
+
 ###### Creat de [_**`Nicușor TURCU`**_](https://github.com/turcunicusor "Github")
