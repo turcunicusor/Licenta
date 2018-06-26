@@ -95,7 +95,7 @@ export class BackendService {
 
   public initDeviceTypes() {
     this.deviceTypes['Lamp'] = 'lamp';
-    this.deviceTypes['Security Laser'] = 'securitylaser';
+    this.deviceTypes['Security Laser'] = 'securitylaser_old';
     this.deviceTypes['Door Lock'] = 'doorlock';
     this.deviceTypes['Light Bulb'] = 'lightbulb';
   }

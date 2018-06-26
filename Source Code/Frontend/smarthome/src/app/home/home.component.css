@@ -3,7 +3,7 @@
 /*}*/
 
 .carousel-caption {
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
   bottom: initial;
   /*max-width: 400px;*/
@@ -115,4 +115,13 @@ line-height: normal;
 
 .adv-txt{
   font-size: 1.1em;
+}
+
+.logo {
+  width: 25%;
+}
+
+#logo {
+  margin-top: 1em;
+  width: 25%;
 }

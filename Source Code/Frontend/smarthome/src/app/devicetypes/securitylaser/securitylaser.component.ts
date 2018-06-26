@@ -16,8 +16,14 @@ export class SecuritylaserComponent implements OnInit {
 
   constructor(public _bs: BackendService, private toastr: ToastrService) {
   }
+
   ngOnInit() {
     this.status = this.params['laser'] === 'true';
+    if (this.status === true) {
+      document.getElementById('imgoff').style.display = 'flex';
+    } else {
+      document.getElementById('imgon').style.display = 'flex';
+    }
   }
 
   onLaserClick(status) {
@@ -28,6 +34,13 @@ export class SecuritylaserComponent implements OnInit {
         //   this.toastr.success('State \'' + event.point.name + '\' updated successfully.');
         // }
         this.status = !this.status;
+        if (this.status === true) {
+          document.getElementById('imgoff').style.display = 'flex';
+          document.getElementById('imgon').style.display = 'none';
+        } else {
+          document.getElementById('imgon').style.display = 'flex';
+          document.getElementById('imgoff').style.display = 'none';
+        }
       },
       (err: HttpErrorResponse) => {
         const message = this._bs.handleError(err);

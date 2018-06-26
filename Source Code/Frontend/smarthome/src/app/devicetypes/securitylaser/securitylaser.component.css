@@ -1,3 +1,7 @@
 .img {
   cursor: pointer;
 }
+
+.alert {
+  margin-top: 40px;
+}

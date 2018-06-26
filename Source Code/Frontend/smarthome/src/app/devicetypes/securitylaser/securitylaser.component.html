@@ -1,13 +1,13 @@
 <div class="containerel innerdiv">
   <div class="container justify-content-center align-items-center">
-    <div class="row justify-content-center align-items-center">
-      <ng-container *ngIf="!this.status">
-        <img (click)="onLaserClick(true)" src="../../../assets/img/securitylaser/laser_off.png" height="68" width="261">
-      </ng-container >
+    <div class="row justify-content-center align-items-center" style="padding-top: 40px">
+      <!--<ng-container *ngIf="!this.status">-->
+        <img id="imgon" style="display: none" (click)="onLaserClick(true)" src="../../../assets/img/securitylaser/laser_off.png" width="90%" height="90%">
+      <!--</ng-container >-->
 
-      <ng-container *ngIf="this.status">
-        <img (click)="onLaserClick(false)" src="../../../assets/img/securitylaser/laser_on.png" height="68" width="261">
-      </ng-container>
+      <!--<ng-container *ngIf="this.status">-->
+        <img id="imgoff" style="display: none" (click)="onLaserClick(false)" src="../../../assets/img/securitylaser/laser_on.png" width="90%" height="90%">
+      <!--</ng-container>-->
     </div>
     <div class="row justify-content-center align-items-center">
       <ng-container *ngIf="!this.status">
