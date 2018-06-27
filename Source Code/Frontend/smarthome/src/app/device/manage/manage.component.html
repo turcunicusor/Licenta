@@ -62,9 +62,9 @@
           <app-doorlock *ngIf="device.type==='doorlock'" [deviceId]="device.id" [params]="device.params"></app-doorlock>
           <app-securitylaser *ngIf="device.type==='securitylaser'" [deviceId]="device.id" [params]="device.params"></app-securitylaser>
           <app-lightbulb *ngIf="device.type==='lightbulb'" [deviceId]="device.id" [params]="device.params"></app-lightbulb>
+          <app-homeenvironment *ngIf="device.type==='homeenvironment'" [deviceId]="device.id" [params]="device.params"></app-homeenvironment>
 
-
-          <ng-container *ngIf="device.type!=='lamp' && device.type!=='doorlock' && device.type!=='securitylaser' && device.type!=='lightbulb'">
+          <ng-container *ngIf="device.type!=='lamp' && device.type!=='doorlock' && device.type!=='securitylaser' && device.type!=='lightbulb' && device.type!=='homeenvironment'">
             <ng-container *ngFor="let key of _ut.keys(device.params); let i = index">
               <div class="containerel input-group mb-3 row bg_color_green innerdiv">
                 <label for="param{{i}}" class="col-lg-4 col-form-label form-control-label text-lg-right text-md-left">{{key}}</label>

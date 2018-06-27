@@ -27,6 +27,8 @@ import {LampComponent} from './devicetypes/lamp/lamp.component';
 import { DoorlockComponent } from './devicetypes/doorlock/doorlock.component';
 import { SecuritylaserComponent } from './devicetypes/securitylaser/securitylaser.component';
 import { LightbulbComponent } from './devicetypes/lightbulb/lightbulb.component';
+import { HomeenvironmentComponent } from './devicetypes/homeenvironment/homeenvironment.component';
+import {GaugeModule} from 'angular-gauge';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { LightbulbComponent } from './devicetypes/lightbulb/lightbulb.component'
     DoorlockComponent,
     SecuritylaserComponent,
     LightbulbComponent,
+    HomeenvironmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { LightbulbComponent } from './devicetypes/lightbulb/lightbulb.component'
       positionClass: 'toast-bottom-center',
       preventDuplicates: true,
     }),
+    GaugeModule.forRoot(),
     BrowserAnimationsModule
   ],
   providers: [BackendService, AuthGuardService, Utils],

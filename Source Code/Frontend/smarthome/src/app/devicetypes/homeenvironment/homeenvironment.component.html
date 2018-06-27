@@ -1,0 +1,40 @@
+<div class="container gauges-container">
+  <!--<div class="col">-->
+  <!--<div class="col ">-->
+  <div class="col">
+    <div class="row">
+      <mwl-gauge
+        id="temperature"
+        class="temperature mx-auto"
+        [max]="100"
+        [dialStartAngle]="180.101"
+        [dialEndAngle]="180"
+        [value]="temperature"
+        [animated]="true"
+        [animationDuration]="1.0"
+      ></mwl-gauge>
+    </div>
+    <div class="row">
+      <p class="mx-auto display-4">Temperature (°C)</p>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <mwl-gauge
+        class="humidity mx-auto"
+        [max]="100"
+        [dialStartAngle]="180.101"
+        [dialEndAngle]="180"
+        [value]="humidity"
+        [animated]="true"
+        [animationDuration]="1.0"
+      >
+      </mwl-gauge>
+    </div>
+    <div class="row">
+      <p class="mx-auto display-4">Humidity (%)</p>
+    </div>
+  </div>
+  <!--</div>-->
+  <!--</div>-->
+</div>

@@ -1,0 +1,45 @@
+.gauges-container {
+  display: flex;
+}
+
+mwl-gauge.temperature > .gauge > .dial {
+  /*stroke: #5BB5E0;*/
+  stroke-width: 5px;
+}
+
+mwl-gauge.temperature > .gauge > .value {
+  stroke: #F8774B;
+  stroke-dasharray: 41, 1;
+  stroke-width: 5px;
+}
+
+mwl-gauge.temperature > .gauge > .value-text {
+  fill: #F8774B;
+  font-size: 0.9em;
+}
+
+mwl-gauge.humidity > .gauge > .dial {
+  /*stroke: #162955;*/
+  stroke-width: 4px;
+}
+
+mwl-gauge.humidity > .gauge > .value-text{
+  /*stroke: #162955;*/
+  fill: #0A94D7;
+}
+
+
+mwl-gauge.humidity > .gauge > .value{
+  stroke-width: 5px;
+  stroke: #0A94D7;
+  stroke-dasharray: 39, 3;
+}
+
+mwl-gauge {
+  width: 200px;
+  height: 200px;
+}
+
+.display-4 {
+  font-size: 1.5em;
+}

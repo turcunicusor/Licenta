@@ -15,7 +15,7 @@
 
 .smarthome {
   background-color: var(--color3rgb);
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 .alldevices {
@@ -26,7 +26,7 @@
   background-color: var(--color3rgb);
 }
 
-.lead{
+.lead {
   font-size: 1.5em;
 }
 
@@ -67,7 +67,6 @@
   cursor: pointer;
 }
 
-
 .trans:hover {
   transition: all .2s ease-in-out;
   transform: scale(1.3);
@@ -84,7 +83,7 @@
   margin-left: 30%;
 }
 
-#customhr{
+#customhr {
   max-width: 50px;
   border-width: 3px;
   border-color: var(--color5rgb);
@@ -96,8 +95,8 @@
 
 .btn-xlarge {
   padding: 14px 30px;
-  font-size: 18px; //change this to your desired size
-line-height: normal;
+  font-size: 18px;
+/ / change this to your desired size line-height: normal;
   /*-webkit-border-radius: 8px;*/
   /*-moz-border-radius: 8px;*/
   /*border-radius: 8px;*/
@@ -107,13 +106,13 @@ line-height: normal;
   font-size: 1.4em;
 }
 
-.adv{
+.adv {
 
   color: var(--color5);
   /*font-weight: bold;*/
 }
 
-.adv-txt{
+.adv-txt {
   font-size: 1.1em;
 }
 
@@ -124,4 +123,39 @@ line-height: normal;
 #logo {
   margin-top: 1em;
   width: 25%;
+}
+
+.laser {
+  margin-top: 11.5%;
+  margin-bottom: 20%;
+  width: 90%;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .laser {
+    margin-top: 19%;
+    margin-bottom: 20%;
+  }
+}
+
+@media (max-width: 991px) {
+  .laser {
+    width: 50%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .homenv {
+    width: 89%;
+  }
+}
+
+@media (max-width: 991px) {
+  .homenv {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    width: 45%;
+  }
 }
