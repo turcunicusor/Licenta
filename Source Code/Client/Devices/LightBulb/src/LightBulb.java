@@ -30,7 +30,7 @@ public class LightBulb {
         }
         System.out.println("red gpio " + args[3]);
         System.out.println("green gpio " + args[4]);
-        System.setProperty("javax.net.ssl.keyStore", "/home/pi/Desktop/Playground/sslkey/secret_key");
+        System.setProperty("javax.net.ssl.keyStore", "/home/pi/Desktop/Devices/sslkey/secret_key");
         System.setProperty("javax.net.ssl.keyStorePassword", "nicusor");
         CommunicationManager com = new CommunicationManager(ip, port, new DeviceImpl(deviceType, "GPIO " + args[3], "GPIO " + args[4]));
         com.doWork();

@@ -29,7 +29,7 @@ public class SecurityLaser {
             return;
         }
         System.out.println("laser gpio " + args[3]);
-        System.setProperty("javax.net.ssl.keyStore", "/home/pi/Desktop/Playground/sslkey/secret_key");
+        System.setProperty("javax.net.ssl.keyStore", "/home/pi/Desktop/Devices/sslkey/secret_key");
         System.setProperty("javax.net.ssl.keyStorePassword", "nicusor");
         CommunicationManager com = new CommunicationManager(ip, port, new DeviceImpl(deviceType, "GPIO " + args[3]));
         com.doWork();

@@ -1,5 +1,7 @@
 import Generic.AcceptedParams;
+import Generic.Data;
 import Generic.IDevice;
+import Generic.Params;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,19 +15,23 @@ import java.util.logging.Logger;
 import javax.net.ssl.SSLSocketFactory;
 
 public class SSLClient {
-    private static final int port = 8000;
+    private static final int port = 8004;
 
     public static void main(String[] args) {
         try {
-            InetAddress ip = InetAddress.getByName("192.168.0.106");
+            InetAddress ip = InetAddress.getByName("169.254.207.167");
             DeviceManager deviceManager = new DeviceManager();
-            deviceManager.registerDevice(new HalDevice(ip, port, "led"));
+            deviceManager.registerDevice(new HalDevice(ip, port, "homeenvironment"));
             IDevice device = deviceManager.getDevice(ip, port);
 //            device.open();
 //            device.close();
             device.getStatus();
-//            AcceptedParams acceptedParams = device.getAcceptedParams();
-////            System.out.println(acceptedParams.get("intensintate"));
+            AcceptedParams acceptedParams = device.getAcceptedParams();
+            System.out.println("Prametrii"+acceptedParams.toString());
+            Data data = new Data();
+            data.addData("temperature;humidity");
+            Params params = device.queryData(data);
+            System.out.println("Valori" + params.toString());
             device.closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,7 +40,7 @@ public class SSLClient {
     }
 
     public static void comandLineClient() {
-        System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_144\\bin\\secret_key");
+        System.setProperty("javax.net.ssl.trustStore", "c:\\Users\\Turcu Nicusor\\Desktop\\Work\\Licenta\\Source Code\\ServerSH\\secret_key");
         SSLSocketFactory sslSocketFactory =
                 (SSLSocketFactory) SSLSocketFactory.getDefault();
         try {

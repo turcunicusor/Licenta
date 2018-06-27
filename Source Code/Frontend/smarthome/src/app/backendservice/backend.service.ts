@@ -98,6 +98,7 @@ export class BackendService {
     this.deviceTypes['Security Laser'] = 'securitylaser_old';
     this.deviceTypes['Door Lock'] = 'doorlock';
     this.deviceTypes['Light Bulb'] = 'lightbulb';
+    this.deviceTypes['Home Environment'] = 'homeenvironment';
   }
 
   public setToken(token: string) {
