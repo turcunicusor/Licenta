@@ -4,18 +4,13 @@ import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;
 
 public class SensorTH {
-    private static final int MAXTIMINGS = 85;
+    private static final int TIMING = 85;
     private final int[] SensorData = {0, 0, 0, 0, 0};
-    private boolean dataReadOk = false;
 
     private float humidity;
     private float temperature;
 
     public SensorTH() {
-        if (Gpio.wiringPiSetup() == -1) {
-            System.out.println(" ==>> GPIO SETUP FAILED");
-            return;
-        }
         humidity = 0.0f;
         temperature = 0.0f;
         GpioUtil.export(3, GpioUtil.DIRECTION_OUT);
@@ -29,7 +24,7 @@ public class SensorTH {
         return temperature;
     }
 
-    public void getTemperature(final int pin) {
+    public void getTemperature(int pin) {
         int laststate = Gpio.HIGH;
         int j = 0;
         SensorData[0] = SensorData[1] = SensorData[2] = SensorData[3] = SensorData[4] = 0;
@@ -37,11 +32,10 @@ public class SensorTH {
         Gpio.pinMode(pin, Gpio.OUTPUT);
         Gpio.digitalWrite(pin, Gpio.LOW);
         Gpio.delay(18);
-
         Gpio.digitalWrite(pin, Gpio.HIGH);
         Gpio.pinMode(pin, Gpio.INPUT);
 
-        for (int i = 0; i < MAXTIMINGS; i++) {
+        for (int i = 0; i < TIMING; i++) {
             int counter = 0;
             while (Gpio.digitalRead(pin) == laststate) {
                 counter++;
@@ -50,20 +44,14 @@ public class SensorTH {
                     break;
                 }
             }
-
             laststate = Gpio.digitalRead(pin);
 
             if (counter == 255) {
                 break;
             }
-
-            /* ignore first 3 transitions */
             if (i >= 4 && i % 2 == 0) {
-                /* shove each bit into the storage bytes */
                 SensorData[j / 8] <<= 1;
-                if (counter > 16) {
-                    SensorData[j / 8] |= 1;
-                }
+                if (counter > 16) SensorData[j / 8] |= 1;
                 j++;
             }
         }
@@ -80,11 +68,6 @@ public class SensorTH {
             if ((SensorData[2] & 0x80) != 0) {
                 temperature = -temperature;
             }
-//            this.dataReadOk = true;
-//            System.out.println("Humidity = " + humidity + " Temperature = " + temperature);
-        } else {
-//            this.dataReadOk = false;
-//            System.out.println("Data not good, skip");
         }
     }
 
@@ -93,10 +76,6 @@ public class SensorTH {
     }
 
     public void readData(int pin) {
-//        while(!dataReadOk) {
-//            Thread.sleep(400);
-//            this.getTemperature(pin);
-//        }
         Runnable r = () -> {
             while (true) {
                 try {
@@ -108,7 +87,5 @@ public class SensorTH {
             }
         };
         new Thread(r).start();
-//        this.dataReadOk = false;
-//        System.out.println("readData Done!!");
     }
 }
