@@ -12,14 +12,14 @@ import {timer} from 'rxjs/observable/timer';
   templateUrl: './homeenvironment.component.html',
   styleUrls: ['./homeenvironment.component.css']
 })
-export class HomeenvironmentComponent implements OnInit {
+export class HomeenvironmentComponent implements OnInit, OnDestroy {
+  public subscription: any;
   @Input() deviceId: string;
   @Input() params: {};
   private device: Device;
   temperature: any = 3;
   humidity: any = 100;
   timerClock: any;
-  subscription: any;
 
   constructor(public _bs: BackendService, private toastr: ToastrService) {
   }
@@ -45,5 +45,9 @@ export class HomeenvironmentComponent implements OnInit {
         // const message = this._bs.handleError(err);
         this.toastr.warning('Could not receive updates from device.');
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
